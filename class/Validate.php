@@ -23,7 +23,7 @@ class Validate{
                         array_push($this->_errors, "{$item} is reuired");
                     }
                 }else{
-                    array_push($this->_errors,"{$item} doesnot exist");
+                    array_push($this->_errors,"{$item} does not exist");
                 }
             }
         }
