@@ -14,16 +14,25 @@ class Validate{
      */
     function check($source,array $items=[]){
         foreach($items as $item=>$rules){
-            foreach($rules as $rule=>$values){
+            foreach($rules as $rule=>$rule_values){
                 // check if the item existe on the source array $_array_name[$item]
                 if(isset($source[$item])){
                     $value = trim($source[$item]);
                     // if the rele defined is required
                     if ($rule == 'required' && empty($value)) {
-                        $this->addErrors("{$item} is required");
+                        $this->addError("{$item} is required");
+                    }else if(!empty($value)){
+                        switch($rule){
+                            // check for minimu input lenght of a string
+                            case "min":
+                                if (strlen($value) < $rule_values) {
+                                    $this->addError("{$item} should have minimum of {$rule_values} caracters");
+                                }
+                                break;
+                        }
                     }
                 }else{
-                    $this->addErrors("{$item} does not exist");
+                    $this->addError("{$item} does not exist");
                 }
             }
         }
@@ -31,7 +40,7 @@ class Validate{
             $this->_passed = true;
         }
     }
-    private function addErrors(string $value){
+    private function addError(string $value){
         $this->_errors[]=$value;
     }
     /**
