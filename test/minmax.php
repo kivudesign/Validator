@@ -1,0 +1,16 @@
+<?php
+$check=[
+    "name"=>[
+        "required"=>true,
+        "min"=>20
+    ],
+    "country"=>[
+        "required"=>true,
+        "min"=>1,
+        "max"=>2,
+        "uniq"=>true
+    ]
+];
+$valid->check($source,$check);
+var_dump($valid->passed());
+var_dump($valid->errors());

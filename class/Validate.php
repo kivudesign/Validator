@@ -14,16 +14,41 @@ class Validate{
      */
     function check($source,array $items=[]){
         foreach($items as $item=>$rules){
-            foreach($rules as $rule=>$values){
+            foreach($rules as $rule=>$rule_values){
                 // check if the item existe on the source array $_array_name[$item]
                 if(isset($source[$item])){
                     $value = trim($source[$item]);
                     // if the rele defined is required
                     if ($rule == 'required' && empty($value)) {
-                        $this->addErrors("{$item} is required");
+                        $this->addError("`{$item}` is required");
+                    }else if(!empty($value)){
+                        switch($rule){
+                            // check for minimu input lenght of a string
+                            case "min":
+                                // check is the value entre is an integer
+                                // and verifier if it is a possitive number, in order to check the minimum length
+                                $min=is_integer($rule_values)? ((int)$rule_values>0? (int)$rule_values:1):0;
+                                if (strlen($value) < $min) {
+                                    $this->addError("`{$item}` should have minimum of `{$min}` caracters");
+                                }
+                                break;
+                            case "max":
+                                // check is the value entre is an integer
+                                // and verifier if it is a possitive number
+                                $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
+                                if (strlen($value) > $max) {
+                                    $this->addError("`{$item}` should have maximum of `{$max}` caracters");
+                                }
+                                break;
+                            default:
+                                if($rule != 'required'){
+                                    $this->addError("rule `{$rule}` is not defined");
+                                }
+                                break;
+                        }
                     }
                 }else{
-                    $this->addErrors("{$item} does not exist");
+                    $this->addError("`{$item}` does not exist");
                 }
             }
         }
@@ -31,7 +56,7 @@ class Validate{
             $this->_passed = true;
         }
     }
-    private function addErrors(string $value){
+    private function addError(string $value){
         $this->_errors[]=$value;
     }
     /**
