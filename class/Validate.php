@@ -25,8 +25,19 @@ class Validate{
                         switch($rule){
                             // check for minimu input lenght of a string
                             case "min":
-                                if (strlen($value) < $rule_values) {
-                                    $this->addError("{$item} should have minimum of {$rule_values} caracters");
+                                // check is the value entre is an integer
+                                // and verifier if it is a possitive number, in order to check the minimum length
+                                $min=is_integer($rule_values)? ((int)$rule_values>0? (int)$rule_values:1):0;
+                                if (strlen($value) < $min) {
+                                    $this->addError("{$item} should have minimum of {$min} caracters");
+                                }
+                                break;
+                            case "max":
+                                // check is the value entre is an integer
+                                // and verifier if it is a possitive number
+                                $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
+                                if (strlen($value) > $max) {
+                                    $this->addError("{$item} should have maximum of {$max} caracters");
                                 }
                                 break;
                         }

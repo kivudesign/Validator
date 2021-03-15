@@ -3,6 +3,11 @@ $check=[
     "name"=>[
         "required"=>true,
         "min"=>20
+    ],
+    "country"=>[
+        "required"=>true,
+        "min"=>1,
+        "max"=>2
     ]
 ];
 $valid->check($source,$check);
