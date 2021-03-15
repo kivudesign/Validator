@@ -25,10 +25,10 @@ class Validate{
                 }else{
                     $this->addErrors("{$item} does not exist");
                 }
-                if(count($this->_errors)==0){
-                    $this->_passed=true;
-                }
             }
+        }
+        if (count($this->_errors) == 0) {
+            $this->_passed = true;
         }
     }
     private function addErrors(string $value){
