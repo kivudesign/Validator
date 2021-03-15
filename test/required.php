@@ -1,8 +1,11 @@
 <?php
-
     $chek = [
-        "name" => [
+        "town" => [
             "required" => true
+        ]
+        ,
+        "city"=>[
+            "required"=>true
         ]
     ];
 

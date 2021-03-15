@@ -1,10 +1,12 @@
 <?php
-    $source = [
-        "name" => "",
-        "age" => 13,
-    ];
-
     use Wepesi\app\Validate;
 
     $valid = new Validate();
+    $source = [
+        "name" => "Wepesi",
+        "age" => 13,
+        "country" => "DRC",
+        "town" => "",
+        "coty" => ""
+    ];
    include "./test/required.php";

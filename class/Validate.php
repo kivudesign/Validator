@@ -20,10 +20,13 @@ class Validate{
                     $value = trim($source[$item]);
                     // if the rele defined is required
                     if ($rule == 'required' && empty($value)) {
-                        array_push($this->_errors, "{$item} is reuired");
+                        array_push($this->_errors, "{$item} is required");
                     }
                 }else{
                     array_push($this->_errors,"{$item} does not exist");
+                }
+                if(count($this->_errors)==0){
+                    $this->_passed=true;
                 }
             }
         }
