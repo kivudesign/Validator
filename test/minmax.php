@@ -7,7 +7,8 @@ $check=[
     "country"=>[
         "required"=>true,
         "min"=>1,
-        "max"=>2
+        "max"=>2,
+        "uniq"=>true
     ]
 ];
 $valid->check($source,$check);

@@ -20,7 +20,7 @@ class Validate{
                     $value = trim($source[$item]);
                     // if the rele defined is required
                     if ($rule == 'required' && empty($value)) {
-                        $this->addError("{$item} is required");
+                        $this->addError("`{$item}` is required");
                     }else if(!empty($value)){
                         switch($rule){
                             // check for minimu input lenght of a string
@@ -29,7 +29,7 @@ class Validate{
                                 // and verifier if it is a possitive number, in order to check the minimum length
                                 $min=is_integer($rule_values)? ((int)$rule_values>0? (int)$rule_values:1):0;
                                 if (strlen($value) < $min) {
-                                    $this->addError("{$item} should have minimum of {$min} caracters");
+                                    $this->addError("`{$item}` should have minimum of `{$min}` caracters");
                                 }
                                 break;
                             case "max":
@@ -37,13 +37,18 @@ class Validate{
                                 // and verifier if it is a possitive number
                                 $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
                                 if (strlen($value) > $max) {
-                                    $this->addError("{$item} should have maximum of {$max} caracters");
+                                    $this->addError("`{$item}` should have maximum of `{$max}` caracters");
+                                }
+                                break;
+                            default:
+                                if($rule != 'required'){
+                                    $this->addError("rule `{$rule}` is not defined");
                                 }
                                 break;
                         }
                     }
                 }else{
-                    $this->addError("{$item} does not exist");
+                    $this->addError("`{$item}` does not exist");
                 }
             }
         }
