@@ -55,6 +55,11 @@ class Validate{
                                     $this->addError("`{$item}` this should be an email");
                                 }
                                 break;
+                            case "url":
+                                if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $value)) {
+                                    $this->addError("`{$item}` this shoudl be a link(url)");
+                                }
+                                break;
                             default:
                                 if($rule != 'required'){
                                     $this->addError("rule `{$rule}` is not defined");

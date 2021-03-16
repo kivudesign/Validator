@@ -1,7 +1,15 @@
 <?php
 $check=[
-    "name"=>[
+    "link"=>[
         "required"=>true,
+        "min"=>3,
+        "max"=>60,
+        "url"=>true
+    ],
+    "email"=>[
+        "required"=>true,
+        "min"=>6,
+        "max"=>20,
         "email"=>true
     ]
 ];
