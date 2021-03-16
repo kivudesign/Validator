@@ -60,6 +60,11 @@ class Validate{
                                     $this->addError("`{$item}` this shoudl be a link(url)");
                                 }
                                 break;
+                            case "matches":
+                                if ($value !== $source[$rule_values]) {
+                                    $this->addError("`{$rule_values}` should me the same as `{$item}`");
+                                }
+                                break;
                             default:
                                 if($rule != 'required'){
                                     $this->addError("rule `{$rule}` is not defined");
