@@ -13,15 +13,16 @@ class Validate{
      * 
      */
     function check($source,array $items=[]){
+        
         foreach($items as $item=>$rules){
             foreach($rules as $rule=>$rule_values){
                 // check if the item existe on the source array $_array_name[$item]
                 if(isset($source[$item])){
-                    $value = trim($source[$item]);
+                    $value = $source[$item];
                     // if the rele defined is required
-                    if ($rule == 'required' && empty($value)) {
+                    if ($rule == 'required' && empty($value) && $value != 0) {
                         $this->addError("`{$item}` is required");
-                    }else if(!empty($value)){
+                    }else if(!empty($value) || $value == 0){
                         switch($rule){
                             // check for minimu input lenght of a string
                             case "min":
@@ -67,6 +68,13 @@ class Validate{
                                     if ($value !== $source[$rule_values]) {
                                         $this->addError("`{$rule_values}` should me the same as `{$item}`");
                                     }
+                                }
+                                break;
+                            case "boolean":
+                                var_dump(is_bool($value));
+                                if((!is_integer($value)) || ($value < 0 && $value > 1))
+                                {
+                                    $this->addError("`{$item}` must be a boolean value");
                                 }
                                 break;
                             default:
