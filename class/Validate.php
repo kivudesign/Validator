@@ -40,6 +40,16 @@ class Validate{
                                     $this->addError("`{$item}` should have maximum of `{$max}` caracters");
                                 }
                                 break;
+                            case "number":
+                                if (preg_match("#.\W#", $value) || preg_match("#[a-zA-Z]#", $value)) {
+                                    $this->addError("`{$item}` should be a number");
+                                }
+                                break;
+                            case "positive":
+                                if ($value<1) {
+                                    $this->addError("`{$item}` should be a positive number");
+                                }
+                                break;
                             default:
                                 if($rule != 'required'){
                                     $this->addError("rule `{$rule}` is not defined");
