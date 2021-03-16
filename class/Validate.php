@@ -50,6 +50,11 @@ class Validate{
                                     $this->addError("`{$item}` should be a positive number");
                                 }
                                 break;
+                            case "email":
+                                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                                    $this->addError("`{$item}` this should be an email");
+                                }
+                                break;
                             default:
                                 if($rule != 'required'){
                                     $this->addError("rule `{$rule}` is not defined");
