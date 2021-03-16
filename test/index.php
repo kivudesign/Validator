@@ -10,4 +10,5 @@
         "coty" => ""
     ];
 //    include "./test/required.php";
-   include "./test/minmax.php";
+//    include "./test/minmax.php";
+   include "./test/number.php";
