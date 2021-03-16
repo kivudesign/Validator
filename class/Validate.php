@@ -61,8 +61,12 @@ class Validate{
                                 }
                                 break;
                             case "matches":
-                                if ($value !== $source[$rule_values]) {
-                                    $this->addError("`{$rule_values}` should me the same as `{$item}`");
+                                if(!isset($source[$rule_values])){
+                                    $this->addError("`{$item}` does not exist, to matches");
+                                }else{
+                                    if ($value !== $source[$rule_values]) {
+                                        $this->addError("`{$rule_values}` should me the same as `{$item}`");
+                                    }
                                 }
                                 break;
                             default:
