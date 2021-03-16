@@ -2,7 +2,8 @@
 $check=[
     "age"=>[
         "required"=>true,
-        "number"=>true
+        "number"=>true,
+        "positive"=>true
     ]
     ];
     $valid->check($source,$check);

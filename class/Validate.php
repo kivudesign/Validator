@@ -42,7 +42,12 @@ class Validate{
                                 break;
                             case "number":
                                 if (preg_match("#.\W#", $value) || preg_match("#[a-zA-Z]#", $value)) {
-                                    $this->addError("{$item} " . $this->lang->number);
+                                    $this->addError("`{$item}` should be a number");
+                                }
+                                break;
+                            case "positive":
+                                if ($value<1) {
+                                    $this->addError("`{$item}` should be a positive number");
                                 }
                                 break;
                             default:
