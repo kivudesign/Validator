@@ -50,6 +50,16 @@ class Validate{
                                     $this->addError("`{$item}` should be a positive number");
                                 }
                                 break;
+                            case "email":
+                                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                                    $this->addError("`{$item}` this should be an email");
+                                }
+                                break;
+                            case "url":
+                                if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $value)) {
+                                    $this->addError("`{$item}` this shoudl be a link(url)");
+                                }
+                                break;
                             default:
                                 if($rule != 'required'){
                                     $this->addError("rule `{$rule}` is not defined");
