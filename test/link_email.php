@@ -1,12 +1,12 @@
 <?php
 $check=[
-    "link"=>[
+    "email"=>[
         "required"=>true,
         "min"=>3,
         "max"=>60,
         "url"=>true
     ],
-    "email"=>[
+    "link"=>[
         "required"=>true,
         "min"=>6,
         "max"=>20,
