@@ -71,11 +71,15 @@ class Validate{
                                 }
                                 break;
                             case "boolean":
-                                var_dump(is_bool($value));
-                                if((!is_integer($value)) || ($value < 0 && $value > 1))
+                                
+                                if(!is_bool($value))
                                 {
-                                    $this->addError("`{$item}` must be a boolean value");
+                                    if((!is_integer($value)) || ($value < 0 || $value > 1))
+                                    {
+                                        $this->addError("`{$item}` must be a boolean value");
+                                    }
                                 }
+                                
                                 break;
                             default:
                                 if($rule != 'required'){
