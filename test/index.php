@@ -11,10 +11,12 @@
         "n_password"=>123456,
         "coty" => "Goma",
         "email"=>"infos@wepesi.com",
-        "link"=> "https://github.com/bim-g/wepesi_validation/"
+        "link"=> "https://github.com/bim-g/wepesi_validation/",
+        "status"=> true
     ];
     // include "./test/required.php";
     // include "./test/minmax.php";
     // include "./test/number.php";
     // include "./test/link_email.php";
-    include "./test/match.php";
+    // include "./test/match.php";
+    include "./test/boolean.php";

@@ -13,20 +13,21 @@ class Validate{
      * 
      */
     function check($source,array $items=[]){
+        
         foreach($items as $item=>$rules){
             foreach($rules as $rule=>$rule_values){
                 // check if the item existe on the source array $_array_name[$item]
                 if(isset($source[$item])){
-                    $value = trim($source[$item]);
+                    $value = $source[$item];
                     // if the rele defined is required
-                    if ($rule == 'required' && empty($value)) {
+                    if ($rule == 'required' && empty($value)&& $value != 0) {
                         $message = [
                             "type"=> "any.required",
                             "message" => "`{$item}` is required",
                             "label" => $item,
                         ];
                         $this->addError($message);
-                    }else if(!empty($value)){
+                    }else if(!empty($value) || $value == 0){
                         switch($rule){
                             // check for minimu input lenght of a string
                             case "min":
@@ -115,6 +116,17 @@ class Validate{
                                     ];
                                         $this->addError($message);
                                     }
+                                }
+                                break;
+                            case "boolean":
+                                if((!is_integer($value)) || ($value < 0 && $value > 1))
+                                {
+                                    $message = [
+                                        "type" => "boolean.base",
+                                        "message" => "`{$item}` must be a boolean value",
+                                        "label" => $item,
+                                    ];
+                                    $this->addError($message);
                                 }
                                 break;
                             default:
