@@ -32,14 +32,15 @@ While have the instance of validation, you can access `check` method, with take 
     ];
 ```
 This module allow to validation on:
-- `required`: this to specifie that the key will be required
-- `number`: this will check if the value is a number 
-- `positive`: this will check if the number is positive
-- `min`: this will check the minimum lenght of a string
-- `max`: this will check the maximum lenght of a string
-- `email`: this will check if the value is an email
-- `url`: this will check if the value is url or a link
-- `matches`: this is used tho check if two key hase the same value.
+- `required`: this to specifie that the key will be required [true], the fact of add only required, it will directly verify if it required.
+- `number`: this will check if the value is a number [true]
+- `positive`: this will check if the number is positive,
+- `min`: this will check the minimum lenght of a string,
+- `max`: this will check the maximum lenght of a string,
+- `email`: this will check if the value is an email,
+- `url`: this will check if the value is url or a link,
+- `matches`: this is used tho check if two key hase the same value, you shoudl specify the second field to check.
+- `boolean`: check if the value is a bolean [true,false] or not also u can use [0,1] to check bolean value.
 
 In the exampole bellow, you can see a comple procured on how to validate data-source
 
