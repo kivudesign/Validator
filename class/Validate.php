@@ -119,6 +119,10 @@ class Validate{
                                 }
                                 break;
                             case "boolean":
+                                
+                                if(!is_bool($value))
+                                {                                   
+
                                 if((!is_integer($value)) || ($value < 0 && $value > 1))
                                 {
                                     $message = [
@@ -127,7 +131,10 @@ class Validate{
                                         "label" => $item,
                                     ];
                                     $this->addError($message);
+
                                 }
+                                }
+                                
                                 break;
                             default:
                                 if($rule != 'required'){
