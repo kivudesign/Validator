@@ -68,6 +68,28 @@ class Validate{
                                     $this->addError($message);
                                 }
                                 break;
+                            case "less":
+                                $less = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
+                                if (strlen($value) >= $less) {
+                                    $message = [
+                                        "type" => "number.less",
+                                        "message" => "`{$item}` should be a less equal to '{$less}'",
+                                        "label" => $item,
+                                    ];
+                                    $this->addError($message);
+                                }
+                                break;
+                            case "greater":
+                                $greater = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
+                                if (strlen($value) <= $greater) {
+                                    $message = [
+                                        "type" => "number.greater",
+                                        "message" => "`{$item}` should be a greater equal to '{$greater}'",
+                                        "label" => $item,
+                                    ];
+                                    $this->addError($message);
+                                }
+                                break;
                             case "positive":
                                 if ($value<1) {
                                     $message = [
