@@ -70,7 +70,8 @@ class Validate{
                                 break;
                             case "less":
                                 $less = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
-                                if (strlen($value) >= $less) {
+                                $_check= (int)$value <= $less?true:false;
+                                    if (!$_check){
                                     $message = [
                                         "type" => "number.less",
                                         "message" => "`{$item}` should be a less equal to '{$less}'",
@@ -81,7 +82,8 @@ class Validate{
                                 break;
                             case "greater":
                                 $greater = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
-                                if (strlen($value) <= $greater) {
+                                $_check= (int)$value >= $greater?true:false;
+                                    if (!$_check) {
                                     $message = [
                                         "type" => "number.greater",
                                         "message" => "`{$item}` should be a greater equal to '{$greater}'",
