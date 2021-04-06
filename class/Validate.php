@@ -68,6 +68,30 @@ class Validate{
                                     $this->addError($message);
                                 }
                                 break;
+                            case "less":
+                                $less = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
+                                $_check= (int)$value <= $less?true:false;
+                                    if (!$_check){
+                                    $message = [
+                                        "type" => "number.less",
+                                        "message" => "`{$item}` should be a less equal to '{$less}'",
+                                        "label" => $item,
+                                    ];
+                                    $this->addError($message);
+                                }
+                                break;
+                            case "greater":
+                                $greater = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
+                                $_check= (int)$value >= $greater?true:false;
+                                    if (!$_check) {
+                                    $message = [
+                                        "type" => "number.greater",
+                                        "message" => "`{$item}` should be a greater equal to '{$greater}'",
+                                        "label" => $item,
+                                    ];
+                                    $this->addError($message);
+                                }
+                                break;
                             case "positive":
                                 if ($value<1) {
                                     $message = [
@@ -121,20 +145,18 @@ class Validate{
                             case "boolean":
                                 
                                 if(!is_bool($value))
-                                {                                   
+                                {     
+                                    if((!is_integer($value)) || ($value < 0 && $value > 1))
+                                    {
+                                        $message = [
+                                            "type" => "boolean.base",
+                                            "message" => "`{$item}` must be a boolean value",
+                                            "label" => $item,
+                                        ];
+                                        $this->addError($message);
 
-                                if((!is_integer($value)) || ($value < 0 && $value > 1))
-                                {
-                                    $message = [
-                                        "type" => "boolean.base",
-                                        "message" => "`{$item}` must be a boolean value",
-                                        "label" => $item,
-                                    ];
-                                    $this->addError($message);
-
-                                }
-                                }
-                                
+                                    }
+                                }                                
                                 break;
                             default:
                                 if($rule != 'required'){
