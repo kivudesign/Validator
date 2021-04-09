@@ -1,45 +1,48 @@
 <?php
+
 namespace Wepesi\app;
 
-class Validate{
+class Validate
+{
     private $_errors;
     private $_passed;
     function __construct()
     {
-        $this->_errors=[];
-        $this->_passed=false;
+        $this->_errors = [];
+        $this->_passed = false;
     }
     /**
      * 
      */
-    function check($source,array $items=[]){
-        
-        foreach($items as $item=>$rules){
-            foreach($rules as $rule=>$rule_values){
+    function check($source, array $items = [])
+    {
+
+        foreach ($items as $item => $rules) {
+            foreach ($rules as $rule => $rule_values) {
                 // check if the item existe on the source array $_array_name[$item]
-                if(isset($source[$item])){
+                if (isset($source[$item])) {
                     $value = $source[$item];
                     // if the rele defined is required
-                    if ($rule == 'required' && empty($value)&& $value != 0) {
+                    if ($rule == 'required' && empty($value) && $value != 0) {
                         $message = [
-                            "type"=> "any.required",
+                            "type" => "any.required",
                             "message" => "`{$item}` is required",
                             "label" => $item,
                         ];
                         $this->addError($message);
-                    }else if(!empty($value) || $value == 0){
-                        switch($rule){
-                            // check for minimu input lenght of a string
+                    } else if (!empty($value) || $value == 0) {
+                        switch ($rule) {
+                                // check for minimu input lenght of a string
                             case "min":
                                 // check is the value entre is an integer
                                 // and verifier if it is a possitive number, in order to check the minimum length
-                                $min=is_integer($rule_values)? ((int)$rule_values>0? (int)$rule_values:1):0;
+                                $min = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 1) : 0;
                                 if (strlen($value) < $min) {
-                                    $message=[
-                                        "type"=>"string.min",
-                                        "message"=> "`{$item}` should have minimum of `{$min}` caracters",
-                                        "label"=>$item,
-                                        "limit"=>$min
+                                    $message = [
+                                        "type" => "string.min",
+                                        "message" => "`{$item}` should have minimum of `{$min}` caracters",
+                                        "label" => $item,
+                                        "limit" => $min
                                     ];
                                     $this->addError($message);
                                 }
@@ -47,7 +50,7 @@ class Validate{
                             case "max":
                                 // check is the value entre is an integer
                                 // and verifier if it is a possitive number
-                                $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
+                                $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
                                 if (strlen($value) > $max) {
                                     $message = [
                                         "type" => "string.max",
@@ -70,8 +73,8 @@ class Validate{
                                 break;
                             case "less":
                                 $less = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
-                                $_check= (int)$value <= $less?true:false;
-                                    if (!$_check){
+                                $_check = (int)$value <= $less ? true : false;
+                                if (!$_check) {
                                     $message = [
                                         "type" => "number.less",
                                         "message" => "`{$item}` should be a less equal to '{$less}'",
@@ -82,8 +85,8 @@ class Validate{
                                 break;
                             case "greater":
                                 $greater = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0) : 0;
-                                $_check= (int)$value >= $greater?true:false;
-                                    if (!$_check) {
+                                $_check = (int)$value >= $greater ? true : false;
+                                if (!$_check) {
                                     $message = [
                                         "type" => "number.greater",
                                         "message" => "`{$item}` should be a greater equal to '{$greater}'",
@@ -93,7 +96,7 @@ class Validate{
                                 }
                                 break;
                             case "positive":
-                                if ($value<1) {
+                                if ($value < 1) {
                                     $message = [
                                         "type" => "number.positive",
                                         "message" => "`{$item}` should be a positive number",
@@ -123,43 +126,47 @@ class Validate{
                                 }
                                 break;
                             case "matches":
-                                if(!isset($source[$rule_values])){
+                                if (!isset($source[$rule_values])) {
                                     $message = [
                                         "type" => "number.base",
                                         "message" => "`{$item}` does not exist, to matches",
                                         "label" => $item,
                                     ];
                                     $this->addError($message);
-                                }else{
+                                } else {
                                     if ($value !== $source[$rule_values]) {
                                         $message = [
-                                        "type" => "string.match",
-                                        "message" => "`{$rule_values}` should me the same as `{$item}`",
-                                        "label_1" => $rule_values,
-                                        "label_2" => $item,
-                                    ];
+                                            "type" => "string.match",
+                                            "message" => "`{$rule_values}` should me the same as `{$item}`",
+                                            "label_1" => $rule_values,
+                                            "label_2" => $item,
+                                        ];
                                         $this->addError($message);
                                     }
                                 }
                                 break;
                             case "boolean":
-                                
-                                if(!is_bool($value))
-                                {     
-                                    if((!is_integer($value)) || ($value < 0 && $value > 1))
-                                    {
+
+                                if (!is_bool($value)) {
+                                    if ((!is_integer($value)) || ($value < 0 && $value > 1)) {
                                         $message = [
                                             "type" => "boolean.base",
                                             "message" => "`{$item}` must be a boolean value",
                                             "label" => $item,
                                         ];
                                         $this->addError($message);
-
                                     }
-                                }                                
+                                }
                                 break;
+                            case 'camelcase':
+                                $new_text = preg_replace('/[^A-Za-z0-9]/', ' ', $value); // Removes special chars.
+                                $new_text = strtolower($new_text);//Lowercase text
+                                //Uppercarse First letter then remove spaces
+                                $new_text = str_replace(' ', '', ucwords($new_text, " \t\r\n\f\v'"));
+                                break;
+
                             default:
-                                if($rule != 'required'){
+                                if ($rule != 'required') {
                                     $message = [
                                         "type" => "any.defined",
                                         "message" => "rule `{$rule}` is not defined",
@@ -170,7 +177,7 @@ class Validate{
                                 break;
                         }
                     }
-                }else{
+                } else {
                     $message = [
                         "type" => "object.unknow",
                         "message" => "`{$item}` does not exist",
@@ -184,21 +191,24 @@ class Validate{
             $this->_passed = true;
         }
     }
-    private function addError(array $value){
-       $this->_errors[]=$value;
+    private function addError(array $value)
+    {
+        $this->_errors[] = $value;
     }
     /**
      * 
      * @returns array
      */
-    function errors(){
-        return ["error"=>$this->_errors];
+    function errors()
+    {
+        return ["error" => $this->_errors];
     }
     /**
      * 
      * @returns boolean [true,false]
      */
-    function passed(){
+    function passed()
+    {
         return $this->_passed;
     }
 }
