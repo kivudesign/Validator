@@ -158,13 +158,6 @@ class Validate
                                     }
                                 }
                                 break;
-                            case 'camelcase':
-                                $new_text = preg_replace('/[^A-Za-z0-9]/', ' ', $value); // Removes special chars.
-                                $new_text = strtolower($new_text);//Lowercase text
-                                //Uppercarse First letter then remove spaces
-                                $new_text = str_replace(' ', '', ucwords($new_text, " \t\r\n\f\v'"));
-                                break;
-
                             default:
                                 if ($rule != 'required') {
                                     $message = [
