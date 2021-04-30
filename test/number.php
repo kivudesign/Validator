@@ -1,10 +1,6 @@
 <?php
 $check=[
-    "age"=>[
-        "required"=>true,
-        "number"=>true,
-        "positive"=>true
-    ]
+    "age"=>$valid->number("age")->min(18)->max(50)->required()->check()
     ];
     $valid->check($source,$check);
 var_dump($valid->passed());

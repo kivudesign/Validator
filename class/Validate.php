@@ -8,6 +8,10 @@
 
 namespace Wepesi\app;
 use Exception;
+use Wepesi\app\{
+    VString,
+    VNumber
+};
 /**
  * Description of tst_valisate
  *
@@ -58,8 +62,6 @@ class Validate {
     private function check_undefined_Object_key(array $source,array $items){
         $diff_array_key= array_diff_key($source,$items);
         $source_key= array_keys($diff_array_key);
-        
-//        $len=count($source_key);
         if(count($source_key)>0){
             foreach($source_key as $key){
                 $message=[
@@ -72,27 +74,12 @@ class Validate {
         }
     }
     function string(string $tring_key=null){
-        try{
-            $regex="#[a-zA-Z0-9]#";
-            if(!isset($this->source[$tring_key]) ){
-                throw new Exception("this key does not exist");
-            }
-            if(isset($this->source[$tring_key]) && preg_match($regex,$this->source[$tring_key]) && strlen($this->source[$tring_key])>0){
-               $this->query=new VString($this->source,$tring_key,$this->source[$tring_key]);   
-               return $this->query;            
-            }else{
-                $message=[
-                    "type" => "string.unknow",
-                    "message" => "`{$tring_key}` shoud be a s tring",
-                    "label" => $tring_key,
-                ];
-                $this->addError($message);
-                return false;
-            }        
-        } catch (Exception $ex){
-            return $ex->getMessage();
-        }
+        return new VString($this->source,$tring_key,$this->source[$tring_key]);
     }
+    function number(string $tring_key=null){
+        return new VNumber($this->source,$tring_key,$this->source[$tring_key]);
+    }
+//    
     private function addError(array $value){
        return $this->_errors[]=$value;
     }

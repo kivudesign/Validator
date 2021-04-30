@@ -17,21 +17,57 @@ class VNumber {
     //put your code here
     private $string_value;
     private $string_item;
+    private $source_data;
     private $_errors;
     private $_min;
     private $_max;
     
-    function __construct(string $string_item) {
-        $this->string_value=$stringValue;
+    function __construct(array $source,string $string_item, string $string_value) {
+        $this->source_data=$source;
+        $this->string_value=$string_value;
         $this->string_item=$string_item;
         $this->_max= $this->_min=0;
+        $this->checkExist();
     }
-    function min(){}
-    function max(){}
-    function positive(){}
-    function bolean(){}
+    function min(int $min_values){
+        if ((int) $this->string_value < $min_values) {
+            $message=[
+                "type"=>"number.min",
+                "message"=> "`{$this->string_item}` should be greater than  `{$min_values}`",
+                "label"=>$this->string_item,
+                "limit"=>$min_values
+            ];
+            $this->addError($message);
+        }
+        return $this;
+    }
+    function max(int $min_values){
+        if ((int) $this->string_value > $min_values) {
+            $message=[
+                "type"=>"number.max",
+                "message"=> "`{$this->string_item}` should be less than  `{$min_values}`",
+                "label"=>$this->string_item,
+                "limit"=>$min_values
+            ];
+            $this->addError($message);
+        }
+        return $this;
+    }
+    function positive(){
+        if ((int) $this->string_value < 0) {
+            $message=[
+                "type"=>"number.positive",
+                "message"=> "`{$this->string_item}` should be a positive number",
+                "label"=>$this->string_item,
+                "limit"=>$min_values
+            ];
+            $this->addError($message);
+        }
+        return $this;
+    }
     function required(){
-        if (empty($this->string_value)&& $this->string_value != 0) {
+        $required_value= trim($this->string_value);
+        if (empty($required_value)) {
             $message = [
                 "type"=> "any.required",
                 "message" => "`{$this->string_item}` is required",
@@ -40,6 +76,27 @@ class VNumber {
             $this->addError($message);
         }
         return $this;
+    }
+//    
+    private function checkExist(string $itemKey=null){
+        $item_to_check=$itemKey?$itemKey:$this->string_item;
+        $regex_string="#[a-zA-Z]#";
+        if (!isset($this->source_data[$item_to_check])) {
+            $message = [
+                "type"=> "any.unknow",
+                "message" => "`{$item_to_check}` is unknow",
+                "label" => $item_to_check,
+            ];
+            $this->addError($message);
+        }else if (preg_match($regex_string,trim($this->source_data[$item_to_check])) || !is_integer($this->source_data[$item_to_check])) {            
+            $message = [
+                "type"=> "number.unknow",
+                "message" => "`{$item_to_check}` should be a number",
+                "label" => $item_to_check,
+            ];
+            $this->addError($message);
+        }
+        return true;
     }
     private function addError(array $value){
        return $this->_errors[]=$value;

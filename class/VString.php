@@ -103,6 +103,7 @@ class VString {
     }
     private function checkExist(string $itemKey=null){
         $item_to_check=$itemKey?$itemKey:$this->string_item;
+        $regex="#[a-zA-Z0-9]#";
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
@@ -110,6 +111,13 @@ class VString {
                 "label" => $item_to_check,
             ];
             $this->addError($message);
+        }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
+            $message=[
+                    "type" => "string.unknow",
+                    "message" => "`{$item_to_check}` shoud be a s tring",
+                    "label" => $item_to_check,
+                ];
+                $this->addError($message);
         }
         return true;
     }
