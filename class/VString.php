@@ -90,7 +90,8 @@ class VString {
         return $this;
     }
     function required(){
-        if (empty($this->string_value)&& $this->string_value != 0) {
+        $required_value= trim($this->string_value);
+        if (empty($required_value)) {
             $message = [
                 "type"=> "any.required",
                 "message" => "`{$this->string_item}` is required",
