@@ -18,7 +18,12 @@ class VString {
     private $_errors;
     private $_min;
     private $_max;
-    //put your code here
+    /**
+     * 
+     * @param array $source
+     * @param string $string_item
+     * @param string $stringValue
+     */
     function __construct(array $source,string $string_item=null,string $stringValue=null) {
         $this->string_value=$stringValue;
         $this->string_item=$string_item;
@@ -26,6 +31,11 @@ class VString {
         $this->_max= $this->_min=0;
         $this->checkExist();
     }
+    /**
+     * 
+     * @param int $rule_values
+     * @return $this
+     */
     function min(int $rule_values=0){
         $min=is_integer($rule_values)? ((int)$rule_values>0?(int)$rule_values:0):0;
         if (strlen($this->string_value) < $min) {
@@ -39,7 +49,11 @@ class VString {
         }
         return $this;
     }
-    
+    /**
+     * 
+     * @param int $rule_values
+     * @return $this
+     */
     function max(int $rule_values=1){
         $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
         $this->_max=$max; 
@@ -54,7 +68,10 @@ class VString {
         }
         return $this;
     }
-
+    /**
+     * 
+     * @return $this
+     */
     function email(){
         if (!filter_var($this->string_value, FILTER_VALIDATE_EMAIL)) {
             $message = [
@@ -66,6 +83,10 @@ class VString {
         }
         return $this;
     }
+    /**
+     * 
+     * @return $this
+     */
     function url(){
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->string_value)) {
             $message = [
@@ -77,6 +98,11 @@ class VString {
         }
         return $this;
     }
+    /**
+     * 
+     * @param string $key_tomatch
+     * @return $this
+     */
     function match(string $key_tomatch){
         $this->checkExist($key_tomatch);
         if (isset($this->source_data[$key_tomatch]) && (strlen($this->string_value)!= strlen($this->source_data[$key_tomatch])) && ($this->string_value!=$this->source_data[$key_tomatch])) {
@@ -101,6 +127,11 @@ class VString {
         }
         return $this;
     }
+    /**
+     * 
+     * @param string $itemKey
+     * @return boolean
+     */
     private function checkExist(string $itemKey=null){
         $item_to_check=$itemKey?$itemKey:$this->string_item;
         $regex="#[a-zA-Z0-9]#";
@@ -120,10 +151,17 @@ class VString {
                 $this->addError($message);
         }
         return true;
-    }
+    }/**
+     * 
+     * @param array $value
+     * @return type
+     */
     private function addError(array $value){
        return $this->_errors[]=$value;
-    }
+    }/**
+     * 
+     * @return type
+     */
     function check(){
         return  $this->_errors;
     }

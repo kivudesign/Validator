@@ -1,19 +1,8 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Wepesi\app;
-use Exception;
-use Wepesi\app\{
-    VString,
-    VNumber
-};
 /**
- * Description of tst_valisate
+ * Description of validate
  *
  * @author Lenovo
  */
@@ -23,7 +12,10 @@ class Validate {
     private $stringValue;
     private $source;
     private $query;
-    //put your code here
+    /**
+     * 
+     * @param array $_source
+     */
     function __construct(array $_source) {
         $this->_errors=[];
         $this->_passed = false;
@@ -59,6 +51,11 @@ class Validate {
             $this->_passed = true;
         }
     }
+    /**
+     * 
+     * @param array $source
+     * @param array $items
+     */
     private function check_undefined_Object_key(array $source,array $items){
         $diff_array_key= array_diff_key($source,$items);
         $source_key= array_keys($diff_array_key);
@@ -73,17 +70,34 @@ class Validate {
             }
         }
     }
+    /**
+     * 
+     * @param string $tring_key
+     * @return \Wepesi\app\VString
+     */
     function string(string $tring_key=null){
         return new VString($this->source,$tring_key,$this->source[$tring_key]);
     }
+    /**
+     * 
+     * @param string $tring_key
+     * @return \Wepesi\app\VNumber
+     */
     function number(string $tring_key=null){
         return new VNumber($this->source,$tring_key,$this->source[$tring_key]);
     }
-//    
+    /**
+     * 
+     * @param array $value
+     * @return type
+     */
     private function addError(array $value){
        return $this->_errors[]=$value;
     }
-    
+    /**
+     * 
+     * @return type
+     */
     function errors(){
         return ["error"=>$this->_errors];
     }
