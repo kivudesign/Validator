@@ -13,7 +13,7 @@
         "link"=> "https://github.com/bim-g/wepesi_validation/",
         "status"=> true
     ];
-    $valid=new Validate($source);
+    $valid=new Validate($source); 
     include "./test/string.php";
     include "./test/number.php";
 //    include "./test/boolean.php";    
