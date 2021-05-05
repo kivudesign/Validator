@@ -88,7 +88,7 @@ class Validate {
      * @return \Wepesi\app\VNumber
      */
     function number(string $tring_key=null){
-        return new VNumber($this->source,$tring_key,$this->source[$tring_key]);
+        return new VNumber($this->source,$tring_key);
     }
     /**
      * 
