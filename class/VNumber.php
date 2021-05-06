@@ -23,11 +23,12 @@ class VNumber {
     private $_max;
     
     function __construct(array $source,string $string_item, string $string_value) {
-        $this->source_data=$source;
-        $this->string_value=$string_value;
+        $this->source_data=$source;        
         $this->string_item=$string_item;
         $this->_max= $this->_min=0;
-        $this->checkExist();
+        if($this->checkExist()){
+            $this->string_value=$source[$string_item];
+        }
     }
     function min(int $min_values){
         if ((int) $this->string_value < $min_values) {
@@ -81,6 +82,7 @@ class VNumber {
     private function checkExist(string $itemKey=null){
         $item_to_check=$itemKey?$itemKey:$this->string_item;
         $regex_string="#[a-zA-Z]#";
+        $status_key_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
@@ -88,6 +90,7 @@ class VNumber {
                 "label" => $item_to_check,
             ];
             $this->addError($message);
+            $status_key_exist=false;
         }else if (preg_match($regex_string,trim($this->source_data[$item_to_check])) || !is_integer($this->source_data[$item_to_check])) {            
             $message = [
                 "type"=> "number.unknow",
@@ -95,8 +98,9 @@ class VNumber {
                 "label" => $item_to_check,
             ];
             $this->addError($message);
+            $status_key_exist=false;
         }
-        return true;
+        return $status_key_exist;
     }
     private function addError(array $value){
        return $this->_errors[]=$value;

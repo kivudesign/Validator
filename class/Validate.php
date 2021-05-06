@@ -55,10 +55,12 @@ class Validate {
      * 
      * @param array $source
      * @param array $items
+     * @return boolean
      */
     private function check_undefined_Object_key(array $source,array $items){
         $diff_array_key= array_diff_key($source,$items);
         $source_key= array_keys($diff_array_key);
+        $status_key=false;
         if(count($source_key)>0){
             foreach($source_key as $key){
                 $message=[
@@ -67,8 +69,10 @@ class Validate {
                     "label" => $key,
                 ];
                 $this->addError($message);
+                $status_key=true;
             }
         }
+        return $status_key;
     }
     /**
      * 
@@ -84,7 +88,15 @@ class Validate {
      * @return \Wepesi\app\VNumber
      */
     function number(string $tring_key=null){
-        return new VNumber($this->source,$tring_key,$this->source[$tring_key]);
+        return new VNumber($this->source,$tring_key);
+    }
+    /**
+     * 
+     * @param string $tring_key
+     * @return type
+     */
+    function any(string $tring_key=null){
+        return $this->check_undefined_Object_key($this->source,$tring_key);
     }
     /**
      * 

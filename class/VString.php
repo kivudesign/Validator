@@ -137,6 +137,7 @@ class VString {
     private function checkExist(string $itemKey=null){
         $item_to_check=$itemKey?$itemKey:$this->string_item;
         $regex="#[a-zA-Z0-9]#";
+        $status_keys_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
@@ -154,7 +155,7 @@ class VString {
                 $this->addError($message);
                 return false;
         }
-        return true;
+        return $status_keys_exist;
     }/**
      * 
      * @param array $value
