@@ -80,7 +80,7 @@ class Validate {
      * @return \Wepesi\app\VString
      */
     function string(string $tring_key=null){
-        return new VString($this->source,$tring_key,$this->source[$tring_key]);
+        return new VString($this->source,$tring_key);
     }
     /**
      * 
@@ -97,6 +97,14 @@ class Validate {
      */
     function any(string $tring_key=null){
         return $this->check_undefined_Object_key($this->source,$tring_key);
+    }
+    /**
+     * 
+     * @param string $tring_key
+     * @return \Wepesi\app\VString
+     */
+    function boolean(string $tring_key=null){
+        return new VBoolean($this->source,$tring_key,$this->source[$tring_key]);
     }
     /**
      * 

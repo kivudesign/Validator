@@ -9,11 +9,12 @@
         "password"=>"1234567",
         "n_password"=>123456,
         "city" => "Goma",
-        "email"=>"infos@wepesi.com",
-        "link"=> "https://github.com/bim-g/wepesi_validation/",
-        "status"=> true
+        // "email"=>"infos@wepesi.com",
+        // "link"=> "https://github.com/bim-g/wepesi_validation/",
+        "status"=> false
     ];
     $valid=new Validate($source);
-    include "./test/string.php";
-    include "./test/number.php";
-//    include "./test/boolean.php";    
+    // include "./test/string.php";
+    // include "./test/number.php";
+    // include "./test/file.php";
+   include "./test/boolean.php";    
