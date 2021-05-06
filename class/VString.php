@@ -24,6 +24,7 @@ class VString {
      * @param string $string_item
      * @param string $stringValue
      */
+  
     function __construct(array $source,string $string_item=null) {
         $this->string_item=$string_item;
         $this->source_data=$source;
@@ -137,6 +138,7 @@ class VString {
     private function checkExist(string $itemKey=null){
         $item_to_check=$itemKey?$itemKey:$this->string_item;
         $regex="#[a-zA-Z0-9]#";
+        $status_keys_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
@@ -145,6 +147,7 @@ class VString {
             ];
             $this->addError($message);
             return false;
+          
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
                     "type" => "string.unknow",
@@ -154,7 +157,7 @@ class VString {
                 $this->addError($message);
                 return false;
         }
-        return true;
+        return $status_keys_exist;
     }/**
      * 
      * @param array $value
