@@ -24,7 +24,6 @@ class VString {
      * @param string $string_item
      * @param string $stringValue
      */
-  
     function __construct(array $source,string $string_item=null) {
         $this->string_item=$string_item;
         $this->source_data=$source;
@@ -147,7 +146,6 @@ class VString {
             ];
             $this->addError($message);
             return false;
-          
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
                     "type" => "string.unknow",
