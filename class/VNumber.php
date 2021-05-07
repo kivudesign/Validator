@@ -22,7 +22,7 @@ class VNumber {
     private $_min;
     private $_max;
     
-    function __construct(array $source,string $string_item, string $string_value) {
+    function __construct(array $source,string $string_item) {
         $this->source_data=$source;        
         $this->string_item=$string_item;
         $this->_max= $this->_min=0;
@@ -54,7 +54,7 @@ class VNumber {
         }
         return $this;
     }
-    function positive(){
+    function positive(int $min_values){
         if ((int) $this->string_value < 0) {
             $message=[
                 "type"=>"number.positive",
