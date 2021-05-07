@@ -16,5 +16,4 @@
     $valid=new Validate($source);
     // include "./test/string.php";
     // include "./test/number.php";
-    // include "./test/file.php";
    include "./test/boolean.php";    
