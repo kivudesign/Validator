@@ -81,7 +81,7 @@ class Validate {
      * @return VString
      */
     function string(string $tring_key=null){
-        return new VString($this->source,$tring_key,$this->source[$tring_key]);
+        return new VString($this->source,$tring_key);
     }
 
     /**
@@ -107,6 +107,14 @@ class Validate {
      */
     function date(string $string_key=null){
         return new VDate($this->source,$string_key);
+    }
+    /**
+     * 
+     * @param string $tring_key
+     * @return \Wepesi\app\VString
+     */
+    function boolean(string $tring_key=null){
+        return new VBoolean($this->source,$tring_key,$this->source[$tring_key]);
     }
     /**
      * 

@@ -54,7 +54,7 @@ class VNumber {
         }
         return $this;
     }
-    function positive(){
+    function positive(int $min_values){
         if ((int) $this->string_value < 0) {
             $message=[
                 "type"=>"number.positive",

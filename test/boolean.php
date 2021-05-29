@@ -1,13 +1,10 @@
 <?php
-
-$check = [
-    'status' => [
-        "boolean" => false,
-        "required" => true
-    ],
-];
-
-$valid->check($source, $check);
-
-var_dump($valid->passed());
-var_dump($valid->errors());
+//define the schema model for validation
+    $schema=[
+        "status"=>$valid->boolean("status")->required()->isValid('TRUE')->check(),        
+    ];
+    
+    $valid->check($source,$schema);
+//    check if the validation passed or not
+    var_dump($valid->passed());
+    var_dump($valid->errors());

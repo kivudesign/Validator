@@ -24,13 +24,14 @@ class VString {
      * @param string $string_item
      * @param string $stringValue
      */
-    function __construct(array $source,string $string_item=null) {        
+    function __construct(array $source,string $string_item=null) {
         $this->string_item=$string_item;
         $this->source_data=$source;
         $this->_max= $this->_min=0;
-        if($this->checkExist()){
+        $this->check_key=$this->checkExist();
+        if($this->check_key){
             $this->string_value=$source[$string_item];
-        }
+        };
     }
     /**
      * 
@@ -144,7 +145,7 @@ class VString {
                 "label" => $item_to_check,
             ];
             $this->addError($message);
-            $status_keys_exist=false;
+            return false;
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
                     "type" => "string.unknow",
@@ -152,7 +153,7 @@ class VString {
                     "label" => $item_to_check,
                 ];
                 $this->addError($message);
-            $status_keys_exist=false;
+                return false;
         }
         return $status_keys_exist;
     }/**
