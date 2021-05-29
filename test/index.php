@@ -11,9 +11,12 @@
         "city" => "Goma",
         "email"=>"infos@wepesi.com",
         "link"=> "https://github.com/bim-g/wepesi_validation/",
-        "status"=> true
+        "status"=> true,
+        "birth_day"=>"2021-05-23",
+        "date_created"=>"2021-05-23"
     ];
     $valid=new Validate($source);
-    include "./test/string.php";
-    include "./test/number.php";
-//    include "./test/boolean.php";    
+//    include "./test/string.php";
+//    include "./test/number.php";
+    include "./test/date.php";
+//    include "./test/boolean.php";

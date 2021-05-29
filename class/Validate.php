@@ -30,7 +30,7 @@ class Validate {
      * 
      * */
     function check($source,array $items=[]){ 
-        $this->check_undefined_Object_key($source,$items);
+//        $this->check_undefined_Object_key($source,$items);
         foreach($items as $item=>$response){
             if(isset($source[$item])) {
                 if($response){
@@ -74,29 +74,39 @@ class Validate {
         }
         return $status_key;
     }
+
     /**
-     * 
-     * @param string $tring_key
-     * @return \Wepesi\app\VString
+     *
+     * @param string|null $tring_key
+     * @return VString
      */
     function string(string $tring_key=null){
         return new VString($this->source,$tring_key,$this->source[$tring_key]);
     }
+
     /**
-     * 
-     * @param string $tring_key
-     * @return \Wepesi\app\VNumber
+     *
+     * @param string|null $string_key
+     * @return VNumber
      */
-    function number(string $tring_key=null){
-        return new VNumber($this->source,$tring_key);
+    function number(string $string_key=null){
+        return new VNumber($this->source,$string_key);
     }
     /**
      * 
-     * @param string $tring_key
+     * @param string $string_key
      * @return type
      */
-    function any(string $tring_key=null){
-        return $this->check_undefined_Object_key($this->source,$tring_key);
+    function any(string $string_key=null){
+        return $this->check_undefined_Object_key($this->source,[$string_key]);
+    }
+
+    /**
+     * @param string|null $string_key
+     * @return VDate
+     */
+    function date(string $string_key=null){
+        return new VDate($this->source,$string_key);
     }
     /**
      * 
