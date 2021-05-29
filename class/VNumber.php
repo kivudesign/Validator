@@ -60,7 +60,7 @@ class VNumber {
                 "type"=>"number.positive",
                 "message"=> "`{$this->string_item}` should be a positive number",
                 "label"=>$this->string_item,
-                "limit"=>$min_values
+                "limit"=>1
             ];
             $this->addError($message);
         }
