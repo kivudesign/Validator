@@ -1,0 +1,18 @@
+{
+    "name": "wepesi/validation",
+    "description": "this module has been design to validate input data values",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Boss Ibrahim Mussa Gregoire",
+            "email": "ibmussafb@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wepesi\\app\\":"class/"
+        }
+    },
+    "require": {}
+}
