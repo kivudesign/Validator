@@ -6,7 +6,7 @@ namespace Wepesi\App;
 /**
  * Description of VNumber
  *
- * @author Lenovo
+ * @author Boss Ibrahim Mussa
  */
 class VDate
 {

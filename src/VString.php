@@ -9,7 +9,7 @@ namespace Wepesi\app;
 /**
  * Description of String
  *
- * @author Ibrahim
+ * @author Boss Ibrahim Mussa
  */
 class VString {
     private $string_value;

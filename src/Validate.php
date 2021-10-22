@@ -4,7 +4,7 @@ namespace Wepesi\app;
 /**
  * Description of validate
  *
- * @author Lenovo
+ * @author Boss Ibrahim Mussa
  */
 class Validate {
     private $_passed;

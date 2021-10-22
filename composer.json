@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Wepesi\\app\\":"class/"
+            "Wepesi\\app\\":"src/"
         }
     },
     "require": {}
