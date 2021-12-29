@@ -18,5 +18,7 @@
             "Wepesi\\app\\":"src/"
         }
     },
-    "require": {}
+    "require": {
+        "php": ">=7.4"
+    }
 }

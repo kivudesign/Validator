@@ -1,0 +1,4 @@
+<?php
+$language=[
+//    "hello"=>"hello"
+];
