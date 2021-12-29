@@ -43,7 +43,7 @@ class VString {
         if (strlen($this->string_value) < $min) {
             $message=[
                 "type"=>"string.min",
-                "message"=> "`{$this->string_item}` should have minimum of `{$min}` caracters",
+                "message"=> i18n::translate("`%s` should have minimum of `%s` caracters",[$this->string_item,$min]),
                 "label"=>$this->string_item,
                 "limit"=>$min
             ];
@@ -62,7 +62,7 @@ class VString {
         if (strlen($this->string_value) > $max) {
             $message = [
                 "type" => "string.max",
-                "message" => "`{$this->string_item}` should have maximum of `{$max}` caracters",
+                "message" => i18n::translate("`%s` should have maximum of `%s` caracters",[$this->string_item,$max]),
                 "label" => $this->string_item,
                 "limit" => $max
             ];
@@ -78,7 +78,7 @@ class VString {
         if (!filter_var($this->string_value, FILTER_VALIDATE_EMAIL)) {
             $message = [
                 "type" => "string.email",
-                "message" => "`{$this->string_item}` this should be an email",
+                "message" => i18n::translate("`%s` this should be an email",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -93,7 +93,7 @@ class VString {
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->string_value)) {
             $message = [
                 "type" => "string.url",
-                "message" => "`{$this->string_item}` this shoudl be a link(url)",
+                "message" => i18n::translate("`{$this->string_item}` this should be a link(url)"),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -110,7 +110,7 @@ class VString {
         if (isset($this->source_data[$key_tomatch]) && (strlen($this->string_value)!= strlen($this->source_data[$key_tomatch])) && ($this->string_value!=$this->source_data[$key_tomatch])) {
             $message = [
                 "type" => "string.match",
-                "message" => "`{$this->string_item}` should match {$key_tomatch}",
+                "message" => i18n::translate("`%s` should match %s",[$this->string_item,$key_tomatch]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -122,7 +122,7 @@ class VString {
         if (empty($required_value)) {
             $message = [
                 "type"=> "any.required",
-                "message" => "`{$this->string_item}` is required",
+                "message" => i18n::translate("`%s` is required",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -149,7 +149,7 @@ class VString {
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
                     "type" => "string.unknow",
-                    "message" => "`{$item_to_check}` shoud be a s tring",
+                    "message" => i18n::translate("`%s` should be a string",[$item_to_check]),
                     "label" => $item_to_check,
                 ];
                 $this->addError($message);
