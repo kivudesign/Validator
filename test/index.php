@@ -16,7 +16,7 @@
         "date_created"=>"2021-05-23"
     ];
     $valid=new Validate($source);
-//    include "./test/string.php";
+    include "./test/string.php";
 //    include "./test/number.php";
 //    include "./test/boolean.php";
-    include "./test/date.php";
+//    include "./test/date.php";
