@@ -149,15 +149,15 @@ class VString {
         $status_keys_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
-                "type"=> "any.unknow",
-                "message" => i18n::translate("`%s` is unknow",[$item_to_check]),
+                "type"=> "any.unknown",
+                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
             return false;
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
-                    "type" => "string.unknow",
+                    "type" => "string.unknown",
                     "message" => i18n::translate("`%s` should be a string",[$item_to_check]),
                     "label" => $item_to_check,
                 ];
