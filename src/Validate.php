@@ -10,15 +10,19 @@ class Validate {
     private bool $_passed;
     private array $_errors;
     private array $source;
+    private i18n $i18n;
+    private string $lang;
 
     /**
      * 
      * @param array $_source
      */
-    function __construct(array $_source) {
+    function __construct(array $_source,string $lang="en") {
         $this->_errors=[];
         $this->_passed = false;
         $this->source=$_source;
+        $this->lang=$lang;
+        $this->i18n= new i18n($lang);
     }
 
     /**
@@ -38,7 +42,7 @@ class Validate {
             }else{
                 $message=[
                     "type" => "object.unknown",
-                    "message" => i18n::translate("`%s` does not exist",[$item]),
+                    "message" => $this->i18n->translate("`%s` does not exist",[$item]),
                     "label" => $item,
                 ];
                 $this->addError($message);
@@ -63,7 +67,7 @@ class Validate {
             foreach($source_key as $key){
                 $message=[
                     "type" => "object.undefined",
-                    "message" => i18n::translate("`%s` is not defined",[$key]),
+                    "message" => $this->i18n->translate("`%s` is not defined",[$key]),
                     "label" => $key,
                 ];
                 $this->addError($message);
@@ -80,7 +84,7 @@ class Validate {
      */
     function string(string $tring_key=null): VString
     {
-        return new VString($this->source,$tring_key);
+        return new VString($this->source,$tring_key,$this->lang);
     }
 
     /**
@@ -90,7 +94,7 @@ class Validate {
      */
     function number(string $string_key=null): VNumber
     {
-        return new VNumber($this->source,$string_key);
+        return new VNumber($this->source,$string_key,$this->lang);
     }
 
     /**
@@ -107,7 +111,7 @@ class Validate {
      */
     function date(string $string_key=null): VDate
     {
-        return new VDate($this->source,$string_key);
+        return new VDate($this->source,$string_key,$this->lang);
     }
 
     /**
@@ -117,7 +121,7 @@ class Validate {
      */
     function boolean(string $tring_key=null): VBoolean
     {
-        return new VBoolean($this->source,$tring_key,$this->source[$tring_key]);
+        return new VBoolean($this->source,$tring_key,$this->source[$tring_key],$this->lang);
     }
     /**
      * 

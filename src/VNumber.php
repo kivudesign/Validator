@@ -21,11 +21,13 @@ class VNumber {
     private array $_errors;
     private int $_min;
     private int $_max;
-    
-    function __construct(array $source,string $string_item) {
+    private i18n $i18n;
+
+    function __construct(array $source,string $string_item,string $lang="en") {
         $this->source_data=$source;        
         $this->string_item=$string_item;
         $this->_max= $this->_min=0;
+        $this->i18n= new i18n($lang);
         if($this->checkExist()){
             $this->string_value=$source[$string_item];
         }
@@ -40,7 +42,7 @@ class VNumber {
         if ((int) $this->string_value < $min_values) {
             $message=[
                 "type"=>"number.min",
-                "message"=> i18n::translate("`%s` should be greater than `%s`",[$this->string_item,$min_values]),
+                "message"=> $this->i18n->translate("`%s` should be greater than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
@@ -58,7 +60,7 @@ class VNumber {
         if ((int) $this->string_value > $min_values) {
             $message=[
                 "type"=>"number.max",
-                "message"=> i18n::translate("`%s` should be less than `%s`",[$this->string_item,$min_values]),
+                "message"=> $this->i18n->translate("`%s` should be less than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
@@ -76,7 +78,7 @@ class VNumber {
         if ((int) $this->string_value < 0) {
             $message=[
                 "type"=>"number.positive",
-                "message"=> i18n::translate("`%s` should be a positive number",[$this->string_item]),
+                "message"=> $this->i18n->translate("`%s` should be a positive number",[$this->string_item]),
                 "label"=>$this->string_item,
                 "limit"=>1
             ];
@@ -94,7 +96,7 @@ class VNumber {
         if (empty($required_value)) {
             $message = [
                 "type"=> "any.required",
-                "message" => i18n::translate("`%s` is required",[$this->string_item]),
+                "message" => $this->i18n->translate("`%s` is required",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -114,7 +116,7 @@ class VNumber {
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknown",
-                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -122,7 +124,7 @@ class VNumber {
         }else if (preg_match($regex_string,trim($this->source_data[$item_to_check])) || !is_integer($this->source_data[$item_to_check])) {            
             $message = [
                 "type"=> "number.unknown",
-                "message" => i18n::translate("`%s` should be a number",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` should be a number",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
