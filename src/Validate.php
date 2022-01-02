@@ -37,7 +37,7 @@ class Validate {
                 }
             }else{
                 $message=[
-                    "type" => "object.unknow",
+                    "type" => "object.unknown",
                     "message" => i18n::translate("`%s` does not exist",[$item]),
                     "label" => $item,
                 ];

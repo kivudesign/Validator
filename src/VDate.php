@@ -142,14 +142,14 @@ class VDate
         $this->_errors=[];
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
-                "type"=> "any.unknow",
-                "message" => i18n::translate("`%s` is unknow",[$item_to_check]),
+                "type"=> "any.unknown",
+                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
-                "type" => "date.unknow",
+                "type" => "date.unknown",
                 "message" => i18n::translate("`%s` should be a date.",[$item_to_check]),
                 "label" => $item_to_check,
             ];
@@ -160,7 +160,8 @@ class VDate
     {
         $this->_errors[] = $value;
     }
-    function check(){
+    function check(): array
+    {
         return  $this->_errors;
     }
 }

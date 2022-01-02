@@ -11,9 +11,12 @@ $language=[
     "`%s` should be less than `%s`"=>"`%s` devrait être inférieur à `%s`",
     "`%s` should be a positive number"=>"`%s` devrait être un nombre positif",
     "`%s` should be a number"=>"`%s` devrait être un nombre.",
-    "`%s` is unknow"=>"`%s` n'est pas definit",
+    "`%s` is unknown"=>"`%s` n'est pas definit",
     "`%s` should be a date."=>"`%s` devrait être une date.",
     "`%s` should be greater than now"=>"`%s` devrait être plus grand que maintenant",
     "`%s` should be a string"=>"`%s` doit est une chaine de caractere",
     "`%s` does not exist"=>"`%s` n'existe pas",
+    "`%s` should be a boolean"=>"`%s` devrait être un booleen",
+    "isValid param must be boolean but you put `%s`"=>"parametre devrait être booleen au lieu de `%s`",
+    "`%s` is not validValue required. You must put `%s`"=>"`%s` n'est une value valide. elle devrait être `%s`",
 ];

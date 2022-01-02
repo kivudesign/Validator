@@ -113,15 +113,15 @@ class VNumber {
         $status_key_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
-                "type"=> "any.unknow",
-                "message" => i18n::translate("`%s` is unknow",[$item_to_check]),
+                "type"=> "any.unknown",
+                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
             $status_key_exist=false;
         }else if (preg_match($regex_string,trim($this->source_data[$item_to_check])) || !is_integer($this->source_data[$item_to_check])) {            
             $message = [
-                "type"=> "number.unknow",
+                "type"=> "number.unknown",
                 "message" => i18n::translate("`%s` should be a number",[$item_to_check]),
                 "label" => $item_to_check,
             ];
