@@ -15,4 +15,5 @@ $language=[
     "`%s` should be a date."=>"`%s` devrait être une date.",
     "`%s` should be greater than now"=>"`%s` devrait être plus grand que maintenant",
     "`%s` should be a string"=>"`%s` doit est une chaine de caractere",
+    "`%s` does not exist"=>"`%s` n'existe pas",
 ];
