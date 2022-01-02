@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Wepesi\app;
+namespace Wepesi\App;
 
 class i18n
 {

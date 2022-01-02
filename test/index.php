@@ -1,5 +1,5 @@
 <?php
-    use Wepesi\app\Validate;
+    use Wepesi\App\Validate;
 //
     $source = [
         "name" => "",
@@ -17,6 +17,6 @@
     ];
     $valid=new Validate($source);
 //    include "./test/string.php";
-    include "./test/number.php";
+//    include "./test/number.php";
 //    include "./test/boolean.php";
-//    include "./test/date.php";
+    include "./test/date.php";

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wepesi\app;
+namespace Wepesi\App;
 /**
  * Description of validate
  *

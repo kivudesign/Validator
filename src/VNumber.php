@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Wepesi\app;
+namespace Wepesi\App;
 
 /**
  * Description of VNumber
@@ -40,7 +40,7 @@ class VNumber {
         if ((int) $this->string_value < $min_values) {
             $message=[
                 "type"=>"number.min",
-                "message"=> i18n::translate("`%s` should be greater than  `%s`",[$this->string_item,$min_values]),
+                "message"=> i18n::translate("`%s` should be greater than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
@@ -58,7 +58,7 @@ class VNumber {
         if ((int) $this->string_value > $min_values) {
             $message=[
                 "type"=>"number.max",
-                "message"=> i18n::translate("`%s` should be less than  `%s`",[$this->string_item,$min_values]),
+                "message"=> i18n::translate("`%s` should be less than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
