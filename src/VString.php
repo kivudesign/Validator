@@ -1,5 +1,5 @@
 <?php
-namespace Wepesi\app;
+namespace Wepesi\App;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,16 +13,16 @@ namespace Wepesi\app;
  */
 class VString {
     private $string_value;
-    private $string_item;
-    private $source_data;
-    private $_errors;
-    private $_min;
-    private $_max;
+    private ?string $string_item;
+    private array $source_data=[];
+    private array $_errors=[];
+    private int $_min=0;
+    private int $_max=0;
+
     /**
-     * 
+     *
      * @param array $source
-     * @param string $string_item
-     * @param string $stringValue
+     * @param string|null $string_item
      */
     function __construct(array $source,string $string_item=null) {
         $this->string_item=$string_item;
@@ -38,12 +38,13 @@ class VString {
      * @param int $rule_values
      * @return $this
      */
-    function min(int $rule_values=0){
+    function min(int $rule_values=0): VString
+    {
         $min=is_integer($rule_values)? ((int)$rule_values>0?(int)$rule_values:0):0;
         if (strlen($this->string_value) < $min) {
             $message=[
                 "type"=>"string.min",
-                "message"=> i18n::translate("`%s` should have minimum of `%s` caracters",[$this->string_item,$min]),
+                "message"=> i18n::translate("`%s` should have minimum of `%s` characters",[$this->string_item,$min]),
                 "label"=>$this->string_item,
                 "limit"=>$min
             ];
@@ -56,13 +57,14 @@ class VString {
      * @param int $rule_values
      * @return $this
      */
-    function max(int $rule_values=1){
+    function max(int $rule_values=1): VString
+    {
         $max = is_integer($rule_values) ? ((int)$rule_values > 0 ? (int)$rule_values : 0):0;
         $this->_max=$max; 
         if (strlen($this->string_value) > $max) {
             $message = [
                 "type" => "string.max",
-                "message" => i18n::translate("`%s` should have maximum of `%s` caracters",[$this->string_item,$max]),
+                "message" => i18n::translate("`%s` should have maximum of `%s` characters",[$this->string_item,$max]),
                 "label" => $this->string_item,
                 "limit" => $max
             ];
@@ -74,7 +76,8 @@ class VString {
      * 
      * @return $this
      */
-    function email(){
+    function email(): VString
+    {
         if (!filter_var($this->string_value, FILTER_VALIDATE_EMAIL)) {
             $message = [
                 "type" => "string.email",
@@ -89,7 +92,8 @@ class VString {
      * 
      * @return $this
      */
-    function url(){
+    function url(): VString
+    {
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->string_value)) {
             $message = [
                 "type" => "string.url",
@@ -117,7 +121,12 @@ class VString {
         }
         return $this;
     }
-    function required(){
+
+    /**
+     * @return $this
+     */
+    function required(): VString
+    {
         $required_value= trim($this->string_value);
         if (empty($required_value)) {
             $message = [
@@ -141,7 +150,7 @@ class VString {
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
-                "message" => "`{$item_to_check}` is unknow",
+                "message" => i18n::translate("`%s` is unknow",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -159,10 +168,11 @@ class VString {
     }/**
      * 
      * @param array $value
-     * @return type
-     */
-    private function addError(array $value){
-       return $this->_errors[]=$value;
+     * @return void
+ */
+    private function addError(array $value): void
+    {
+        $this->_errors[] = $value;
     }/**
      * 
      * @return type

@@ -1,5 +1,5 @@
 <?php
-    use Wepesi\app\Validate;
+    use Wepesi\App\Validate;
 //
     $source = [
         "name" => "",

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Wepesi\app;
+namespace Wepesi\App;
 
 /**
  * Description of VNumber
@@ -16,11 +16,11 @@ namespace Wepesi\app;
 class VNumber {
     //put your code here
     private $string_value;
-    private $string_item;
-    private $source_data;
-    private $_errors;
-    private $_min;
-    private $_max;
+    private string $string_item;
+    private array $source_data;
+    private array $_errors;
+    private int $_min;
+    private int $_max;
     
     function __construct(array $source,string $string_item) {
         $this->source_data=$source;        
@@ -30,11 +30,17 @@ class VNumber {
             $this->string_value=$source[$string_item];
         }
     }
-    function min(int $min_values){
+
+    /**
+     * @param int $min_values
+     * @return $this
+     */
+    function min(int $min_values): VNumber
+    {
         if ((int) $this->string_value < $min_values) {
             $message=[
                 "type"=>"number.min",
-                "message"=> "`{$this->string_item}` should be greater than  `{$min_values}`",
+                "message"=> i18n::translate("`%s` should be greater than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
@@ -42,11 +48,17 @@ class VNumber {
         }
         return $this;
     }
-    function max(int $min_values){
+
+    /**
+     * @param int $min_values
+     * @return $this
+     */
+    function max(int $min_values): VNumber
+    {
         if ((int) $this->string_value > $min_values) {
             $message=[
                 "type"=>"number.max",
-                "message"=> "`{$this->string_item}` should be less than  `{$min_values}`",
+                "message"=> i18n::translate("`%s` should be less than `%s`",[$this->string_item,$min_values]),
                 "label"=>$this->string_item,
                 "limit"=>$min_values
             ];
@@ -54,11 +66,17 @@ class VNumber {
         }
         return $this;
     }
-    function positive(int $min_values){
+
+    /**
+     * @param int $min_values
+     * @return $this
+     */
+    function positive(int $min_values): VNumber
+    {
         if ((int) $this->string_value < 0) {
             $message=[
                 "type"=>"number.positive",
-                "message"=> "`{$this->string_item}` should be a positive number",
+                "message"=> i18n::translate("`%s` should be a positive number",[$this->string_item]),
                 "label"=>$this->string_item,
                 "limit"=>1
             ];
@@ -66,27 +84,37 @@ class VNumber {
         }
         return $this;
     }
-    function required(){
+
+    /**
+     * @return $this
+     */
+    function required(): VNumber
+    {
         $required_value= trim($this->string_value);
         if (empty($required_value)) {
             $message = [
                 "type"=> "any.required",
-                "message" => "`{$this->string_item}` is required",
+                "message" => i18n::translate("`%s` is required",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
         }
         return $this;
     }
-//    
-    private function checkExist(string $itemKey=null){
-        $item_to_check=$itemKey?$itemKey:$this->string_item;
+
+    /**
+     * @param string|null $itemKey
+     * @return bool
+     */
+    private function checkExist(string $itemKey=null): bool
+    {
+        $item_to_check=!$itemKey?$this->string_item:$itemKey;
         $regex_string="#[a-zA-Z]#";
         $status_key_exist=true;
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknow",
-                "message" => "`{$item_to_check}` is unknow",
+                "message" => i18n::translate("`%s` is unknow",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -94,7 +122,7 @@ class VNumber {
         }else if (preg_match($regex_string,trim($this->source_data[$item_to_check])) || !is_integer($this->source_data[$item_to_check])) {            
             $message = [
                 "type"=> "number.unknow",
-                "message" => "`{$item_to_check}` should be a number",
+                "message" => i18n::translate("`%s` should be a number",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -102,10 +130,20 @@ class VNumber {
         }
         return $status_key_exist;
     }
-    private function addError(array $value){
-       return $this->_errors[]=$value;
+
+    /**
+     * @param array $value
+     */
+    private function addError(array $value): void
+    {
+        $this->_errors[] = $value;
     }
-    function check(){
+
+    /**
+     * @return array
+     */
+    function check(): array
+    {
         return  $this->_errors;
     }
 }
