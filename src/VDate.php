@@ -16,10 +16,13 @@ class VDate
     private int $_min;
     private int $_max;
     //put your code here
-    function __construct(array $source,string $string_item=null) {
+    private i18n $i18n;
+
+    function __construct(array $source,string $string_item=null,string $lang="en") {
         $this->date_value=$source[$string_item];
         $this->string_item=$string_item;
         $this->source_data=$source;
+        $this->i18n= new i18n($lang);
         $this->_max= $this->_min=0;
         $this->checkExist();
     }
@@ -35,7 +38,7 @@ class VDate
         if ($date_value_time < $min_date_time) {
             $message=[
                 "type"=>"date.now",
-                "message"=> i18n::translate("`%s` should be greater than now",[$this->string_item]),
+                "message"=> $this->i18n->translate("`%s` should be greater than now",[$this->string_item]),
                 "label"=>$this->string_item,
                 "limit"=>$min_date
             ];
@@ -57,7 +60,7 @@ class VDate
         if ($date_value_time > $min_date_time) {
             $message=[
                 "type"=>"date.now",
-                "message"=> i18n::translate("`%s` should be greater than today ",[$this->string_item]),
+                "message"=> $this->i18n->translate("`%s` should be greater than today ",[$this->string_item]),
                 "label"=>$this->string_item,
                 "limit"=>$min_date
             ];
@@ -86,7 +89,7 @@ class VDate
         if ($date_value_time > $min_date_time) {
             $message=[
                 "type"=>"date.min",
-                "message"=> i18n::translate("`%s` should be greater than `%s`",[$this->string_item,$min_date]),
+                "message"=> $this->i18n->translate("`%s` should be greater than `%s`",[$this->string_item,$min_date]),
                 "label"=>$this->string_item,
                 "limit"=>$min_date
             ];
@@ -109,7 +112,7 @@ class VDate
         if ($max_date_time<$date_value_time) {
             $message = [
                 "type" => "date.max",
-                "message" => i18n::translate("`%s` should be less than `%s`",[$this->string_item,$max_date]),
+                "message" => $this->i18n->translate("`%s` should be less than `%s`",[$this->string_item,$max_date]),
                 "label" => $this->string_item,
                 "limit" => $max_date
             ];
@@ -127,7 +130,7 @@ class VDate
         if (empty($required_value) || strlen($required_value)==0) {
             $message = [
                 "type"=> "any.required",
-                "message" => i18n::translate("`%s` is required",[$this->string_item]),
+                "message" => $this->i18n->translate("`%s` is required",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -143,14 +146,14 @@ class VDate
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type"=> "any.unknown",
-                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
         }else if(!preg_match($regex,$this->source_data[$item_to_check]) || strlen(trim($this->source_data[$item_to_check]))==0){
             $message=[
                 "type" => "date.unknown",
-                "message" => i18n::translate("`%s` should be a date.",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` should be a date.",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);

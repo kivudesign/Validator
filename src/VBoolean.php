@@ -18,16 +18,18 @@ class VBoolean
     private ?string $string_item;
     private array $source_data;
     private array $_errors=[];
+    private i18n $i18n;
 
     /**
      *
      * @param array $source
      * @param string|null $string_item
      */
-    function __construct(array $source, string $string_item = null)
+    function __construct(array $source, string $string_item = null,string $lang)
     {
         $this->string_item = $string_item;
         $this->source_data = $source;
+        $this->i18n= new i18n($lang);
         if ($this->checkExist()) {
             $this->string_value = $source[$string_item];
         };
@@ -47,7 +49,7 @@ class VBoolean
         if (!isset($this->source_data[$item_to_check])) {
             $message = [
                 "type" => "any.unknown",
-                "message" => i18n::translate("`%s` is unknown",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` is unknown",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -55,7 +57,7 @@ class VBoolean
         } else if (!preg_match($regex, is_bool($val) ? ($val ? 'true' : 'false') : $val)) {
             $message = [
                 "type" => "boolean.unknown",
-                "message" => i18n::translate("`%s` should be a boolean",[$item_to_check]),
+                "message" => $this->i18n->translate("`%s` should be a boolean",[$item_to_check]),
                 "label" => $item_to_check,
             ];
             $this->addError($message);
@@ -70,7 +72,7 @@ class VBoolean
         if (empty($required_value)) {
             $message = [
                 "type" => "any.required",
-                "message" => i18n::translate("`%s` is required",[$this->string_item]),
+                "message" => $this->i18n->translate("`%s` is required",[$this->string_item]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -86,7 +88,7 @@ class VBoolean
         if (!($check)) {
             $message = [
                 "type" => "boolean.required",
-                "message" => i18n::translate("isValid param must be boolean but you put `%s`",[$required_value]),
+                "message" => $this->i18n->translate("isValid param must be boolean but you put `%s`",[$required_value]),
                 "label" => $this->string_item,
             ];
             $this->addError($message);
@@ -97,7 +99,7 @@ class VBoolean
             if ($incoming_value != $required_value) {
                 $message = [
                     "type" => "boolean.valid",
-                    "message" => i18n::translate("`%s` is not validValue required. You must put `%s`",[$incoming_value,$required_value]),
+                    "message" => $this->i18n->translate("`%s` is not validValue required. You must put `%s`",[$incoming_value,$required_value]),
                     "label" => $this->string_item,
                 ];
                 $this->addError($message);

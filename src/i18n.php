@@ -5,8 +5,13 @@ namespace Wepesi\App;
 
 class i18n
 {
-    static function translate(string $message,array $data=[]):string{
-        $file="./lang/".LANG."/language.php";
+    private string $lang;
+
+    function __construct(string $lang="en"){
+        $this->lang=$lang;
+    }
+    function translate(string $message,array $data=[]):string{
+        $file="./lang/".$this->lang."/language.php";
         if(!is_file($file) && !file_exists($file)){
             $file="./lang/en/language.php";
         }
@@ -18,4 +23,5 @@ class i18n
         }
         return  $message_key;
     }
+    //TODO add methode that will help to analyse all content off each file and add missing key to the other files to have the same key in all the app.
 }
