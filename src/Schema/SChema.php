@@ -14,7 +14,7 @@ abstract class SChema
      */
     function min(int $rule_values): SChema
     {
-        $this->schema[$this->source]["minimum"]=$rule_values;
+        $this->schema[$this->source]["min"]=$rule_values;
         return $this;
     }
 
@@ -25,7 +25,7 @@ abstract class SChema
      */
     function max(int $rule_values): SChema
     {
-        $this->schema[$this->source]["maximum"]=$rule_values;
+        $this->schema[$this->source]["max"]=$rule_values;
         return $this;
     }
 
