@@ -34,12 +34,12 @@ class StringSchemaTest extends TestCase
     }
     function testStringMinimumKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["minimum"=>1]];
+        $subset_array=["VString"=>["min"=>1]];
         $this->assertEquals($subset_array, $stringSchema->min(1)->check());
     }
     function testStringMaximumKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["maximum"=>10]];
+        $subset_array=["VString"=>["max"=>10]];
         $this->assertEquals($subset_array, $stringSchema->max(10)->check());
     }
 }
