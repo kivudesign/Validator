@@ -1,8 +1,11 @@
 <?php
 
-
+/**
+ * Description of validate
+ *
+ * @author Boss Ibrahim Mussa
+ */
 namespace Wepesi\App;
-
 
 use Wepesi\App\Schema\BooleanSchema;
 use Wepesi\App\Schema\DateSchema;
