@@ -1,24 +1,31 @@
 {
-    "name": "wepesi/validation",
-    "description": "this module has been design to validate input data values",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Boss Ibrahim Mussa Gregoire",
-            "email": "ibmussafb@gmail.com"
-        },
-        {
-            "name": "Masikilizano Emanuel Domeshow",
-            "email": "domeshowemmanuel@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Wepesi\\App\\":"src/"
-        }
+  "name": "wepesi/validation",
+  "description": "This module has been design to help you validate data values",
+  "type": "library",
+  "license": "Apache",
+  "Stabilities": "v3.1-BETA",
+  "minimum-stability": "beta",
+  "authors": [
+    {
+      "name": "Boss Ibrahim Mussa Gregoire",
+      "email": "ibmussafb@gmail.com"
     },
-    "require": {
-        "php": ">=7.4"
+    {
+      "name": "Masikilizano Emanuel Domeshow",
+      "email": "domeshowemmanuel@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Wepesi\\App\\":"src/",
+      "Test\\": "test/"
+    }
+  },
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "spatie/phpunit-watcher": "^1.23"
+  }
 }
