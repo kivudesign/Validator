@@ -14,7 +14,7 @@ namespace Wepesi\App\Schema;
 class StringSchema extends SChema {
 
     function __construct() {
-        $this->source="VString";
+        $this->source="String";
         $this->schema[$this->source]=[];
     }
 

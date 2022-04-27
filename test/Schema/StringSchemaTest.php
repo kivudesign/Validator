@@ -15,31 +15,31 @@ class StringSchemaTest extends TestCase
     }
     function testStringObjectIsKey(){
         $stringSchema= new StringSchema();
-        $this->assertArrayHasKey("VString",$stringSchema->check());
+        $this->assertArrayHasKey("String",$stringSchema->check());
     }
     function testStringEmailKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["email"=>true]];
+        $subset_array=["String"=>["email"=>true]];
         $this->assertEquals($subset_array, $stringSchema->email()->check());
     }
     function testStringURLKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["url"=>true]];
+        $subset_array=["String"=>["url"=>true]];
         $this->assertEquals($subset_array, $stringSchema->url()->check());
     }
     function testStringMatchKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["match"=>'email']];
+        $subset_array=["String"=>["match"=>'email']];
         $this->assertEquals($subset_array, $stringSchema->match('email')->check());
     }
     function testStringMinimumKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["min"=>1]];
+        $subset_array=["String"=>["min"=>1]];
         $this->assertEquals($subset_array, $stringSchema->min(1)->check());
     }
     function testStringMaximumKey(){
         $stringSchema = new StringSchema();
-        $subset_array=["VString"=>["max"=>10]];
+        $subset_array=["String"=>["max"=>10]];
         $this->assertEquals($subset_array, $stringSchema->max(10)->check());
     }
 }
