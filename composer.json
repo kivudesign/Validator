@@ -3,7 +3,6 @@
   "description": "This module has been design to help you validate data values",
   "type": "library",
   "license": "Apache-2.0",
-  "Stabilities": "v3.1-BETA",
   "minimum-stability": "beta",
   "support":{
     "email": "ibmussafb@gmail.com"
