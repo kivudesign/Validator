@@ -6,12 +6,15 @@ namespace Wepesi\App\Schema;
  * and open the template in the editor.
  */
 
+use Wepesi\App\Providers\SChemaProvider;
+
+
 /**
  * Description of String
  *
  * @author Boss Ibrahim Mussa
  */
-class StringSchema extends SChema {
+class StringSchema extends SChemaProvider {
 
     function __construct() {
         $this->source="String";

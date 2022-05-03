@@ -8,12 +8,14 @@
 
 namespace Wepesi\App\Schema;
 
+use Wepesi\App\Providers\SChemaProvider;
+
 /**
  * Description of VNumber
  *
  * @author Boss Ibrahim Mussa
  */
-class NumberSchema extends SChema {
+class NumberSchema extends SChemaProvider {
 
     function __construct() {
         $this->source="VNumber";
