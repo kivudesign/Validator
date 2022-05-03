@@ -29,7 +29,7 @@ class BooleanSchema
         return $this;
     }
 
-    function required(): SChema
+    function required(): BooleanSchema
     {
         $this->schema[$this->source]['required'] = true;
 

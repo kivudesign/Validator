@@ -2,17 +2,21 @@
   "name": "wepesi/validation",
   "description": "This module has been design to help you validate data values",
   "type": "library",
-  "license": "Apache",
-  "Stabilities": "v3.1-BETA",
+  "license": "Apache-2.0",
   "minimum-stability": "beta",
+  "support":{
+    "email": "ibmussafb@gmail.com"
+  } ,
   "authors": [
     {
       "name": "Boss Ibrahim Mussa Gregoire",
-      "email": "ibmussafb@gmail.com"
+      "email": "ibmussafb@gmail.com",
+      "role": "Develloper"
     },
     {
       "name": "Masikilizano Emanuel Domeshow",
-      "email": "domeshowemmanuel@gmail.com"
+      "email": "domeshowemmanuel@gmail.com",
+      "role": "Develloper"
     }
   ],
   "autoload": {

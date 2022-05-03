@@ -2,12 +2,14 @@
 
 
 namespace Wepesi\App\Schema;
+use Wepesi\App\Providers\SChemaProvider;
+
 /**
  * Description of VDate
  *
  * @author Boss Ibrahim Mussa
  */
-class DateSchema extends SChema
+class DateSchema extends SChemaProvider
 {
     function __construct() {
         $this->source="VDate";

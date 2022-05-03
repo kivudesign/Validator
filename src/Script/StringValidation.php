@@ -2,16 +2,17 @@
 namespace Wepesi\App\Script;
 
 use Exception;
+use Wepesi\App\Providers\ValidationProvider;
 
 /**
  * Description of String
  *
  * @author Boss Ibrahim Mussa
  */
-class StringValidation {
+class StringValidation extends ValidationProvider {
     private string $string_value, $field_item,$field_value;
     private array $source_data;
-    private ?array $errors;
+    protected ?array $errors;
     private int $_min, $_max;
 
     /**
@@ -21,7 +22,7 @@ class StringValidation {
      * @throws Exception
      */
     function __construct(array $source,array $schema) {
-        $this->init_app($source,$schema);
+        $this->initInstance($source,$schema);
     }
 
     /**
@@ -38,7 +39,7 @@ class StringValidation {
     /**
      * @throws Exception
      */
-    private function init_app($source, $schema){
+    private function initInstance($source, $schema){
         $this->errors=null;
         $this->_min=0;
         $this->_max=1;
@@ -70,7 +71,7 @@ class StringValidation {
      * @param int $rule
      *
      */
-    function min(int $rule):void
+    function min($rule):void
     {
         if (strlen($this->field_value) < $rule) {
             $message=[
@@ -88,7 +89,7 @@ class StringValidation {
      * @param int $rule
      *
      */
-    function max(int $rule)
+    function max($rule)
     {
         $this->_max=$rule;
         if (strlen($this->string_value) > $rule) {
@@ -184,22 +185,5 @@ class StringValidation {
                 return false;
         }
         return true;
-    }
-    /**
-     *
-     * @param array $value
-     * @return void
- */
-    private function addError(array $value): void
-    {
-        $this->errors[] = $value;
-    }
-
-    /**
-     * @return array
-     */
-    function result(): ?array
-    {
-        return  $this->errors;
     }
 }
