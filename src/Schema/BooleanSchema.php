@@ -19,7 +19,7 @@ class BooleanSchema
 
     function __construct()
     {
-        $this->source = "VBolean";
+        $this->source = "Boolean";
         $this->schema[$this->source]=[];
     }
 

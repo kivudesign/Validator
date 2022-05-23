@@ -18,19 +18,19 @@ class BooleanSchemaTest extends TestCase
     function testStringObjectIsKey()
     {
         $booleanSchema = new BooleanSchema();
-        $this->assertArrayHasKey('VBolean', $booleanSchema->check());
+        $this->assertArrayHasKey('Boolean', $booleanSchema->check());
     }
 
     function testBooleanIsRequireddKey()
     {
         $booleanSchema = new BooleanSchema();
-        $subset_array = ['VBolean' => ['required' => true]];
+        $subset_array = ['Boolean' => ['required' => true]];
         $this->assertEquals($subset_array, $booleanSchema->required()->check());
     }
     function testBooleanIsValidKey()
     {
         $booleanSchema = new BooleanSchema();
-        $subset_array = ['VBolean' => ['isValid' => true]];
+        $subset_array = ['Boolean' => ['isValid' => true]];
         $this->assertEquals($subset_array, $booleanSchema->isValid()->check());
     }
 }

@@ -18,19 +18,19 @@ class NumberSchemaTest extends TestCase
     function testStringObjectIsKey()
     {
         $numberSchema = new NumberSchema();
-        $this->assertArrayHasKey('VNumber', $numberSchema->check());
+        $this->assertArrayHasKey('Number', $numberSchema->check());
     }
 
     function testRequiredKey()
     {
         $numberSchema = new NumberSchema();
-        $subset_array = ['VNumber' => ['required' => true]];
+        $subset_array = ['Number' => ['required' => true]];
         $this->assertEquals($subset_array, $numberSchema->required()->check());
     }
     function testNumberPositiveKey()
     {
         $numberSchema = new NumberSchema();
-        $subset_array = ['VNumber' => ['positive' => true]];
+        $subset_array = ['Number' => ['positive' => true]];
         $this->assertEquals($subset_array, $numberSchema->positive()->check());
     }
 }
