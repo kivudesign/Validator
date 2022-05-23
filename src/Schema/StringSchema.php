@@ -17,8 +17,7 @@ use Wepesi\App\Providers\SChemaProvider;
 class StringSchema extends SChemaProvider {
 
     function __construct() {
-        $this->source="String";
-        $this->schema[$this->source]=[];
+        parent::__construct('String');
     }
 
     function email(): StringSchema

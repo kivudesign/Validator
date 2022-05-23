@@ -12,8 +12,7 @@ use Wepesi\App\Providers\SChemaProvider;
 class DateSchema extends SChemaProvider
 {
     function __construct() {
-        $this->source="VDate";
-        $this->schema[$this->source]=[];
+        parent::__construct('Date');
     }
 
     /**

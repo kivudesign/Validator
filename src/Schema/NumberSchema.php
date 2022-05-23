@@ -18,8 +18,7 @@ use Wepesi\App\Providers\SChemaProvider;
 class NumberSchema extends SChemaProvider {
 
     function __construct() {
-        $this->source="VNumber";
-        $this->schema[$this->source]=[];
+        parent::__construct("Number");
     }
 
     /**

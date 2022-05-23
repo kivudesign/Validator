@@ -18,19 +18,19 @@ class DateSchemaTest extends TestCase
     function testStringObjectIsKey()
     {
         $dateSchema = new DateSchema();
-        $this->assertArrayHasKey('VDate', $dateSchema->check());
+        $this->assertArrayHasKey('Date', $dateSchema->check());
     }
 
     function testDateNowKey()
     {
         $dateSchema = new DateSchema();
-        $subset_array = ['VDate' => ['now' => true]];
+        $subset_array = ['Date' => ['now' => true]];
         $this->assertEquals($subset_array, $dateSchema->now()->check());
     }
     function testDateTodayKey()
     {
         $dateSchema = new DateSchema();
-        $subset_array = ['VDate' => ['today' => true]];
+        $subset_array = ['Date' => ['today' => true]];
         $this->assertEquals($subset_array, $dateSchema->today()->check());
     }
 }

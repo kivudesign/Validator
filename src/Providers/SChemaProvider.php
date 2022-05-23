@@ -9,6 +9,11 @@ abstract class SChemaProvider implements SchemaContracts
     protected array $schema=[];
     protected string $source;
 
+    function __construct(string $type)
+    {
+        $this->source = $type;
+        $this->schema[$this->source] = [];
+    }
     /**
      * @param $rule
      * @return SChemaProvider
