@@ -21,6 +21,17 @@ abstract class ValidationProvider implements Contracts
         $this->errors[] = $value;
     }
 
+    protected function isRequired(string $source="any",string $fields){
+        $required_value = trim($fields);
+        if (strlen($required_value) == 0) {
+            $message = [
+                'type' => $source.".required",
+                'message' => "`$fields` is required",
+                'label' => $fields,
+            ];
+            $this->addError($message);
+        }
+    }
     /**
      * @return array
      */

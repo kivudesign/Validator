@@ -23,6 +23,10 @@ class StringValidation extends ValidationProvider {
      */
     function __construct(array $source,array $schema) {
         $this->initInstance($source,$schema);
+        $fields=array_keys($schema);
+        $this->field_item = $fields[0];
+        //
+        $this->source_data = $source;
     }
 
     /**
