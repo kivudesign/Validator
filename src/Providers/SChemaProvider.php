@@ -1,9 +1,17 @@
 <?php
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Wepesi\App\Providers;
 
 use Wepesi\App\Providers\Contracts\SchemaContracts;
 
+/**
+ * Class SChemaProvider
+ * @package Wepesi\App\Providers
+ */
 abstract class SChemaProvider implements SchemaContracts
 {
     protected array $schema=[];
@@ -19,7 +27,7 @@ abstract class SChemaProvider implements SchemaContracts
      * @return SChemaProvider
      *
      */
-    function min($rule): SChemaProvider
+    function min(int $rule): SChemaProvider
     {
         $this->schema[$this->source]["min"]=$rule;
         return $this;
@@ -44,7 +52,7 @@ abstract class SChemaProvider implements SchemaContracts
     /**
      * @return array
      */
-    function check(): array
+    function generate(): array
     {
         return  $this->schema;
     }
