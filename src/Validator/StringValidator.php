@@ -1,73 +1,39 @@
 <?php
-namespace Wepesi\App\Script;
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
+
+namespace Wepesi\App\Validator;
 
 use Exception;
-use Wepesi\App\Providers\ValidationProvider;
+use Wepesi\App\Providers\ValidatorProvider;
 
 /**
  * Description of String
  *
  * @author Boss Ibrahim Mussa
  */
-class StringValidation extends ValidationProvider {
-    private string $string_value, $field_item,$field_value;
+abstract class StringValidator extends ValidatorProvider {
+    private string $field_value, $field_item;
     private array $source_data;
-    protected ?array $errors;
-    private int $_min, $_max;
+    public array $errors;
+    private int $_min;
+    private int $_max;
 
     /**
      *
-     * @param array $source
-     * @param array $schema
-     * @throws Exception
+     * @param string $item
+     * @param string $value
      */
-    function __construct(array $source,array $schema) {
-        $this->initInstance($source,$schema);
-        $fields=array_keys($schema);
-        $this->field_item = $fields[0];
-        //
-        $this->source_data = $source;
-    }
-
-    /**
-     * @param array $schema
-     */
-    private function extract_data(array $schema ){
-        $conditions=$schema[$this->field_item]['String'];
-        foreach ($conditions as $key=>$value){
-            call_user_func([$this,$key],$value);
-            return;
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function initInstance($source, $schema){
-        $this->errors=null;
-        $this->_min=0;
-        $this->_max=1;
-        $this->source_data=[];
-        $this->field_value="";
-        //
-        if(!is_array($source) || count($source)==0){
-            throw new Exception("Your Source Data should not be en empty array");
-        }
-        if(!is_array($schema) || count($schema)==0){
-            throw new Exception("Your Schema should not be en empty array");
-        }
-        $fields=array_keys($schema);
-        $this->field_item=$fields[0];
-        //
-        $this->source_data=$source;
-        if(!isset($source[$fields[0]])){
-            throw new \Exception("field not defined");
-        }
-        $this->field_value=$source[$fields[0]];
-        if($this->isString($fields[0])){
-            $this->string_value=$this->field_value;
-        };
-        $this->extract_data($schema);
+    public function __construct(string $item,string $value) {
+        $this->errors = [];
+        $this->_min = strlen($value);
+        $this->_max = strlen($value);
+        $this->source_data = [];
+        $this->field_item = $item;
+        $this->field_value = $value;
+        parent::__construct();
     }
 
     /**
@@ -75,7 +41,7 @@ class StringValidation extends ValidationProvider {
      * @param int $rule
      *
      */
-    function min($rule):void
+    public function min(int $rule):void
     {
         if (strlen($this->field_value) < $rule) {
             $message=[
@@ -93,10 +59,10 @@ class StringValidation extends ValidationProvider {
      * @param int $rule
      *
      */
-    function max($rule)
+    public function max(int $rule)
     {
         $this->_max=$rule;
-        if (strlen($this->string_value) > $rule) {
+        if (strlen($this->field_value) > $rule) {
             $message = [
                 "type" => "string.max",
                 "message" => "`$this->field_item` should have maximum of `$rule` characters",
@@ -107,10 +73,12 @@ class StringValidation extends ValidationProvider {
         }
     }
 
-
-    function email()
+    /**
+     *
+     */
+    public function email()
     {
-        if (!filter_var($this->string_value, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->field_value, FILTER_VALIDATE_EMAIL)) {
             $message = [
                 "type" => "string.email",
                 "message" => ("`$this->field_item` should be an email."),
@@ -127,9 +95,9 @@ class StringValidation extends ValidationProvider {
      * www.[domain].[extension]
      *
      */
-    function url()
+    public function url()
     {
-        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->string_value)) {
+        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->field_value)) {
             $message = [
                 "type" => "string.url",
                 "message" => ("`{$this->field_item}` this should be a link(url)"),
@@ -144,10 +112,10 @@ class StringValidation extends ValidationProvider {
      * @param string $key_to_match
      *
      */
-    function match(string $key_to_match)
+    public function match(string $key_to_match)
     {
         $this->isString($key_to_match);
-        if (isset($this->source_data[$key_to_match]) && (strlen($this->string_value)!= strlen($this->source_data[$key_to_match])) && ($this->string_value!=$this->source_data[$key_to_match])) {
+        if (isset($this->source_data[$key_to_match]) && (strlen($this->field_value)!= strlen($this->source_data[$key_to_match])) && ($this->field_value!=$this->source_data[$key_to_match])) {
             $message = [
                 "type" => "string.match",
                 "message" => "`$this->field_item` should match `$key_to_match`",
@@ -157,7 +125,7 @@ class StringValidation extends ValidationProvider {
         }
     }
 
-    function required()
+    public function required()
     {
         $required_value= trim($this->field_value);
         if (strlen($required_value)==0) {
@@ -173,9 +141,9 @@ class StringValidation extends ValidationProvider {
     /**
      *
      * @param string $item_key
-     * @return boolean
+     * @return void
      */
-    private function isString(string $item_key): bool
+    protected function isString(string $item_key): void
     {
         $field_to_check=!$item_key?$this->field_item:$item_key;
         $regex="#[a-zA-Z0-9]#";
@@ -185,9 +153,7 @@ class StringValidation extends ValidationProvider {
                     "message" => ("`$field_to_check` should be a string"),
                     "label" => $field_to_check,
                 ];
-                $this->addError($message);
-                return false;
+            $this->addError($message);
         }
-        return true;
     }
 }

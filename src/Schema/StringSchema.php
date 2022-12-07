@@ -1,4 +1,9 @@
 <?php
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
+
 namespace Wepesi\App\Schema;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,7 +19,7 @@ use Wepesi\App\Providers\SChemaProvider;
  *
  * @author Boss Ibrahim Mussa
  */
-class StringSchema extends SChemaProvider {
+abstract class StringSchema extends SChemaProvider {
 
     function __construct() {
         parent::__construct('String');
