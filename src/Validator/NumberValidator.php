@@ -19,7 +19,7 @@ use Wepesi\App\Providers\ValidatorProvider;
  *
  * @author Boss Ibrahim Mussa
  */
-class NumberValidator extends ValidatorProvider {
+final class NumberValidator extends ValidatorProvider {
 
     function __construct(string $string_item,string $value,array $source) {
         $this->data_source = $source;
