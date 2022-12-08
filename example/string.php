@@ -6,14 +6,27 @@
 /**
  * Validate string
  */
+
+use Wepesi\App\Validate;
+
+$validate = new Validate();
+$source = [
+    'name' => 'ibrahim',
+    'country' => "",
+    'password' => '1234567',
+    'new_password' => 123456,
+    'email' => 'infos@wepesi.com',
+    'link' => 'https://github.com/bim-g/wepesi_validation/'
+];
 $rules = [
     "name" => $schema->string()->email()->min(35)->max(50)->required()->generate(),
-    "country" => $schema->string()->min(3)->max(40)->generate(),
+    "country" => $schema->string()->min(3)->max(40)->required()->generate(),
     "password" => $schema->string()->min(3)->max(40)->generate(),
-    "n_password" => $schema->string()->min(3)->max(40)->match("password")->generate(),
+    "new_password" => $schema->string()->min(3)->max(40)->match("password")->generate(),
+    "email" => $schema->string()->min(3)->max(40)->email()->generate(),
+    "link" => $schema->string()->min(3)->max(40)->url()->generate(),
 ];
- var_dump($rules);
-//$valid->check($source, $rules);
+$validate->check($source, $rules);
 ////    check if the validation passed or not
-//var_dump($valid->passed());
-//var_dump($valid->errors());
+var_dump($validate->passed());
+var_dump($validate->errors());
