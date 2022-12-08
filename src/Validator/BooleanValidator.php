@@ -22,15 +22,15 @@ use Wepesi\App\Providers\ValidatorProvider;
 final class BooleanValidator extends ValidatorProvider
 {
 
-    function __construct(string $string_item,string $value,array $source)
+    function __construct(string $item, array $source)
     {
-        $this->field_name = $string_item;
+        $this->field_name = $item;
         $this->data_source = $source;
         $this->field_value = $source[$this->field_name];
         $this->class_provider = "boolean";
 
         if ($this->isBoolean()) {
-            $this->field_value = $source[$string_item];
+            $this->field_value = $source[$item];
         };
         parent::__construct();
     }

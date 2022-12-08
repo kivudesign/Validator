@@ -21,13 +21,13 @@ use Wepesi\App\Providers\ValidatorProvider;
  */
 final class NumberValidator extends ValidatorProvider {
 
-    function __construct(string $string_item,string $value,array $source) {
-        $this->data_source = $source;
-        $this->field_name = $string_item;
-        $this->field_value= $value;
+    function __construct(string $item, array $data_source) {
+        $this->data_source = $data_source;
+        $this->field_name = $item;
+        $this->field_value = $data_source[$item];
         $this->class_provider = "number";
         if($this->isNumber()){
-            $this->field_value = $source[$string_item];
+            $this->field_value = $data_source[$item];
         }
         parent::__construct();
     }

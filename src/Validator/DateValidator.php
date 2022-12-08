@@ -17,10 +17,10 @@ use Wepesi\App\Providers\ValidatorProvider;
 final class DateValidator extends ValidatorProvider
 {
 
-    public function __construct(string $item,string $value,array $source ) {
-        $this->field_value = $source[$item];
+    public function __construct(string $item,array $data_source ) {
         $this->field_name = $item;
-        $this->data_source = $source;
+        $this->field_value = $data_source[$item];
+        $this->data_source = $data_source;
         $this->class_provider = "date";
         $this->checkExist();
         parent::__construct();

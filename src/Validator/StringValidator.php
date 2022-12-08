@@ -16,15 +16,14 @@ use Wepesi\App\Providers\ValidatorProvider;
 final class StringValidator extends ValidatorProvider {
     /**
      *
-     * @param string $item  the item to be validated.
-     * @param string $value  the value of the item
-     * @param array $data_source  the source data from where is going to check it the match key exist and have value.
+     * @param string $item the item to be validated.
+     * @param array $data_source the source data from where is going to check it the match key exist and have value.
      */
-    public function __construct(string $item, string $value, array $data_source=[]) {
+    public function __construct(string $item, array $data_source=[]) {
         $this->errors = [];
         $this->data_source = $data_source;
         $this->field_name = $item;
-        $this->field_value = $value;
+        $this->field_value = $data_source[$item];
         $this->class_provider = "string";
         parent::__construct();
     }

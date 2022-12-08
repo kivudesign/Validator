@@ -60,7 +60,7 @@ class Validate
 
                     $reflexion = new ReflectionClass($class_name);
 
-                    $instance = $reflexion->newInstance($item, $value,$resource);
+                    $instance = $reflexion->newInstance($item,$resource);
 
                     foreach ($rules[$key] as $method => $params){
                         if(method_exists($instance,$method)){
