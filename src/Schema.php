@@ -48,7 +48,9 @@ class Schema
      */
     public function boolean(): BooleanSchema
     {
-        return new BooleanSchema();
+        return new class extends BooleanSchema{};
     }
+    //TODO add support to array validation
 
+    // TODO add support for file validation
 }
