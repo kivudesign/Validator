@@ -40,7 +40,7 @@ class Schema
      */
     public function date(): DateSchema
     {
-        return new DateSchema();
+        return new class extends DateSchema{};
     }
 
     /**
