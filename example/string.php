@@ -7,8 +7,10 @@
  * Validate string
  */
 
+use Wepesi\App\Schema;
 use Wepesi\App\Validate;
 
+$schema = new Schema();
 $validate = new Validate();
 $source = [
     'name' => 'ibrahim',
