@@ -25,7 +25,7 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function min(int $rule): SChemaProvider
     {
-        $this->schema[$this->source]["min"]=$rule;
+        $this->schema[$this->source]["min"] = $rule;
         return $this;
     }
 
@@ -35,13 +35,13 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function max($rule): SChemaProvider
     {
-        $this->schema[$this->source]["max"]=$rule;
+        $this->schema[$this->source]["max"] = $rule;
         return $this;
     }
 
     function required(): SChemaProvider
     {
-        $this->schema[$this->source]["required"]=true;
+        $this->schema[$this->source]["required"] = true;
         return $this;
     }
 
