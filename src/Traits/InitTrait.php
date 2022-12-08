@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Wepesi\App\Traits;
 
@@ -7,6 +10,8 @@ namespace Wepesi\App\Traits;
 trait InitTrait
 {
     /**
+     * @param $source
+     * @param $schema
      * @throws \Exception
      */
     private function initInstance($source, $schema)
@@ -30,7 +35,7 @@ trait InitTrait
      * @param array $schema
      */
     protected function extract_data(array $schema ){
-        $conditions=$schema[$this->field_item]['String'];
+        $conditions = $schema[$this->field_item]['String'];
         foreach ($conditions as $key=>$value){
             call_user_func([$this,$key],$value);
             return;
