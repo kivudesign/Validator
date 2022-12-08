@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Test\Schema;
 
@@ -11,26 +14,26 @@ class NumberSchemaTest extends TestCase
 {
     function testStringIsObject()
     {
-        $numberSchema = new NumberSchema();
+        $numberSchema = new class extends NumberSchema{};
         $this->assertIsObject($numberSchema);
     }
 
     function testStringObjectIsKey()
     {
-        $numberSchema = new NumberSchema();
-        $this->assertArrayHasKey('Number', $numberSchema->check());
+        $numberSchema = new class extends NumberSchema{};
+        $this->assertArrayHasKey("NumberValidator", $numberSchema->generate());
     }
 
     function testRequiredKey()
     {
-        $numberSchema = new NumberSchema();
-        $subset_array = ['Number' => ['required' => true]];
-        $this->assertEquals($subset_array, $numberSchema->required()->check());
+        $numberSchema = new class extends NumberSchema{};
+        $subset_array = ["NumberValidator" => ['required' => true]];
+        $this->assertEquals($subset_array, $numberSchema->required()->generate());
     }
     function testNumberPositiveKey()
     {
-        $numberSchema = new NumberSchema();
-        $subset_array = ['Number' => ['positive' => true]];
-        $this->assertEquals($subset_array, $numberSchema->positive()->check());
+        $numberSchema = new class extends NumberSchema{};
+        $subset_array = ["NumberValidator" => ['positive' => true]];
+        $this->assertEquals($subset_array, $numberSchema->positive()->generate());
     }
 }

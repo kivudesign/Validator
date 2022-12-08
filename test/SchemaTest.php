@@ -16,6 +16,10 @@ class SchemaTest extends TestCase
         $schema = new Schema();
         $this->assertIsObject($schema);
     }
+
+    /**
+     * @return void
+     */
     function testSchemaStringObject(){
         $schema = new Schema();
         $rules=["name"=>$schema->string()->min(3)->max(10)->required()->generate()];
@@ -43,6 +47,40 @@ class SchemaTest extends TestCase
             ]
         ];
         $this->assertIsNotArray($rules["name"]);
+        $this->assertNotEquals($expected,$rules);
+    }
+    /*
+     * Number Schema Test
+     */
+    function testSchemaNumberObject(){
+        $schema = new Schema();
+        $rules=["age"=>$schema->number()->min(3)->max(10)->required()->positive()->generate()];
+        $expected=[
+            "age"=>[
+                "NumberValidator"=>[
+                    "min"=>3,
+                    "max"=>10,
+                    "required"=>true,
+                    "positive" => true,
+                ]
+            ]
+        ];
+        $this->assertEquals($rules,$expected);
+    }
+    function testSchemaNumberErrorObject(){
+        $schema = new Schema();
+        $rules = ["age" => $schema->number()->min(5)->max(10)->positive()->required()];
+        $expected=[
+            "age"=>[
+                "NumberValidator"=>[
+                    "min"=>3,
+                    "max"=>10,
+                    "required"=>true,
+                    "positive"=>false,
+                ]
+            ]
+        ];
+        $this->assertIsNotArray($rules["age"]);
         $this->assertNotEquals($expected,$rules);
     }
 }
