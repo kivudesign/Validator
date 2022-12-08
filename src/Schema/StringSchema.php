@@ -22,7 +22,7 @@ use Wepesi\App\Providers\SChemaProvider;
 abstract class StringSchema extends SChemaProvider {
 
     function __construct() {
-        parent::__construct('String');
+        parent::__construct('StringValidator');
     }
 
     function email(): StringSchema

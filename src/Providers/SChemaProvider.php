@@ -8,13 +8,9 @@ namespace Wepesi\App\Providers;
 
 use Wepesi\App\Providers\Contracts\SchemaContracts;
 
-/**
- * Class SChemaProvider
- * @package Wepesi\App\Providers
- */
 abstract class SChemaProvider implements SchemaContracts
 {
-    protected array $schema=[];
+    protected array $schema = [];
     protected string $source;
 
     function __construct(string $type)
@@ -22,10 +18,10 @@ abstract class SChemaProvider implements SchemaContracts
         $this->source = $type;
         $this->schema[$this->source] = [];
     }
+
     /**
-     * @param $rule
+     * @param int $rule
      * @return SChemaProvider
-     *
      */
     function min(int $rule): SChemaProvider
     {
