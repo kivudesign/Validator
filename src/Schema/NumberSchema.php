@@ -1,9 +1,7 @@
 <?php
-
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
  */
 
 namespace Wepesi\App\Schema;
@@ -15,10 +13,10 @@ use Wepesi\App\Providers\SChemaProvider;
  *
  * @author Boss Ibrahim Mussa
  */
-class NumberSchema extends SChemaProvider {
+abstract class NumberSchema extends SChemaProvider {
 
     function __construct() {
-        parent::__construct("Number");
+        parent::__construct("NumberValidator");
     }
 
     /**
@@ -26,7 +24,7 @@ class NumberSchema extends SChemaProvider {
      */
     function positive(): NumberSchema
     {
-        $this->schema[$this->source]['positive']=true;
+        $this->schema[$this->source]['positive'] = true;
         return $this;
     }
 }

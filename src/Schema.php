@@ -32,7 +32,7 @@ class Schema
      */
     public function number(): NumberSchema
     {
-        return new NumberSchema();
+        return new class extends NumberSchema{};
     }
 
     /**
