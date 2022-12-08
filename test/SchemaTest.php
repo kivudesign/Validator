@@ -83,4 +83,39 @@ class SchemaTest extends TestCase
         $this->assertIsNotArray($rules["age"]);
         $this->assertNotEquals($expected,$rules);
     }
+    /*
+     * Number Schema Test
+     */
+    function testSchemaDateObject(){
+        $schema = new Schema();
+        $rules = ["date_creat" => $schema->date()->min("now")->max("2022-12-25")->now()->required()->generate()];
+        $expected = [
+            "date_creat"=>[
+                "DateValidator" =>
+                    [
+                    "min" => "now",
+                    "max" => "2022-12-25",
+                    "required"=> true,
+                    "now" => true,
+                ]
+            ]
+        ];
+        $this->assertEquals($rules,$expected);
+    }
+    function testSchemaDateErrorObject(){
+        $schema = new Schema();
+        $rules = ["date_creat" => $schema->date()->min("now")->max("2022-12-25")->required()];
+        $expected=[
+            "date_creat"=>[
+                "DateValidator"=>[
+                    "min"=>"now",
+                    "max"=>"2022-12-25",
+                    "required"=>true,
+                    "positive"=>false,
+                ]
+            ]
+        ];
+        $this->assertIsNotArray($rules["date_creat"]);
+        $this->assertNotEquals($expected,$rules);
+    }
 }
