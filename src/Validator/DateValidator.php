@@ -67,11 +67,11 @@ final class DateValidator extends ValidatorProvider
     }
 
     /**
-     * @param string|null $rule_values
+     * @param string|null $rule
      * @return void
      * get the min date control from the given date
      */
-    public function min($rule_values)
+    public function min($rule)
     {
         /**
          * $regex= "#[a-zA-Z]#";
@@ -79,8 +79,8 @@ final class DateValidator extends ValidatorProvider
          * $con=!$time?$time:(int)$time;
          * in case the parameters are integers
          */
-        $rule_values = $rule_values ?? "now";
-        $min_date_time = strtotime($rule_values);
+        $rule = $rule ?? "now";
+        $min_date_time = strtotime($rule);
         $min_date = date("d/F/Y",$min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time > $min_date_time) {
@@ -95,14 +95,14 @@ final class DateValidator extends ValidatorProvider
     }
 
     /**
-     * @param string|null $rule_values
+     * @param string|null $rule
      * @return void
      * while try to check maximum date of a defined period use this module
      */
-    public function max($rule_values)
+    public function max($rule)
     {
-        $rule_values = $rule_values ?? "now";
-        $max_date_time = strtotime($rule_values);
+        $rule = $rule ?? "now";
+        $max_date_time = strtotime($rule);
         $max_date = date("d/F/Y",$max_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($max_date_time < $date_value_time) {
