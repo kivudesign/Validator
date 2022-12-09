@@ -1,10 +1,13 @@
 <?php
-
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Test\Script;
 use Exception;
 use PHPUnit\Framework\TestCase;
-use Wepesi\App\Script\StringValidation;
+use Wepesi\App\Validator\StringValidator;
 
 class StringValidationTest extends TestCase
 {
@@ -12,9 +15,9 @@ class StringValidationTest extends TestCase
      * @throws Exception
      */
     function testStringValidationSourceDataException(){
-        $stringValidationSourceDataException= Exception::class;
+        $stringValidationSourceDataException = Exception::class;
         try {
-            $stringValidationSourceDataException = new StringValidation([], []);
+            $stringValidationSourceDataException = new StringValidator("","");
         }catch (Exception $ex){
             $className = get_class($ex);
             $msg = $ex->getMessage();
@@ -31,7 +34,7 @@ class StringValidationTest extends TestCase
         $stringValidationSchemaException= Exception::class;
         try {
             $source=["name"=>"john Doe"];
-            $stringValidationSchemaException = new StringValidation($source, []);
+            $stringValidationSchemaException = new StringValidator($source, []);
         }catch (Exception $ex){
             $className = get_class($ex);
             $msg = $ex->getMessage();
@@ -53,7 +56,7 @@ class StringValidationTest extends TestCase
                     "required"=>false
                 ]
             ]];
-            $stringValidationSchemaException = new StringValidation($source, $schema);
+            $stringValidationSchemaException = new StringValidator($source, $schema);
         }catch (Exception $ex){
             $className = get_class($ex);
             $msg = $ex->getMessage();
@@ -78,7 +81,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $this->assertIsObject($stringValidation);
     }
     /**
@@ -93,7 +96,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $error[]=[
             'type'=>'string.min',
             'message'=>'`name` should have minimum of `150` characters',
@@ -115,7 +118,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $this->assertEmpty($stringValidation->result());
     }/**
      * @throws Exception
@@ -130,7 +133,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $error[]=[
             'type'=>'string.max',
             'message'=>'`description` should have maximum of `150` characters',
@@ -152,7 +155,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $this->assertEmpty($stringValidation->result());
     }/**
      * @throws Exception
@@ -166,7 +169,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $error[]=[
             'type'=>'string.email',
             'message'=>'`email` should be an email.',
@@ -187,7 +190,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $this->assertEmpty($stringValidation->result());
     }
     /**
@@ -202,7 +205,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $error[]=[
             'type'=>'string.url',
             'message'=>'`link` this should be a link(url)',
@@ -228,7 +231,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation= new StringValidation($source,$schema);
+        $stringValidation= new StringValidator($source,$schema);
         $this->assertEmpty($stringValidation->result());
     }
 
@@ -245,7 +248,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation = new StringValidation($source, $schema);
+        $stringValidation = new StringValidator($source, $schema);
         $error=[
                 'type' => 'string.unknown',
                 'message' => "`username` should be a string",
@@ -267,7 +270,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation = new StringValidation($source, $schema);
+        $stringValidation = new StringValidator($source, $schema);
         $error=[
             'type' => 'string.required',
             'message' => "`username` is required",
@@ -289,7 +292,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation = new StringValidation($source, $schema);
+        $stringValidation = new StringValidator($source, $schema);
         $this->assertEmpty($stringValidation->result());
     }
 
@@ -309,7 +312,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation = new StringValidation($source, $schema);
+        $stringValidation = new StringValidator($source, $schema);
         $error[]=[
             'type' => 'string.match',
             'message' => "`password` should match `retape_password`",
@@ -334,7 +337,7 @@ class StringValidationTest extends TestCase
                 ]
             ]
         ];
-        $stringValidation = new StringValidation($source, $schema);
+        $stringValidation = new StringValidator($source, $schema);
         $this->assertEmpty($stringValidation->result());
     }
 }

@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Wepesi\App\Schema;
 /*
@@ -7,37 +11,24 @@ namespace Wepesi\App\Schema;
  * and open the template in the editor.
  */
 
+use Wepesi\App\Providers\SChemaProvider;
+
 /**
  * Description of String
  *
  * @author Domeshow
  */
-class BooleanSchema
+abstract class BooleanSchema extends SChemaProvider
 {
-    private string $source;
-    private array $schema;
 
     function __construct()
     {
-        $this->source = "Boolean";
-        $this->schema[$this->source]=[];
+        parent::__construct("BooleanValidator");
     }
 
     function isValid(): BooleanSchema
     {
-        $this->schema[$this->source]['isValid']=true;
+        $this->schema[$this->source]['isValid'] = true;
         return $this;
-    }
-
-    function required(): BooleanSchema
-    {
-        $this->schema[$this->source]['required'] = true;
-
-        return $this;
-    }
-
-    function check(): array
-    {
-        return $this->schema;
     }
 }

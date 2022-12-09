@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Test\Schema;
 
@@ -11,26 +14,26 @@ class BooleanSchemaTest extends TestCase
 {
     function testBooleanIsObject()
     {
-        $booleanSchema = new BooleanSchema();
+        $booleanSchema = new class extends BooleanSchema{};
         $this->assertIsObject($booleanSchema);
     }
 
     function testStringObjectIsKey()
     {
-        $booleanSchema = new BooleanSchema();
-        $this->assertArrayHasKey('Boolean', $booleanSchema->check());
+        $booleanSchema = new class extends BooleanSchema{};
+        $this->assertArrayHasKey('BooleanValidator', $booleanSchema->generate());
     }
 
     function testBooleanIsRequireddKey()
     {
-        $booleanSchema = new BooleanSchema();
-        $subset_array = ['Boolean' => ['required' => true]];
-        $this->assertEquals($subset_array, $booleanSchema->required()->check());
+        $booleanSchema = new class extends BooleanSchema{};
+        $subset_array = ['BooleanValidator' => ['required' => true]];
+        $this->assertEquals($subset_array, $booleanSchema->required()->generate());
     }
     function testBooleanIsValidKey()
     {
-        $booleanSchema = new BooleanSchema();
-        $subset_array = ['Boolean' => ['isValid' => true]];
-        $this->assertEquals($subset_array, $booleanSchema->isValid()->check());
+        $booleanSchema = new class extends BooleanSchema{};
+        $subset_array = ['BooleanValidator' => ['isValid' => true]];
+        $this->assertEquals($subset_array, $booleanSchema->isValid()->generate());
     }
 }

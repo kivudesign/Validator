@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Copyright (c) 2022.  Wepesi validation.
+ *  @author Boss Ibrahim Mussa
+ */
 
 namespace Test\Schema;
 
@@ -11,26 +14,26 @@ class DateSchemaTest extends TestCase
 {
     function testStringIsObject()
     {
-        $dateSchema = new DateSchema();
+        $dateSchema = new class extends DateSchema{};
         $this->assertIsObject($dateSchema);
     }
 
     function testStringObjectIsKey()
     {
-        $dateSchema = new DateSchema();
-        $this->assertArrayHasKey('Date', $dateSchema->check());
+        $dateSchema = new class extends DateSchema{};
+        $this->assertArrayHasKey('DateValidator', $dateSchema->generate());
     }
 
     function testDateNowKey()
     {
-        $dateSchema = new DateSchema();
-        $subset_array = ['Date' => ['now' => true]];
-        $this->assertEquals($subset_array, $dateSchema->now()->check());
+        $dateSchema = new class extends DateSchema{};
+        $subset_array = ['DateValidator' => ['now' => true]];
+        $this->assertEquals($subset_array, $dateSchema->now()->generate());
     }
     function testDateTodayKey()
     {
-        $dateSchema = new DateSchema();
-        $subset_array = ['Date' => ['today' => true]];
-        $this->assertEquals($subset_array, $dateSchema->today()->check());
+        $dateSchema = new class extends DateSchema{};
+        $subset_array = ['DateValidator' => ['today' => true]];
+        $this->assertEquals($subset_array, $dateSchema->today()->generate());
     }
 }

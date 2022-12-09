@@ -7,7 +7,8 @@
 namespace Wepesi\App\Providers\Contracts;
 
 
-interface SchemaContracts extends Contracts
+interface ValidatorContracts extends Contracts
 {
-    function required();
+    function addError(array $value);
+    function result():array;
 }

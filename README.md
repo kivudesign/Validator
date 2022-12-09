@@ -3,10 +3,14 @@ this module will help to do your own input validation from http request `POST` o
 
 # INTEGRATION
 The integration is the simple thing to do.
-First you neeed to create a new instance of `Validate` whitch will be use to do our validation.
+First you need to define the rule of the input data, and easy way to do so is by using a schema model which help hundle all of the process,
+then create an instance of `Validate` which will help validate data input according to rules already defined.
 While have the instance of validation, you can access `check` method, with take two parameters, the `source` and `rules`;
 ```php
-    $valid=new Validate($source);
+    $valid = new \Wepesi\App\Validate();
+    $schema = new \Wepesi\App\Schema();
+    $source = [];
+    $rules = ["name" => $schema->string()->min(3)->max(5)->generate()];    
     $valid->check($source,$rules);
 ```
 * `source` 
@@ -28,24 +32,27 @@ different method are now available according to you need.
     now you can validate your keys according to a specify type witch are:
     - string
     - number
-    - ...
+    - date,
+    - boolean
+    - file
 
 ```php
     // rules 
     $rules=[
-        "email"=>$valid->string("name")->email()->min(9)->max(50)->required()->check(),    
-        "year"=>$valid->number("year")->email()->min(35)->max(60)->required()->check()    
+        "email"=>$schema->string()->email()->min(9)->max(50)->required()->generate(),    
+        "year"=>$schema->number()->email()->min(35)->max(60)->required()->generate()    
     ];
 ```
 in the example bellow, for the first rule
 ```php
-    "email"=>$valid->string("name")->email()->min(9)->max(50)->required()->check()
+    "email"=>$schema->string()->email()->min(9)->max(50)->required()->generate()
     
     // check `email` keys should be a:
     // - string: type of the value to be check should be a string
     // - email: that string should be a email
     // - min:9=> the email should have minimum caracters  9 caracter
-    // - min:9=> the email should have maximum caracters should exid 50 caracters
+    // - max:50=> the email should have maximum caracters should exid 50 caracters
+    // - required=> it will no be empty
 ```
 
 `STRING` method allow to validation:
@@ -65,12 +72,13 @@ In the example bellow, you can see a complete procured on how to validate data-s
         "link"=>"https://github.com/bim-g/wepesi_validation/",
         "age"=>1
         ];
-$valid=new Validate($source);
+$valid = new \Wepesi\App\Validate();
+$schema = new \Wepesi\App\Schema();
     $rules=[
-        "name"=>$validate->string("name")->required()->min(3)->max(30)->check(),
-        "email"=>$validate->string("email")->required()->min(3)->max(60)->email()->check(),
-        "link"=>$validate->string("link")->required()->min(3)->max(60)->url()->check(),
-        "age"=>$validate->number("age")->required()->positive()->check()
+        "name"=>$schema->string()->required()->min(3)->max(30)->generate(),
+        "email"=>$schema->string()->required()->min(3)->max(60)->email()->generate(),
+        "link"=>$schema->string()->required()->min(3)->max(60)->url()->generate(),
+        "age"=>$schema->number()->required()->positive()->generate()
     ];
     
     $valid->check($source,$rules);
