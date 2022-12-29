@@ -6,6 +6,7 @@
 
 namespace Wepesi\App;
 
+use Wepesi\App\Schema\ArraySchema;
 use Wepesi\App\Schema\BooleanSchema;
 use Wepesi\App\Schema\DateSchema;
 use Wepesi\App\Schema\NumberSchema;
@@ -51,6 +52,8 @@ class Schema
         return new class extends BooleanSchema{};
     }
     //TODO add support to array validation
-
+    public function array(): ArraySchema{
+          return new class extends ArraySchema{};
+    }
     // TODO add support for file validation
 }

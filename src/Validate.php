@@ -56,11 +56,12 @@ class Validate
                     if ($key == "any") continue;
                     $value = $resource[$item];
 
-                    $class_name = "\Wepesi\App\Validator\\".$key;
+                    $class_validator_name = "\Wepesi\App\Validator\\".$key;
 
-                    $reflexion = new ReflectionClass($class_name);
+                    $reflexion = new ReflectionClass($class_validator_name);
+                    $class_name = explode("Validator",$key)[0];
 
-                    $instance = $reflexion->newInstance($item,$resource);
+                    $instance = $reflexion->newInstance($item,$resource,strtolower($class_name));
 
                     foreach ($rules[$key] as $method => $params){
                         if(method_exists($instance,$method)){

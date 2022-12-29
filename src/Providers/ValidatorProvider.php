@@ -19,8 +19,8 @@ abstract class ValidatorProvider implements Contracts
     function __construct(){
         $this->errors = [];
     }
-    abstract function min(int $rule);
-    abstract function max(int $rule);
+    abstract public function min(int $rule);
+    abstract public function max(int $rule);
     public function required(){
         $required_value = trim($this->field_value);
         if (strlen($required_value) == 0) {
