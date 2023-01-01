@@ -18,11 +18,11 @@ abstract class ArraySchema extends SChemaProvider
     }
 
     /**
-     * @param array $data_object
+     * @param array $elements data array to be validated
      * @return $this
      */
-    public function object(array $data_object):ArraySchema{
-        $this->schema[$this->class_name]['object'] = $data_object;
+    public function elements(array $elements):ArraySchema{
+        $this->schema[$this->class_name]['elements'] = $elements;
         return $this;
     }
 }

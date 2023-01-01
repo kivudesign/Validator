@@ -23,3 +23,4 @@ $data_source = [
 //    include __DIR__."/number.php";
 //    include __DIR__."/date.php";
 //    include __DIR__."/boolean.php";
+    include __DIR__."/arrays.php";

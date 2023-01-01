@@ -7,8 +7,11 @@
 namespace Wepesi\App\Validator;
 
 use Wepesi\App\Providers\ValidatorProvider;
+use Wepesi\App\Resolver\Option;
+use Wepesi\App\Resolver\OptionsResolver;
+use Wepesi\App\Validate;
 
-class ArrayValidator extends ValidatorProvider
+final class ArrayValidator extends ValidatorProvider
 {
     /**
      * @param string $item field name
@@ -27,11 +30,41 @@ class ArrayValidator extends ValidatorProvider
     public function min(int $rule)
     {
         // TODO: Implement min() method.
+        if (count($this->field_value) < $rule) {
+            $message = [
+                'type' => 'array.min',
+                'message' => "`$this->field_name` should have a minimum of `$rule` elements",
+                'label' => $this->field_name,
+                'limit' => $rule
+            ];
+            $this->addError($message);
+        }
     }
 
     public function max(int $rule)
     {
         // TODO: Implement max() method.
+        if (count($this->field_value) > $rule) {
+            $message = [
+                'type' => 'array.max',
+                'message' => "`$this->field_name` should have a maximum of `$rule` elements",
+                'label' => $this->field_name,
+                'limit' => $rule
+            ];
+            $this->addError($message);
+        }
     }
 
+    /**
+     * @param array $elements validate an array if elements, it should be and array with key value to be well set
+     * @return void
+     */
+    public function elements(array $elements){
+        $validate = new Validate();
+        $element_source = $this->data_source[$this->field_name];
+        $validate->check($element_source,$elements);
+        if(!$validate->passed()){
+            foreach ($validate->errors() as $error) $this->addError($error);
+        }
+    }
 }

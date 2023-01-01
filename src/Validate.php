@@ -7,9 +7,11 @@
 namespace Wepesi\App;
 
 use Exception;
+use phpDocumentor\Reflection\Types\Null_;
 use ReflectionClass;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
+use function PHPUnit\Framework\throwException;
 
 
 class Validate
@@ -50,6 +52,9 @@ class Validate
                 $this->addError($message);
             }else{
                 foreach ($schema as $item => $rules) {
+                    if(!is_array($rules)){
+                        throw new \Exception("Trying to access array offset on value of type null! method generate not called");
+                    }
                     $class_namespace = array_keys($rules)[0];
                     if ($class_namespace == "any") continue;
 
@@ -72,13 +77,8 @@ class Validate
                     $this->passed = true;
                 }
             }
-        }catch (Exception $ex){
-            $message = [
-                'type' => 'object.unknown',
-                'message' => $ex,
-                'label' => "unknown",
-            ];
-            $this->addError($message);
+        }catch (\Exception $ex){
+            die($ex);
         }
     }
 
