@@ -9,5 +9,6 @@ namespace Wepesi\App\Providers\Contracts;
 
 interface SchemaContracts extends Contracts
 {
-    function required();
+
+    public function generate();
 }

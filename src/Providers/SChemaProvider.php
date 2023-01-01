@@ -16,7 +16,7 @@ abstract class SChemaProvider implements SchemaContracts
     /**
      * @param string $class_name
      */
-    function __construct(string $class_name)
+    public function __construct(string $class_name)
     {
         $this->class_name = $class_name;
         $this->schema[$this->class_name] = [];
@@ -42,7 +42,7 @@ abstract class SChemaProvider implements SchemaContracts
         return $this;
     }
 
-    function required(): SChemaProvider
+    public function required(): SChemaProvider
     {
         $this->schema[$this->class_name]["required"] = true;
         return $this;
@@ -51,7 +51,7 @@ abstract class SChemaProvider implements SchemaContracts
     /**
      * @return array
      */
-    function generate(): array
+    public function generate(): array
     {
         return  $this->schema;
     }

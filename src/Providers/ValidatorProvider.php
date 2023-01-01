@@ -37,7 +37,7 @@ abstract class ValidatorProvider implements Contracts
      * @param array $value
      * @return void
      */
-    function addError(array $value): void
+    public function addError(array $value): void
     {
         $this->errors[] = $value;
     }
@@ -45,7 +45,7 @@ abstract class ValidatorProvider implements Contracts
     /**
      * @return array
      */
-    function result(): array
+    public function result(): array
     {
         return  $this->errors;
     }
