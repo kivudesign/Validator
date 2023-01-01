@@ -34,7 +34,7 @@ different method are now available according to you need.
     - number
     - date,
     - boolean
-    - file
+    - file (_experimental_)
 
 ```php
     // rules 
@@ -72,9 +72,9 @@ In the example bellow, you can see a complete procured on how to validate data-s
         "link"=>"https://github.com/bim-g/wepesi_validation/",
         "age"=>1
         ];
-$valid = new \Wepesi\App\Validate();
-$schema = new \Wepesi\App\Schema();
-    $rules=[
+    $valid = new \Wepesi\App\Validate();
+    $schema = new \Wepesi\App\Schema();
+    $rules = [
         "name"=>$schema->string()->required()->min(3)->max(30)->generate(),
         "email"=>$schema->string()->required()->min(3)->max(60)->email()->generate(),
         "link"=>$schema->string()->required()->min(3)->max(60)->url()->generate(),
@@ -82,6 +82,11 @@ $schema = new \Wepesi\App\Schema();
     ];
     
     $valid->check($source,$rules);
-    var_dump($valid->passed()); // if everything is correct return true
-    var_dump($valid->errors()); // return all errors according to the validation type
+    var_dump(["passed"=>$valid->passed()]); // if everything is correct return true
+    var_dump(["errors"=>$valid->errors()]); // return all errors according to the validation type
 ```
+Two method are used to check the status of the result:
+- `passed` : return boolean value, is `true` if there is no problem
+- `errors` : return an array, in case the `passed` return false the array will not be empty.
+
+`Enjoy` :)
