@@ -22,4 +22,4 @@ $data_source = [
 //    include_once __DIR__."/string.php";
 //    include __DIR__."/number.php";
 //    include __DIR__."/date.php";
-    include __DIR__."/boolean.php";
+//    include __DIR__."/boolean.php";

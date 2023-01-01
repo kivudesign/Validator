@@ -21,8 +21,8 @@ $source = [
     'link' => 'https://github.com/bim-g/wepesi_validation/'
 ];
 $rules = [
-    "name" => $schema->string()->email()->min(35)->max(50)->required()->generate(),
-    "country" => $schema->string()->min(3)->max(40)->required()->generate(),
+    "names" => $schema->string()->email()->min(35)->max(50)->required()->generate(),
+    "country" => $schema->string()->min(30)->max(40)->required()->generate(),
     "password" => $schema->string()->min(3)->max(40)->generate(),
     "new_password" => $schema->string()->min(3)->max(40)->match("password")->generate(),
     "email" => $schema->string()->min(3)->max(40)->email()->generate(),
@@ -30,5 +30,4 @@ $rules = [
 ];
 $validate->check($source, $rules);
 ////    check if the validation passed or not
-var_dump($validate->passed());
-var_dump($validate->errors());
+include_once __DIR__."/vardump.php";

@@ -14,11 +14,15 @@ abstract class ArraySchema extends SChemaProvider
 {
     public function __construct()
     {
-        parent::__construct(get_class($this));
+        parent::__construct(__CLASS__);
     }
 
-    public function object(array $dataobject){
-        $this->schema[$this->source]['object'] = $dataobject;
+    /**
+     * @param array $data_object
+     * @return $this
+     */
+    public function object(array $data_object):ArraySchema{
+        $this->schema[$this->class_name]['object'] = $data_object;
         return $this;
     }
 }

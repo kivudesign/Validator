@@ -16,5 +16,4 @@ $rules=[
     ];
     $validate->check($data_source,$rules);
 
-    var_dump($validate->passed());
-    var_dump($validate->errors());
+include_once __DIR__ . '/vardump.php';

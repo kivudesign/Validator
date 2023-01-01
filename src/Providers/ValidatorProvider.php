@@ -25,7 +25,7 @@ abstract class ValidatorProvider implements Contracts
         $required_value = trim($this->field_value);
         if (strlen($required_value) == 0) {
             $message = [
-                'type' => $this->class_provider . '.required',
+                'type' => $this->class_provider . ' required',
                 'message' => "'$this->field_name' is required",
                 'label' => $this->field_name,
             ];

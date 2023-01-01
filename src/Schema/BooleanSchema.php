@@ -23,12 +23,12 @@ abstract class BooleanSchema extends SChemaProvider
 
     function __construct()
     {
-        parent::__construct("BooleanValidator");
+        parent::__construct(__CLASS__);
     }
 
     function isValid(): BooleanSchema
     {
-        $this->schema[$this->source]['isValid'] = true;
+        $this->schema[$this->class_name]['isValid'] = true;
         return $this;
     }
 }

@@ -11,12 +11,15 @@ use Wepesi\App\Providers\Contracts\SchemaContracts;
 abstract class SChemaProvider implements SchemaContracts
 {
     protected array $schema = [];
-    protected string $source;
+    protected string $class_name;
 
-    function __construct(string $type)
+    /**
+     * @param string $class_name
+     */
+    function __construct(string $class_name)
     {
-        $this->source = $type;
-        $this->schema[$this->source] = [];
+        $this->class_name = $class_name;
+        $this->schema[$this->class_name] = [];
     }
 
     /**
@@ -25,7 +28,7 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function min(int $rule): SChemaProvider
     {
-        $this->schema[$this->source]["min"] = $rule;
+        $this->schema[$this->class_name]["min"] = $rule;
         return $this;
     }
 
@@ -35,13 +38,13 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function max($rule): SChemaProvider
     {
-        $this->schema[$this->source]["max"] = $rule;
+        $this->schema[$this->class_name]["max"] = $rule;
         return $this;
     }
 
     function required(): SChemaProvider
     {
-        $this->schema[$this->source]["required"] = true;
+        $this->schema[$this->class_name]["required"] = true;
         return $this;
     }
 

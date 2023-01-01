@@ -16,7 +16,7 @@ use Wepesi\App\Providers\SChemaProvider;
 abstract class NumberSchema extends SChemaProvider {
 
     function __construct() {
-        parent::__construct("NumberValidator");
+        parent::__construct(__CLASS__);
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class NumberSchema extends SChemaProvider {
      */
     function positive(): NumberSchema
     {
-        $this->schema[$this->source]['positive'] = true;
+        $this->schema[$this->class_name]['positive'] = true;
         return $this;
     }
 }

@@ -15,7 +15,7 @@ use Wepesi\App\Providers\SChemaProvider;
 abstract class DateSchema extends SChemaProvider
 {
     function __construct() {
-        parent::__construct('DateValidator');
+        parent::__construct(__CLASS__);
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class DateSchema extends SChemaProvider
      */
     public function min($rule): DateSchema
     {
-        $this->schema[$this->source]['min'] = $rule;
+        $this->schema[$this->class_name]['min'] = $rule;
         return $this;
     }
 
@@ -34,7 +34,7 @@ abstract class DateSchema extends SChemaProvider
      */
     public function max($rule): DateSchema
     {
-        $this->schema[$this->source]['max'] = $rule;
+        $this->schema[$this->class_name]['max'] = $rule;
         return $this;
     }
     /**
@@ -42,7 +42,7 @@ abstract class DateSchema extends SChemaProvider
      */
     function now(): DateSchema
     {
-        $this->schema[$this->source]["now"] = true;
+        $this->schema[$this->class_name]["now"] = true;
         return $this;
     }
     /**
@@ -50,7 +50,7 @@ abstract class DateSchema extends SChemaProvider
      */
     function today(): DateSchema
     {
-        $this->schema[$this->source]["today"]=true;
+        $this->schema[$this->class_name]["today"]=true;
         return $this;
     }
 }

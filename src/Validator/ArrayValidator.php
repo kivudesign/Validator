@@ -10,14 +10,18 @@ use Wepesi\App\Providers\ValidatorProvider;
 
 class ArrayValidator extends ValidatorProvider
 {
-    public function __construct(string $item, array $data_source=[],string $class_name="")
+    /**
+     * @param string $item field name
+     * @param array $data_source resource where data will come from
+     */
+    public function __construct(string $item, array $data_source=[])
     {
         $this->errors = [];
         $this->data_source = $data_source;
         $this->field_name = $item;
         $this->field_value = $data_source[$item];
-        $this->class_provider = $class_name;
-         parent::__construct();
+        $this->class_provider = "array";
+        parent::__construct();
     }
 
     public function min(int $rule)
