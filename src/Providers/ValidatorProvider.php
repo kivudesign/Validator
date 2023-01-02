@@ -14,22 +14,33 @@ abstract class ValidatorProvider implements Contracts
     protected array $errors;
     protected array $data_source;
     protected string $field_name;
-    protected string $field_value;
+    protected $field_value;
     protected string $class_provider = 'unknown';
     function __construct(){
         $this->errors = [];
     }
-    abstract function min(int $rule);
-    abstract function max(int $rule);
+    abstract public function min(int $rule);
+    abstract public function max(int $rule);
     public function required(){
-        $required_value = trim($this->field_value);
-        if (strlen($required_value) == 0) {
-            $message = [
-                'type' => $this->class_provider . '.required',
-                'message' => "'$this->field_name' is required",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+        if(is_array($this->field_value)){
+            if (count($this->field_value) == 0) {
+                $message = [
+                    'type' => $this->class_provider . ' required',
+                    'message' => "'$this->field_name' is required",
+                    'label' => $this->field_name,
+                ];
+                $this->addError($message);
+            }
+        }else{
+            $required_value = trim($this->field_value);
+            if (strlen($required_value) == 0) {
+                $message = [
+                    'type' => $this->class_provider . ' required',
+                    'message' => "'$this->field_name' is required",
+                    'label' => $this->field_name,
+                ];
+                $this->addError($message);
+            }
         }
     }
     /**
@@ -37,7 +48,7 @@ abstract class ValidatorProvider implements Contracts
      * @param array $value
      * @return void
      */
-    function addError(array $value): void
+    public function addError(array $value): void
     {
         $this->errors[] = $value;
     }
@@ -45,7 +56,7 @@ abstract class ValidatorProvider implements Contracts
     /**
      * @return array
      */
-    function result(): array
+    public function result(): array
     {
         return  $this->errors;
     }

@@ -9,6 +9,6 @@ namespace Wepesi\App\Providers\Contracts;
 
 interface ValidatorContracts extends Contracts
 {
-    function addError(array $value);
-    function result():array;
+    public function addError(array $value);
+    public function result():array;
 }

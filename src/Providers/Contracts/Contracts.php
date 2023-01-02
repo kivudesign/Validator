@@ -9,6 +9,7 @@ namespace Wepesi\App\Providers\Contracts;
 
 interface Contracts
 {
-    function min(int $rule);
-    function max(int $rule);
+    public function min(int $rule);
+    public function max(int $rule);
+    public function required();
 }

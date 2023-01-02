@@ -18,5 +18,4 @@ $data_source = [
 
 $validate->check($data_source,$rules);
 //    check if the validation passed or not
-    var_dump($validate->passed());
-    var_dump($validate->errors());
+include_once __DIR__ . '/vardump.php';

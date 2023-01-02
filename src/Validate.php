@@ -7,9 +7,11 @@
 namespace Wepesi\App;
 
 use Exception;
+use phpDocumentor\Reflection\Types\Null_;
 use ReflectionClass;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
+use function PHPUnit\Framework\throwException;
 
 
 class Validate
@@ -30,13 +32,11 @@ class Validate
      */
     function check(array $resource, array $schema){
         try {
-
-
             $this->errors = [];
             $option_resolver = [];
             /**
              * use of Option resolver to catch all undefined key
-             * Check for undefined object
+             * on the source data
              */
             foreach ($resource as $item => $response) {
                 $option_resolver[] = new Option($item);
@@ -47,22 +47,23 @@ class Validate
                 $message = [
                     'type' => 'object.unknown',
                     'message' => $options["exception"],
-                    'label' => "label",
+                    'label' => "exception",
                 ];
                 $this->addError($message);
             }else{
                 foreach ($schema as $item => $rules) {
-                    $key = array_keys($rules)[0];
-                    if ($key == "any") continue;
-                    $value = $resource[$item];
+                    if(!is_array($rules)){
+                        throw new \Exception("Trying to access array offset on value of type null! method generate not called");
+                    }
+                    $class_namespace = array_keys($rules)[0];
+                    if ($class_namespace == "any") continue;
 
-                    $class_name = "\Wepesi\App\Validator\\".$key;
-
-                    $reflexion = new ReflectionClass($class_name);
+                    $validator_class = str_replace("Schema","Validator",$class_namespace);
+                    $reflexion = new ReflectionClass($validator_class);
 
                     $instance = $reflexion->newInstance($item,$resource);
 
-                    foreach ($rules[$key] as $method => $params){
+                    foreach ($rules[$class_namespace] as $method => $params){
                         if(method_exists($instance,$method)){
                             call_user_func_array([$instance,$method],[$params]);
                         }
@@ -76,13 +77,8 @@ class Validate
                     $this->passed = true;
                 }
             }
-        }catch (Exception $ex){
-            $message = [
-                'type' => 'object.unknown',
-                'message' => $ex,
-                'label' => "unknown",
-            ];
-            $this->addError($message);
+        }catch (\Exception $ex){
+            die($ex);
         }
     }
 
