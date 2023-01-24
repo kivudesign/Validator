@@ -1,5 +1,5 @@
 # WEPESI VALIDATION
-this module will help to do your own input validation from http request `POST` or `GET`.
+Validate your input value with a simple model tools.
 
 ## INTEGRATION
 The integration is the simple thing to do.
@@ -109,6 +109,7 @@ validate integer is now quite difficult, but it required to be consistent in wha
 
 ### `date`      
 validate your date(datetime) not yet full supported
+
 ### `boolean`   
 validate boolean.
 ```php
@@ -122,13 +123,40 @@ validate boolean.
 ```
 
 ### `array`
-use this method to valida you array event with element inside. 
-Apart from `required`,`min`,`max` and  `generate` method, the array module as also it own method to control elements
-- `elements`: it is a method that will allow to control embedded array element as show in the example bellow.
+use this method to validate your array  data object. 
+- `required` : the field should be an array,
+- `min` : define minimum number of elements the field should have,
+- `max` : define maximum number of elements the field should have,
+- `string` : check is content of an array string,
+
+In some case the array can have children, and 
+method, the array module as also it own method to control elements,
+- `body`: will allow to multidimensional array.
+Resources
+```php
+$source = [
+    "name" =>"wepesi",
+    "email" => "info@wepesi.com",
+    "children_name" => ["alfa",3,false,"rachel"],
+    "possessions" => [
+        "cars" => 2,
+        "plane" => 0,
+        "houses" => 4,
+        "children" => -3,
+        "location" => [
+            "goma" => "Q.Virunga 08",
+            "bukabu" => "Bagira 10",
+            "kinshasa" => "matadi kibala 05"
+        ]
+    ]
+];
+```
+Validation Schema
 ```php
 $rules =[
   "name" => $schema->string()->min(1)->max(10)->required()->generate(),
   "email" => $schema->string()->email()->required()->generate(),
+  "children_name" => $schema->array()->string()->generate(),
   "possessions" => $schema->array()->min(1)->max(2)->required()->elements([
       "cars" => $schema->number()->min(1)->required()->generate(),
       "plane" => $schema->number()->min(1)->required()->generate(),
@@ -143,7 +171,12 @@ $rules =[
 ];
 ```
 The method take an array of a schema generated.
-
+In case you want to validate array with string content use `string` from array schema
+Note: while using array you can not use `string`  method with `elements` at the sametime it will cause an error, it should one or another.
+```php
+$schema->array()->string()->elements([])->generate()
+```
+This will throw an error, each one should be used separately.
 You can check the example folder then you can get all exercises for each method.
 
-`Enjoy` :)
+Enjoy :)
