@@ -127,7 +127,8 @@ use this method to validate your array  data object.
 - `required` : the field should be an array,
 - `min` : define minimum number of elements the field should have,
 - `max` : define maximum number of elements the field should have,
-- `string` : check is content of an array string,
+- `string` : check if content of an array are string,
+- `number` : check if content of an array are numbers,
 
 In some case the array can have children, and 
 method, the array module as also it own method to control elements,
@@ -136,13 +137,14 @@ Resources
 ```php
 $source = [
     "name" =>"wepesi",
-    "email" => "info@wepesi.com",
-    "children_name" => ["alfa",3,false,"rachel"],
+    "email" => "info@wepesi.com",    
     "possessions" => [
         "cars" => 2,
         "plane" => 0,
         "houses" => 4,
         "children" => -3,
+        "children_name" => ["alfa",3,false,"rachel"],
+        "children_age" => [20,"15.7","rachel"],
         "location" => [
             "goma" => "Q.Virunga 08",
             "bukabu" => "Bagira 10",
@@ -156,12 +158,13 @@ Validation Schema
 $rules =[
   "name" => $schema->string()->min(1)->max(10)->required()->generate(),
   "email" => $schema->string()->email()->required()->generate(),
-  "children_name" => $schema->array()->string()->generate(),
   "possessions" => $schema->array()->min(1)->max(2)->required()->elements([
       "cars" => $schema->number()->min(1)->required()->generate(),
       "plane" => $schema->number()->min(1)->required()->generate(),
       "houses" => $schema->number()->min(6)->required()->generate(),
       "children" => $schema->number()->positive()->required()->generate(),
+      "children_name" => $schema->array()->string()->generate(),
+      "children_age" => $schema->array()->number()->generate(),
       "location" => $schema->array()->min(2)->elements([
           "goma" => $schema->string()->min(20)->generate(),
           "bukabu" => $schema->string()->min(20)->generate(),
@@ -172,7 +175,8 @@ $rules =[
 ```
 The method take an array of a schema generated.
 In case you want to validate array with string content use `string` from array schema
-Note: while using array you can not use `string`  method with `elements` at the sametime it will cause an error, it should one or another.
+`Note`: while using array you can not use `string` method or `number` with `elements` at the sametime it will cause an error,
+event you can not use `string` with `number` at once, it should be one or another.
 ```php
 $schema->array()->string()->elements([])->generate()
 ```

@@ -68,6 +68,10 @@ final class ArrayValidator extends ValidatorProvider
         }
     }
 
+    /**
+     * check content are string, in other case handler an error
+     * @return void
+     */
     public function string(){
         $message = [
             'type' => 'array.string',
@@ -84,6 +88,28 @@ final class ArrayValidator extends ValidatorProvider
                     $message['message'] = "`$this->field_name[$i]` should be a string";
                     $this->addError($message);
                 }
+            }
+        }
+    }
+    public function number(){
+        $len = count($this->field_value);
+        if ($len < 1) {
+            $this->min(1);
+        }else{
+            $filter = array_filter($this->field_value,function ($element){
+                if(!is_numeric($element)) return $element;
+            });
+
+            $keys = array_keys($filter);
+            for($i=0; $i<count($keys); $i++){
+                $position = $keys[$i];
+                $message = [
+                    'type' => 'array.number',
+                    'message' => "`$this->field_name[$position]` should be a number",
+                    'label' => $this->field_name,
+                    'limit' => count($keys)
+                ];
+                $this->addError($message);
             }
         }
     }
