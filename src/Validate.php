@@ -6,13 +6,9 @@
 
 namespace Wepesi\App;
 
-use Exception;
-use phpDocumentor\Reflection\Types\Null_;
 use ReflectionClass;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
-use function PHPUnit\Framework\throwException;
-
 
 class Validate
 {

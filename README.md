@@ -73,6 +73,11 @@ use this method your string value, it has built in method for different scenario
 - `matches`     : this is used tho check if two key has the same value, you should specify the second field to check.
 - `generate`    : this methode will generate the array structure that will be used to validate the value, and should be called and the end of each element. In case it's not called there will be an error.
 
+### supported `url` :
+* `http(s)://[domain].[extension]` ,
+* `http(s)://www.[domain].[extension]`,
+* `www.[domain].[extension]`
+
 In the example bellow, you can see a complete procured on how to validate data-source
 
 ```php

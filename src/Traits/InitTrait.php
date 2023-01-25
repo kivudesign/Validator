@@ -17,10 +17,10 @@ trait InitTrait
     private function initInstance($source, $schema)
     {
         if (!is_array($source) || count($source) == 0) {
-            throw new Exception('Your Source Data should not be en empty array');
+            throw new \Exception('Your Source Data should not be en empty array');
         }
         if (!is_array($schema) || count($schema) == 0) {
-            throw new Exception('Your Schema should not be en empty array');
+            throw new \Exception('Your Schema should not be en empty array');
         }
         $fields = array_keys($schema);
 
@@ -34,11 +34,7 @@ trait InitTrait
     /**
      * @param array $schema
      */
-    protected function extract_data(array $schema ){
-        $conditions = $schema[$this->field_item]['String'];
-        foreach ($conditions as $key=>$value){
-            call_user_func([$this,$key],$value);
-            return;
-        }
+    protected function extract_data(array $schema ):void{
+        // TODO implement extract data
     }
 }

@@ -30,9 +30,10 @@ final class ArrayValidator extends ValidatorProvider
      * @param int $rule
      * @return void
      */
-    public function min(int $rule)
+    public function min(int $rule):void
     {
         // TODO: Implement min() method.
+        if($this->positiveParamMethod($rule)) return;
         if (count($this->field_value) < $rule) {
             $message = [
                 'type' => 'array.min',
@@ -44,9 +45,10 @@ final class ArrayValidator extends ValidatorProvider
         }
     }
 
-    public function max(int $rule)
+    public function max(int $rule):void
     {
         // TODO: Implement max() method.
+        if($this->positiveParamMethod($rule,true)) return;
         if (count($this->field_value) > $rule) {
             $message = [
                 'type' => 'array.max',
@@ -62,7 +64,7 @@ final class ArrayValidator extends ValidatorProvider
      * @param array $elements validate an array if elements, it should be and array with key value to be well set
      * @return void
      */
-    public function structure(array $elements)
+    public function structure(array $elements):void
     {
         $validate = new Validate();
         $element_source = $this->data_source[$this->field_name];
@@ -76,7 +78,7 @@ final class ArrayValidator extends ValidatorProvider
      * check content are string, in other case handler an error
      * @return void
      */
-    public function string()
+    public function string():void
     {
         $len = count($this->field_value);
         if ($len < 1) {

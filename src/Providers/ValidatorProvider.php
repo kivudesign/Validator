@@ -60,4 +60,19 @@ abstract class ValidatorProvider implements Contracts
     {
         return  $this->errors;
     }
+
+    protected function positiveParamMethod(int $rule,bool $max = false):bool{
+        $status = true;
+        if($rule<1){
+            $method = $max?"max":"min";
+            $message = [
+                'type' => $this->class_provider . ' method '. $method,
+                'message' => "'$this->field_name' $method param should be a positive number",
+                'label' => $this->field_name,
+            ];
+            $this->addError($message);
+            $status = false;
+        }
+        return $status;
+    }
 }
