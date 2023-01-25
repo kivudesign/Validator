@@ -7,8 +7,6 @@
 namespace Wepesi\App\Validator;
 
 use Wepesi\App\Providers\ValidatorProvider;
-use Wepesi\App\Resolver\Option;
-use Wepesi\App\Resolver\OptionsResolver;
 use Wepesi\App\Validate;
 
 final class ArrayValidator extends ValidatorProvider
@@ -27,6 +25,11 @@ final class ArrayValidator extends ValidatorProvider
         parent::__construct();
     }
 
+    /**
+     * check the minimum length of an array should be about
+     * @param int $rule
+     * @return void
+     */
     public function min(int $rule)
     {
         // TODO: Implement min() method.
@@ -59,7 +62,8 @@ final class ArrayValidator extends ValidatorProvider
      * @param array $elements validate an array if elements, it should be and array with key value to be well set
      * @return void
      */
-    public function elements(array $elements){
+    public function structure(array $elements)
+    {
         $validate = new Validate();
         $element_source = $this->data_source[$this->field_name];
         $validate->check($element_source,$elements);
@@ -72,26 +76,34 @@ final class ArrayValidator extends ValidatorProvider
      * check content are string, in other case handler an error
      * @return void
      */
-    public function string(){
-        $message = [
-            'type' => 'array.string',
-            'message' => "`$this->field_name` should have at least 1 elements",
-            'label' => $this->field_name,
-            'limit' => 1
-        ];
+    public function string()
+    {
         $len = count($this->field_value);
         if ($len < 1) {
-            $this->addError($message);
+            $this->min(1);
         }else{
-            for($i=0; $i<$len; $i++){
-                if(!is_string($this->field_value[$i])){
-                    $message['message'] = "`$this->field_name[$i]` should be a string";
-                    $this->addError($message);
-                }
+            $filter = array_filter($this->field_value,function($element){
+                if(!is_string($element)) return $element;
+            });
+            $keys = array_keys($filter);
+            for($i=0; $i<count($keys); $i++){
+                $position = $keys[$i];
+                $message = [
+                    'type' => 'array.string',
+                    'message' => "`$this->field_name[$position]` should be a string",
+                    'label' => $this->field_name,
+                    'limit' => 1
+                ];
+                $this->addError($message);
             }
         }
     }
-    public function number(){
+
+    /**
+     * @return void
+     */
+    public function number():void
+    {
         $len = count($this->field_value);
         if ($len < 1) {
             $this->min(1);

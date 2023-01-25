@@ -21,11 +21,11 @@ abstract class ArraySchema extends SChemaProvider
      * @param array $elements data array to be validated
      * @return $this
      */
-    public function elements(array $elements):ArraySchema{
+    public function structure(array $elements):?ArraySchema{
         if(isset($this->schema[$this->class_name]['string']) || isset($this->schema[$this->class_name]['number'])) {
             return false;
         }
-        $this->schema[$this->class_name]['elements'] = $elements;
+        $this->schema[$this->class_name]['structure'] = $elements;
         return $this;
     }
 
