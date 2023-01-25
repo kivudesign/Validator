@@ -12,6 +12,7 @@ $validate = new Validate();
 $source = [
     "name" =>"wepesi",
     "email" => "info@wepesi.com",
+    "children_name" => ["alfa",3,false,"rachel"],
     "possessions" => [
         "cars" => 2,
         "plane" => 0,
@@ -28,6 +29,7 @@ $source = [
 $rules =[
   "name" => $schema->string()->min(1)->max(10)->required()->generate(),
   "email" => $schema->string()->email()->required()->generate(),
+  "children_name" => $schema->array()->string()->generate(),
   "possessions" => $schema->array()->min(1)->max(2)->required()->elements([
       "cars" => $schema->number()->min(1)->required()->generate(),
       "plane" => $schema->number()->min(1)->required()->generate(),
@@ -40,6 +42,7 @@ $rules =[
       ])->generate()
   ])->generate()
 ];
+
 $validate->check($source, $rules);
 ////    check if the validation passed or not
 include_once __DIR__ . '/vardump.php';

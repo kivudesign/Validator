@@ -22,7 +22,17 @@ abstract class ArraySchema extends SChemaProvider
      * @return $this
      */
     public function elements(array $elements):ArraySchema{
+        if(isset($this->schema[$this->class_name]['string']) || isset($this->schema[$this->class_name]['number'])) {
+            return false;
+        }
         $this->schema[$this->class_name]['elements'] = $elements;
+        return $this;
+    }
+    public function string():?ArraySchema{
+        if(isset($this->schema[$this->class_name]['number'])) {
+            return false;
+        }
+        $this->schema[$this->class_name]['string'] = true;
         return $this;
     }
 }

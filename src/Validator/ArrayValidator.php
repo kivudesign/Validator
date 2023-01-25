@@ -67,4 +67,24 @@ final class ArrayValidator extends ValidatorProvider
             foreach ($validate->errors() as $error) $this->addError($error);
         }
     }
+
+    public function string(){
+        $message = [
+            'type' => 'array.string',
+            'message' => "`$this->field_name` should have at least 1 elements",
+            'label' => $this->field_name,
+            'limit' => 1
+        ];
+        $len = count($this->field_value);
+        if ($len < 1) {
+            $this->addError($message);
+        }else{
+            for($i=0; $i<$len; $i++){
+                if(!is_string($this->field_value[$i])){
+                    $message['message'] = "`$this->field_name[$i]` should be a string";
+                    $this->addError($message);
+                }
+            }
+        }
+    }
 }
