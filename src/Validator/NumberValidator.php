@@ -38,6 +38,7 @@ final class NumberValidator extends ValidatorProvider {
      */
     function min(int $rule)
     {
+        if($this->positiveParamMethod($rule)) return;
         if ((int) $this->field_value < $rule) {
             $message = [
                 "type" => "number.min",
@@ -55,6 +56,7 @@ final class NumberValidator extends ValidatorProvider {
      */
     function max(int $rule)
     {
+        if($this->positiveParamMethod($rule,true)) return;
         if ((int) $this->field_value > $rule) {
             $message = [
                 "type" => "number.max",
