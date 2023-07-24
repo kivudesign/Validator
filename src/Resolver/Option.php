@@ -6,6 +6,8 @@
 
 namespace Wepesi\App\Resolver;
 
+use Closure;
+
 /**
  * Class Option
  * @package Wepesi\App\Resolver
@@ -28,9 +30,9 @@ final class Option
     private bool $hasDefaultValue;
 
     /**
-     * @var \Closure|null
+     * @var Closure|null
      */
-    private ?\Closure $validator = null;
+    private ?Closure $validator = null;
 
     /**
      * Option constructor.
@@ -78,10 +80,10 @@ final class Option
     }
 
     /**
-     * @param \Closure $closure
+     * @param Closure $closure
      * @return $this
      */
-    public function validator(\Closure $closure): self
+    public function validator(Closure $closure): self
     {
         $this->validator = $closure;
         return $this;
@@ -93,7 +95,7 @@ final class Option
      */
     public function isValid($value): bool
     {
-        if ($this->validator instanceof \Closure) {
+        if ($this->validator instanceof Closure) {
             $validator = $this->validator;
             return $validator($value);
         }

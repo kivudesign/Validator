@@ -7,25 +7,27 @@
 namespace Wepesi\App\Traits;
 
 
+use Exception;
+
 trait InitTrait
 {
     /**
      * @param $source
      * @param $schema
-     * @throws \Exception
+     * @throws Exception
      */
     private function initInstance($source, $schema)
     {
         if (!is_array($source) || count($source) == 0) {
-            throw new \Exception('Your Source Data should not be en empty array');
+            throw new Exception('Your Source Data should not be en empty array');
         }
         if (!is_array($schema) || count($schema) == 0) {
-            throw new \Exception('Your Schema should not be en empty array');
+            throw new Exception('Your Schema should not be en empty array');
         }
         $fields = array_keys($schema);
 
         if (!isset($source[$fields[0]])) {
-            throw new \Exception('field not defined');
+            throw new Exception('field not defined');
         }
 
         $this->extract_data($schema);
@@ -34,7 +36,8 @@ trait InitTrait
     /**
      * @param array $schema
      */
-    protected function extract_data(array $schema ):void{
+    protected function extract_data(array $schema): void
+    {
         // TODO implement extract data
     }
 }

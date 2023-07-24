@@ -65,6 +65,6 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function generate(): array
     {
-        return  $this->schema;
+        return $this->schema;
     }
 }

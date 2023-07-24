@@ -21,5 +21,5 @@ interface ValidatorContracts extends Contracts
     /**
      * @return array
      */
-    public function result():array;
+    public function result(): array;
 }

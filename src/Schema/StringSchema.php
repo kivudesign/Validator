@@ -18,12 +18,14 @@ use Wepesi\App\Providers\SChemaProvider;
  * String valiation schema
  * validate string value
  */
-final class StringSchema extends SChemaProvider {
+final class StringSchema extends SChemaProvider
+{
 
     /**
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(__CLASS__);
     }
 
@@ -32,16 +34,17 @@ final class StringSchema extends SChemaProvider {
      */
     public function email(): StringSchema
     {
-        $this->schema[$this->class_name]["email"]=true;
+        $this->schema[$this->class_name]["email"] = true;
         return $this;
     }
+
     /**
-     * 
+     *
      * @return $this
      */
     public function url(): StringSchema
     {
-        $this->schema[$this->class_name]["url"]=true;
+        $this->schema[$this->class_name]["url"] = true;
         return $this;
     }
 
@@ -60,10 +63,11 @@ final class StringSchema extends SChemaProvider {
      * @param string $ip_address
      * @return $this
      */
-    public function addressIp(bool $ipv6 = false): StringSchema{
-        if($ipv6) {
+    public function addressIp(bool $ipv6 = false): StringSchema
+    {
+        if ($ipv6) {
             $this->schema[$this->class_name]['addressIpv6'] = true;
-        }else{
+        } else {
             $this->schema[$this->class_name]['addressIp'] = true;
         }
         return $this;

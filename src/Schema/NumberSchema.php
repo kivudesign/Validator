@@ -12,12 +12,14 @@ use Wepesi\App\Providers\SChemaProvider;
  * Schema number validation
  * validate any format number
  */
-final class NumberSchema extends SChemaProvider {
+final class NumberSchema extends SChemaProvider
+{
 
     /**
      *
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct(__CLASS__);
     }
 

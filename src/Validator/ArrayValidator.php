@@ -10,7 +10,7 @@ use Wepesi\App\Providers\ValidatorProvider;
 use Wepesi\App\Validate;
 
 /**
- *
+ * Validate array schema
  */
 final class ArrayValidator extends ValidatorProvider
 {
@@ -18,13 +18,12 @@ final class ArrayValidator extends ValidatorProvider
      * @param string $item field name
      * @param array $data_source resource where data will come from
      */
-    public function __construct(string $item, array $data_source=[])
+    public function __construct(string $item, array $data_source = [])
     {
         $this->errors = [];
         $this->data_source = $data_source;
         $this->field_name = $item;
         $this->field_value = $data_source[$item];
-        $this->class_provider = "array";
         parent::__construct();
     }
 
@@ -33,10 +32,10 @@ final class ArrayValidator extends ValidatorProvider
      * @param int $rule
      * @return void
      */
-    public function min(int $rule):void
+    public function min(int $rule): void
     {
         // TODO: Implement min() method.
-        if($this->positiveParamMethod($rule)) return;
+        if ($this->positiveParamMethod($rule)) return;
         if (count($this->field_value) < $rule) {
             $message = [
                 'type' => 'array.min',
@@ -52,10 +51,10 @@ final class ArrayValidator extends ValidatorProvider
      * @param int $rule
      * @return void
      */
-    public function max(int $rule):void
+    public function max(int $rule): void
     {
         // TODO: Implement max() method.
-        if($this->positiveParamMethod($rule,true)) return;
+        if ($this->positiveParamMethod($rule, true)) return;
         if (count($this->field_value) > $rule) {
             $message = [
                 'type' => 'array.max',
@@ -71,12 +70,12 @@ final class ArrayValidator extends ValidatorProvider
      * @param array $elements validate an array if elements, it should be and array with key value to be well set
      * @return void
      */
-    public function structure(array $elements):void
+    public function structure(array $elements): void
     {
         $validate = new Validate();
         $element_source = $this->data_source[$this->field_name];
-        $validate->check($element_source,$elements);
-        if(!$validate->passed()){
+        $validate->check($element_source, $elements);
+        if (!$validate->passed()) {
             foreach ($validate->errors() as $error) $this->addError($error);
         }
     }
@@ -85,17 +84,17 @@ final class ArrayValidator extends ValidatorProvider
      * check content are string, in other case handler an error
      * @return void
      */
-    public function string():void
+    public function string(): void
     {
         $len = count($this->field_value);
         if ($len < 1) {
             $this->min(1);
-        }else{
-            $filter = array_filter($this->field_value,function($element){
-                if(!is_string($element)) return $element;
+        } else {
+            $filter = array_filter($this->field_value, function ($element) {
+                if (!is_string($element)) return $element;
             });
             $keys = array_keys($filter);
-            for($i=0; $i<count($keys); $i++){
+            for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
                 $message = [
                     'type' => 'array.string',
@@ -111,18 +110,18 @@ final class ArrayValidator extends ValidatorProvider
     /**
      * @return void
      */
-    public function number():void
+    public function number(): void
     {
         $len = count($this->field_value);
         if ($len < 1) {
             $this->min(1);
-        }else{
-            $filter = array_filter($this->field_value,function ($element){
-                if(!is_numeric($element)) return $element;
+        } else {
+            $filter = array_filter($this->field_value, function ($element) {
+                if (!is_numeric($element)) return $element;
             });
 
             $keys = array_keys($filter);
-            for($i=0; $i<count($keys); $i++){
+            for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
                 $message = [
                     'type' => 'array.number',
@@ -133,5 +132,13 @@ final class ArrayValidator extends ValidatorProvider
                 $this->addError($message);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function classProvider(): string
+    {
+        return 'array';
     }
 }

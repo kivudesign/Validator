@@ -7,8 +7,6 @@
 namespace Wepesi\App\Schema;
 
 use Wepesi\App\Providers\SChemaProvider;
-use Wepesi\App\Resolver\Option;
-use Wepesi\App\Resolver\OptionsResolver;
 
 /**
  * Arraye schema validation
@@ -27,8 +25,9 @@ final class ArraySchema extends SChemaProvider
      * @param array $elements data array to be validated
      * @return $this
      */
-    public function structure(array $elements):?ArraySchema{
-        if(isset($this->schema[$this->class_name]['string']) || isset($this->schema[$this->class_name]['number'])) {
+    public function structure(array $elements): ?ArraySchema
+    {
+        if (isset($this->schema[$this->class_name]['string']) || isset($this->schema[$this->class_name]['number'])) {
             return false;
         }
         $this->schema[$this->class_name]['structure'] = $elements;
@@ -39,8 +38,9 @@ final class ArraySchema extends SChemaProvider
      *  check if array content are(is) string
      * @return $this|null
      */
-    public function string():?ArraySchema{
-        if(isset($this->schema[$this->class_name]['number'])) {
+    public function string(): ?ArraySchema
+    {
+        if (isset($this->schema[$this->class_name]['number'])) {
             return false;
         }
         $this->schema[$this->class_name]['string'] = true;
@@ -50,8 +50,9 @@ final class ArraySchema extends SChemaProvider
     /**
      * @return $this|null
      */
-    public function number():?ArraySchema{
-        if(isset($this->schema[$this->class_name]['string'])) {
+    public function number(): ?ArraySchema
+    {
+        if (isset($this->schema[$this->class_name]['string'])) {
             return false;
         }
         $this->schema[$this->class_name]['number'] = true;

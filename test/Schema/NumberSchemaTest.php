@@ -10,8 +10,12 @@ namespace Test\Schema;
 use PHPUnit\Framework\TestCase;
 use Wepesi\App\Schema\NumberSchema;
 
+/**
+ *
+ */
 class NumberSchemaTest extends TestCase
 {
+    private string $numberSchema = 'Wepesi\\App\\Schema\\NumberSchema';
     /**
      * @return void
      */
@@ -27,7 +31,7 @@ class NumberSchemaTest extends TestCase
     public function testStringObjectIsKey()
     {
         $numberSchema = new NumberSchema();
-        $this->assertArrayHasKey("NumberValidator", $numberSchema->generate());
+        $this->assertArrayHasKey($this->numberSchema, $numberSchema->generate());
     }
 
     /**
@@ -36,7 +40,7 @@ class NumberSchemaTest extends TestCase
     public function testRequiredKey()
     {
         $numberSchema = new NumberSchema();
-        $subset_array = ["NumberValidator" => ['required' => true]];
+        $subset_array = [$this->numberSchema => ['required' => true]];
         $this->assertEquals($subset_array, $numberSchema->required()->generate());
     }
 
@@ -46,7 +50,7 @@ class NumberSchemaTest extends TestCase
     public function testNumberPositiveKey()
     {
         $numberSchema = new NumberSchema();
-        $subset_array = ["NumberValidator" => ['positive' => true]];
+        $subset_array = [$this->numberSchema => ['positive' => true]];
         $this->assertEquals($subset_array, $numberSchema->positive()->generate());
     }
 }

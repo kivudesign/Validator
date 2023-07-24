@@ -61,8 +61,9 @@ class Schema
     /**
      * @return ArraySchema
      */
-    public function array(): ArraySchema{
-          return new ArraySchema();
+    public function array(): ArraySchema
+    {
+        return new ArraySchema();
     }
     // TODO add support for file validation
 }

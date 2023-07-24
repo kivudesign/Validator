@@ -12,10 +12,12 @@ use Wepesi\App\Schema\StringSchema;
 
 class StringSchemaTest extends TestCase
 {
+    private string $stringSchema = 'Wepesi\\App\\Schema\\StringSchema';
     /**
      * @return void
      */
-    public function testStringIsObject(){
+    public function testStringIsObject()
+    {
         $stringSchema = new StringSchema();
         $this->assertIsObject($stringSchema);
     }
@@ -23,53 +25,59 @@ class StringSchemaTest extends TestCase
     /**
      * @return void
      */
-    public function testStringObjectIsKey(){
+    public function testStringObjectIsKey()
+    {
         $stringSchema = new StringSchema();
-        $this->assertArrayHasKey("StringValidator",$stringSchema->generate());
+        $this->assertArrayHasKey($this->stringSchema, $stringSchema->generate());
     }
 
     /**
      * @return void
      */
-    public function testStringEmailKey(){
+    public function testStringEmailKey()
+    {
         $stringSchema = new StringSchema();
-        $subset_array = ["StringValidator"=>["email"=>true]];
+        $subset_array = [$this->stringSchema => ["email" => true]];
         $this->assertEquals($subset_array, $stringSchema->email()->generate());
     }
 
     /**
      * @return void
      */
-    public function testStringURLKey(){
+    public function testStringURLKey()
+    {
         $stringSchema = new StringSchema();
-        $subset_array = ["StringValidator"=>["url"=>true]];
+        $subset_array = [$this->stringSchema => ["url" => true]];
         $this->assertEquals($subset_array, $stringSchema->url()->generate());
     }
 
     /**
      * @return void
      */
-    public function testStringMatchKey(){
+    public function testStringMatchKey()
+    {
         $stringSchema = new StringSchema();
-        $subset_array = ["StringValidator" => ["match"=>'email']];
+        $subset_array = [$this->stringSchema => ["match" => 'email']];
         $this->assertEquals($subset_array, $stringSchema->match('email')->generate());
     }
 
     /**
      * @return void
      */
-    public function testStringMinimumKey(){
+    public function testStringMinimumKey()
+    {
         $stringSchema = new StringSchema();
-        $subset_array = ["StringValidator" => ["min" => 1]];
+        $subset_array = [$this->stringSchema => ["min" => 1]];
         $this->assertEquals($subset_array, $stringSchema->min(1)->generate());
     }
 
     /**
      * @return void
      */
-    public function testStringMaximumKey(){
+    public function testStringMaximumKey()
+    {
         $stringSchema = new StringSchema();
-        $subset_array = ["StringValidator" => ["max" => 10]];
+        $subset_array = [$this->stringSchema => ["max" => 10]];
         $this->assertEquals($subset_array, $stringSchema->max(10)->generate());
     }
 }

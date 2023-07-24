@@ -19,18 +19,19 @@ use Wepesi\App\Providers\ValidatorProvider;
  *
  * @author Boss Ibrahim Mussa
  */
-final class NumberValidator extends ValidatorProvider {
+final class NumberValidator extends ValidatorProvider
+{
 
     /**
      * @param string $item
      * @param array $data_source
      */
-    function __construct(string $item, array $data_source) {
+    function __construct(string $item, array $data_source)
+    {
         $this->data_source = $data_source;
         $this->field_name = $item;
         $this->field_value = $data_source[$item];
-        $this->class_provider = "number";
-        if($this->isNumber()){
+        if ($this->isNumber()) {
             $this->field_value = $data_source[$item];
         }
         parent::__construct();
@@ -42,13 +43,13 @@ final class NumberValidator extends ValidatorProvider {
      */
     function min(int $rule)
     {
-        if($this->positiveParamMethod($rule)) return;
-        if ((int) $this->field_value < $rule) {
+        if ($this->positiveParamMethod($rule)) return;
+        if ((int)$this->field_value < $rule) {
             $message = [
-                "type" => "number.min",
-                "message" => "`$this->field_name` should be greater than `$rule`",
-                "label" => $this->field_name,
-                "limit" => $rule
+                'type' => 'number.min',
+                'message' => "`$this->field_name` should be greater than `$rule`",
+                'label' => $this->field_name,
+                'limit' => $rule
             ];
             $this->addError($message);
         }
@@ -60,13 +61,13 @@ final class NumberValidator extends ValidatorProvider {
      */
     function max(int $rule)
     {
-        if($this->positiveParamMethod($rule,true)) return;
-        if ((int) $this->field_value > $rule) {
+        if ($this->positiveParamMethod($rule, true)) return;
+        if ((int)$this->field_value > $rule) {
             $message = [
-                "type" => "number.max",
-                "message" => "`$this->field_name` should be less than `$rule`",
-                "label" => $this->field_name,
-                "limit" => $rule
+                'type' => 'number.max',
+                'message' => "`$this->field_name` should be less than `$rule`",
+                'label' => $this->field_name,
+                'limit' => $rule
             ];
             $this->addError($message);
         }
@@ -77,12 +78,12 @@ final class NumberValidator extends ValidatorProvider {
      */
     function positive()
     {
-        if ((int) $this->field_value < 0) {
+        if ((int)$this->field_value < 0) {
             $message = [
-                "type" => "number.positive",
-                "message" => "`$this->field_name` should be a positive number",
-                "label" => $this->field_name,
-                "limit" => 1
+                'type' => 'number.positive',
+                'message' => "`$this->field_name` should be a positive number",
+                'label' => $this->field_name,
+                'limit' => 1
             ];
             $this->addError($message);
         }
@@ -93,16 +94,24 @@ final class NumberValidator extends ValidatorProvider {
      */
     protected function isNumber(): bool
     {
-        $regex_string = "#[a-zA-Z]#";
-       if (preg_match($regex_string,trim($this->data_source[$this->field_name])) || !is_integer($this->data_source[$this->field_name])) {
+        $regex_string = '#[a-zA-Z]#';
+        if (preg_match($regex_string, trim($this->data_source[$this->field_name])) || !is_integer($this->data_source[$this->field_name])) {
             $message = [
-                "type" => "number.unknown",
-                "message" => "`$this->field_name` should be a number",
-                "label" => $this->field_name,
+                'type' => 'number.unknown',
+                'message' => "`$this->field_name` should be a number",
+                'label' => $this->field_name,
             ];
             $this->addError($message);
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    protected function classProvider(): string
+    {
+        return 'number';
     }
 }

@@ -9,7 +9,7 @@ namespace Wepesi\App\Providers;
 use Wepesi\App\Providers\Contracts\Contracts;
 
 /**
- *
+ * Validator provider model
  */
 abstract class ValidatorProvider implements Contracts
 {
@@ -29,15 +29,12 @@ abstract class ValidatorProvider implements Contracts
      * @var
      */
     protected $field_value;
-    /**
-     * @var string
-     */
-    protected string $class_provider = 'unknown';
 
     /**
      *
      */
-    function __construct(){
+    function __construct()
+    {
         $this->errors = [];
     }
 
@@ -54,23 +51,37 @@ abstract class ValidatorProvider implements Contracts
     abstract public function max(int $rule);
 
     /**
+     * Provide validation module name
+     * @return string
+     */
+    abstract protected function classProvider(): string ;
+
+    /**
+     * @return string
+     */
+    private function getClassProvider(): string
+    {
+        return $this->classProvider && strlen($this->classProvider) > 0 ? $this->classProvider : 'unknown';
+    }
+    /**
      * @return void
      */
-    public function required(){
-        if(is_array($this->field_value)){
+    public function required()
+    {
+        if (is_array($this->field_value)) {
             if (count($this->field_value) == 0) {
                 $message = [
-                    'type' => $this->class_provider . ' required',
+                    'type' => $this->getClassProvider() . ' required',
                     'message' => "'$this->field_name' is required",
                     'label' => $this->field_name,
                 ];
                 $this->addError($message);
             }
-        }else{
+        } else {
             $required_value = trim($this->field_value);
             if (strlen($required_value) == 0) {
                 $message = [
-                    'type' => $this->class_provider . ' required',
+                    'type' => $this->classProvider() . ' required',
                     'message' => "'$this->field_name' is required",
                     'label' => $this->field_name,
                 ];
@@ -78,6 +89,7 @@ abstract class ValidatorProvider implements Contracts
             }
         }
     }
+
     /**
      *
      * @param array $value
@@ -93,7 +105,7 @@ abstract class ValidatorProvider implements Contracts
      */
     public function result(): array
     {
-        return  $this->errors;
+        return $this->errors;
     }
 
     /**
@@ -101,12 +113,13 @@ abstract class ValidatorProvider implements Contracts
      * @param bool $max
      * @return bool
      */
-    protected function positiveParamMethod(int $rule,bool $max = false):bool{
+    protected function positiveParamMethod(int $rule, bool $max = false): bool
+    {
         $status = true;
-        if($rule<1){
-            $method = $max?"max":"min";
+        if ($rule < 1) {
+            $method = $max ? "max" : "min";
             $message = [
-                'type' => $this->class_provider . ' method '. $method,
+                'type' => $this->getClassProvider() . ' method ' . $method,
                 'message' => "'$this->field_name' $method param should be a positive number",
                 'label' => $this->field_name,
             ];
