@@ -12,27 +12,27 @@ use Wepesi\App\Schema\DateSchema;
 
 class DateSchemaTest extends TestCase
 {
-    function testStringIsObject()
+    public function testStringIsObject()
     {
-        $dateSchema = new class extends DateSchema{};
+        $dateSchema = new DateSchema();
         $this->assertIsObject($dateSchema);
     }
 
-    function testStringObjectIsKey()
+    public function testStringObjectIsKey()
     {
-        $dateSchema = new class extends DateSchema{};
+        $dateSchema = new DateSchema();
         $this->assertArrayHasKey('DateValidator', $dateSchema->generate());
     }
 
-    function testDateNowKey()
+    public function testDateNowKey()
     {
-        $dateSchema = new class extends DateSchema{};
+        $dateSchema = new DateSchema();
         $subset_array = ['DateValidator' => ['now' => true]];
         $this->assertEquals($subset_array, $dateSchema->now()->generate());
     }
-    function testDateTodayKey()
+    public function testDateTodayKey()
     {
-        $dateSchema = new class extends DateSchema{};
+        $dateSchema = new DateSchema();
         $subset_array = ['DateValidator' => ['today' => true]];
         $this->assertEquals($subset_array, $dateSchema->today()->generate());
     }

@@ -15,16 +15,21 @@ use Wepesi\App\Providers\SChemaProvider;
 
 
 /**
- * Description of String
- *
- * @author Boss Ibrahim Mussa
+ * String valiation schema
+ * validate string value
  */
-abstract class StringSchema extends SChemaProvider {
+final class StringSchema extends SChemaProvider {
 
+    /**
+     *
+     */
     public function __construct() {
         parent::__construct(__CLASS__);
     }
 
+    /**
+     * @return $this
+     */
     public function email(): StringSchema
     {
         $this->schema[$this->class_name]["email"]=true;

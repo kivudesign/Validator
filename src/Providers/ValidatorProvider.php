@@ -6,21 +6,56 @@
 
 namespace Wepesi\App\Providers;
 
-
 use Wepesi\App\Providers\Contracts\Contracts;
 
+/**
+ *
+ */
 abstract class ValidatorProvider implements Contracts
 {
+    /**
+     * @var array
+     */
     protected array $errors;
+    /**
+     * @var array
+     */
     protected array $data_source;
+    /**
+     * @var string
+     */
     protected string $field_name;
+    /**
+     * @var
+     */
     protected $field_value;
+    /**
+     * @var string
+     */
     protected string $class_provider = 'unknown';
+
+    /**
+     *
+     */
     function __construct(){
         $this->errors = [];
     }
+
+    /**
+     * @param int $rule
+     * @return mixed
+     */
     abstract public function min(int $rule);
+
+    /**
+     * @param int $rule
+     * @return mixed
+     */
     abstract public function max(int $rule);
+
+    /**
+     * @return void
+     */
     public function required(){
         if(is_array($this->field_value)){
             if (count($this->field_value) == 0) {
@@ -61,6 +96,11 @@ abstract class ValidatorProvider implements Contracts
         return  $this->errors;
     }
 
+    /**
+     * @param int $rule
+     * @param bool $max
+     * @return bool
+     */
     protected function positiveParamMethod(int $rule,bool $max = false):bool{
         $status = true;
         if($rule<1){

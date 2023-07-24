@@ -12,27 +12,27 @@ use Wepesi\App\Schema\BooleanSchema;
 
 class BooleanSchemaTest extends TestCase
 {
-    function testBooleanIsObject()
+    public function testBooleanIsObject()
     {
-        $booleanSchema = new class extends BooleanSchema{};
+        $booleanSchema = new BooleanSchema();
         $this->assertIsObject($booleanSchema);
     }
 
-    function testStringObjectIsKey()
+    public function testStringObjectIsKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
+        $booleanSchema = new BooleanSchema();
         $this->assertArrayHasKey('BooleanValidator', $booleanSchema->generate());
     }
 
-    function testBooleanIsRequireddKey()
+    public function testBooleanIsRequireddKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
+        $booleanSchema = new BooleanSchema();
         $subset_array = ['BooleanValidator' => ['required' => true]];
         $this->assertEquals($subset_array, $booleanSchema->required()->generate());
     }
-    function testBooleanIsValidKey()
+    public function testBooleanIsValidKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
+        $booleanSchema = new BooleanSchema();
         $subset_array = ['BooleanValidator' => ['isValid' => true]];
         $this->assertEquals($subset_array, $booleanSchema->isValid()->generate());
     }

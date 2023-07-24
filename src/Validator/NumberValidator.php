@@ -21,6 +21,10 @@ use Wepesi\App\Providers\ValidatorProvider;
  */
 final class NumberValidator extends ValidatorProvider {
 
+    /**
+     * @param string $item
+     * @param array $data_source
+     */
     function __construct(string $item, array $data_source) {
         $this->data_source = $data_source;
         $this->field_name = $item;

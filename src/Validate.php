@@ -10,11 +10,23 @@ use ReflectionClass;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
 
+/**
+ *
+ */
 class Validate
 {
+    /**
+     * @var array
+     */
     private array $errors;
+    /**
+     * @var bool
+     */
     private bool $passed;
 
+    /**
+     *
+     */
     function __construct()
     {
         $this->errors = [];
@@ -78,6 +90,10 @@ class Validate
         }
     }
 
+    /**
+     * @param array $message
+     * @return void
+     */
     private function addError(array $message){
         $this->errors[] = $message;
     }

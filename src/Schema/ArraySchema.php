@@ -10,8 +10,14 @@ use Wepesi\App\Providers\SChemaProvider;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
 
-abstract class ArraySchema extends SChemaProvider
+/**
+ * Arraye schema validation
+ */
+final class ArraySchema extends SChemaProvider
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct(__CLASS__);

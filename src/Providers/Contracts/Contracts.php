@@ -7,9 +7,25 @@
 namespace Wepesi\App\Providers\Contracts;
 
 
+/**
+ *
+ */
 interface Contracts
 {
+    /**
+     * @param int $rule
+     * @return mixed
+     */
     public function min(int $rule);
+
+    /**
+     * @param int $rule
+     * @return mixed
+     */
     public function max(int $rule);
+
+    /**
+     * @return mixed
+     */
     public function required();
 }

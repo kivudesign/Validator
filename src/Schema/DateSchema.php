@@ -8,12 +8,14 @@ namespace Wepesi\App\Schema;
 use Wepesi\App\Providers\SChemaProvider;
 
 /**
- * Description of VDate
+ * Schema datetime
  *
- * @author Boss Ibrahim Mussa
  */
-abstract class DateSchema extends SChemaProvider
+final class DateSchema extends SChemaProvider
 {
+    /**
+     *
+     */
     function __construct() {
         parent::__construct(__CLASS__);
     }

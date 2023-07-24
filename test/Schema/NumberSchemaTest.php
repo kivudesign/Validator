@@ -12,27 +12,40 @@ use Wepesi\App\Schema\NumberSchema;
 
 class NumberSchemaTest extends TestCase
 {
-    function testStringIsObject()
+    /**
+     * @return void
+     */
+    public function testStringIsObject()
     {
-        $numberSchema = new class extends NumberSchema{};
+        $numberSchema = new NumberSchema();
         $this->assertIsObject($numberSchema);
     }
 
-    function testStringObjectIsKey()
+    /**
+     * @return void
+     */
+    public function testStringObjectIsKey()
     {
-        $numberSchema = new class extends NumberSchema{};
+        $numberSchema = new NumberSchema();
         $this->assertArrayHasKey("NumberValidator", $numberSchema->generate());
     }
 
-    function testRequiredKey()
+    /**
+     * @return void
+     */
+    public function testRequiredKey()
     {
-        $numberSchema = new class extends NumberSchema{};
+        $numberSchema = new NumberSchema();
         $subset_array = ["NumberValidator" => ['required' => true]];
         $this->assertEquals($subset_array, $numberSchema->required()->generate());
     }
-    function testNumberPositiveKey()
+
+    /**
+     * @return void
+     */
+    public function testNumberPositiveKey()
     {
-        $numberSchema = new class extends NumberSchema{};
+        $numberSchema = new NumberSchema();
         $subset_array = ["NumberValidator" => ['positive' => true]];
         $this->assertEquals($subset_array, $numberSchema->positive()->generate());
     }

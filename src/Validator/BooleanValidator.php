@@ -22,6 +22,10 @@ use Wepesi\App\Providers\ValidatorProvider;
 final class BooleanValidator extends ValidatorProvider
 {
 
+    /**
+     * @param string $item
+     * @param array $source
+     */
     function __construct(string $item, array $source)
     {
         $this->field_name = $item;
@@ -35,7 +39,16 @@ final class BooleanValidator extends ValidatorProvider
         parent::__construct();
     }
 
+    /**
+     * @param $rule
+     * @return void
+     */
     public function min($rule){}
+
+    /**
+     * @param $rule
+     * @return void
+     */
     public function max($rule){}
 
     /**
@@ -61,6 +74,10 @@ final class BooleanValidator extends ValidatorProvider
         return true;
     }
 
+    /**
+     * @param string $value
+     * @return void
+     */
     public function isValid(string $value)
     {
         $passed_value = is_bool($value) ? ($value ? 'true' : 'false') : $value;

@@ -12,9 +12,15 @@ use Wepesi\App\Schema\DateSchema;
 use Wepesi\App\Schema\NumberSchema;
 use Wepesi\App\Schema\StringSchema;
 
+/**
+ *
+ */
 class Schema
 {
 
+    /**
+     * @return true[]
+     */
     function any(): array
     {
         return ['any' => true];
@@ -25,7 +31,7 @@ class Schema
      */
     public function string(): StringSchema
     {
-        return new class extends StringSchema{};
+        return new StringSchema();
     }
 
     /**
@@ -33,7 +39,7 @@ class Schema
      */
     public function number(): NumberSchema
     {
-        return new class extends NumberSchema{};
+        return new NumberSchema();
     }
 
     /**
@@ -41,7 +47,7 @@ class Schema
      */
     public function date(): DateSchema
     {
-        return new class extends DateSchema{};
+        return new DateSchema();
     }
 
     /**
@@ -49,11 +55,14 @@ class Schema
      */
     public function boolean(): BooleanSchema
     {
-        return new class extends BooleanSchema{};
+        return new BooleanSchema();
     }
-    //TODO add support to array validation
+
+    /**
+     * @return ArraySchema
+     */
     public function array(): ArraySchema{
-          return new class extends ArraySchema{};
+          return new ArraySchema();
     }
     // TODO add support for file validation
 }

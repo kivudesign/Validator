@@ -18,14 +18,20 @@ use Wepesi\App\Providers\SChemaProvider;
  *
  * @author Domeshow
  */
-abstract class BooleanSchema extends SChemaProvider
+final class BooleanSchema extends SChemaProvider
 {
 
+    /**
+     *
+     */
     function __construct()
     {
         parent::__construct(__CLASS__);
     }
 
+    /**
+     * @return $this
+     */
     function isValid(): BooleanSchema
     {
         $this->schema[$this->class_name]['isValid'] = true;

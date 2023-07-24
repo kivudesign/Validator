@@ -118,6 +118,10 @@ final class StringValidator extends ValidatorProvider {
         }
     }
 
+    /**
+     * @param string $ip_address
+     * @return void
+     */
     public function addressIp(string $ip_address){
         if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP) ) {
             $message = [
@@ -128,6 +132,11 @@ final class StringValidator extends ValidatorProvider {
             $this->addError($message);
         }
     }
+
+    /**
+     * @param string $ip_address
+     * @return void
+     */
     public function addressIpv6(string $ip_address){
         if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) ) {
             $message = [

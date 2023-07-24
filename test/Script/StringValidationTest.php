@@ -9,12 +9,15 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use Wepesi\App\Validator\StringValidator;
 
+/**
+ * String validation test
+ */
 class StringValidationTest extends TestCase
 {
     /**
      * @throws Exception
      */
-    function testStringValidationSourceDataException(){
+    public function testStringValidationSourceDataException(){
         $stringValidationSourceDataException = Exception::class;
         try {
             $stringValidationSourceDataException = new StringValidator("","");
@@ -30,7 +33,7 @@ class StringValidationTest extends TestCase
         $this->assertSame($expectedMessage,$msg);
         $this->assertSame($expectedCode,$code);
     }
-    function testStringValidationSchemaException(){
+    public function testStringValidationSchemaException(){
         $stringValidationSchemaException= Exception::class;
         try {
             $source=["name"=>"john Doe"];
@@ -47,7 +50,7 @@ class StringValidationTest extends TestCase
         $this->assertSame($expectedMessage,$msg);
         $this->assertSame($expectedCode,$code);
     }
-    function testStringValidationFieldNotDefinedException(){
+    public function testStringValidationFieldNotDefinedException(){
         $stringValidationSchemaException= Exception::class;
         try {
             $source=["name"=>"john Doe"];
@@ -72,7 +75,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringIsObject(){
+    public function testStringIsObject(){
         $source = ['name' => 'John Doe'];
         $schema = [
             'name' => [
@@ -87,7 +90,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringMinError(){
+    public function testStringMinError(){
         $source=["name"=>"John Doe"];
         $schema=[
             'name'=>[
@@ -109,7 +112,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringMinSuccess(){
+    public function testStringMinSuccess(){
         $source=["name"=>"John Doe"];
         $schema=[
             'name'=>[
@@ -123,7 +126,7 @@ class StringValidationTest extends TestCase
     }/**
      * @throws Exception
      */
-    function testStringMaxError(){
+    public function testStringMaxError(){
         $source=["description"=>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda at, dolorem dolores error harum laudantium magnam qui quisquam sapiente sequi unde, voluptatum. At illo nesciunt obcaecati, odit omnis repellendus!
 "];
         $schema=[
@@ -146,7 +149,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringMaxSuccess(){
+    public function testStringMaxSuccess(){
         $source=["description"=>"Lorem ipsum dolor sit amet."];
         $schema=[
             'description'=>[
@@ -160,7 +163,7 @@ class StringValidationTest extends TestCase
     }/**
      * @throws Exception
      */
-    function testStringEmailError(){
+    public function testStringEmailError(){
         $source=["email"=>"John@Doe"];
         $schema=[
             'email'=>[
@@ -181,7 +184,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringEmailSuccess(){
+    public function testStringEmailSuccess(){
         $source=["email"=>"John@doe.com"];
         $schema=[
             'email'=>[
@@ -196,7 +199,7 @@ class StringValidationTest extends TestCase
     /**
     * @throws Exception
     */
-    function testStringURLError(){
+    public function testStringURLError(){
         $source=["link"=>"hello.com"];
         $schema=[
             'link'=>[
@@ -217,7 +220,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringURLSuccess(){
+    public function testStringURLSuccess(){
         /**
          * supported link : http(s)://[domain].[extension] ,
          * http(s)://www.[domain].[extension],
@@ -238,7 +241,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringRequiredErrorsUnknown()
+    public function testStringRequiredErrorsUnknown()
     {
         $source = ['username' => ' '];
         $schema = [
@@ -260,7 +263,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringRequiredErrors()
+    public function testStringRequiredErrors()
     {
         $source = ['username' => ' '];
         $schema = [
@@ -282,7 +285,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringRequiredSuccess()
+    public function testStringRequiredSuccess()
     {
         $source = ['username' => 'JonDoe'];
         $schema = [
@@ -299,7 +302,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringMatchErrors()
+    public function testStringMatchErrors()
     {
         $source = [
             'password' => 'passwrd',
@@ -324,7 +327,7 @@ class StringValidationTest extends TestCase
     /**
      * @throws Exception
      */
-    function testStringMatchSuccess()
+    public function testStringMatchSuccess()
     {
         $source = [
             'password' => 'password',

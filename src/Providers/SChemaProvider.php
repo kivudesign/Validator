@@ -8,9 +8,18 @@ namespace Wepesi\App\Providers;
 
 use Wepesi\App\Providers\Contracts\SchemaContracts;
 
+/**
+ *
+ */
 abstract class SChemaProvider implements SchemaContracts
 {
+    /**
+     * @var array
+     */
     protected array $schema = [];
+    /**
+     * @var string
+     */
     protected string $class_name;
 
     /**
@@ -42,6 +51,9 @@ abstract class SChemaProvider implements SchemaContracts
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function required(): SChemaProvider
     {
         $this->schema[$this->class_name]["required"] = true;

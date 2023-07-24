@@ -9,6 +9,9 @@ namespace Wepesi\App\Validator;
 use Wepesi\App\Providers\ValidatorProvider;
 use Wepesi\App\Validate;
 
+/**
+ *
+ */
 final class ArrayValidator extends ValidatorProvider
 {
     /**
@@ -45,6 +48,10 @@ final class ArrayValidator extends ValidatorProvider
         }
     }
 
+    /**
+     * @param int $rule
+     * @return void
+     */
     public function max(int $rule):void
     {
         // TODO: Implement max() method.

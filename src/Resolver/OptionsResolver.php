@@ -14,9 +14,15 @@ use Wepesi\App\Traits\ExceptionTraits;
  */
 final class OptionsResolver
 {
+    /**
+     * @var \ArrayObject
+     */
     private \ArrayObject $options;
     use ExceptionTraits;
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options)
     {
         $this->options = new \ArrayObject();
@@ -25,6 +31,10 @@ final class OptionsResolver
         }
     }
 
+    /**
+     * @param array $options
+     * @return array
+     */
     public function resolve(array $options): array
     {
         try {
@@ -69,6 +79,10 @@ final class OptionsResolver
         $this->options->offsetSet($option->getName(), $option);
     }
 
+    /**
+     * @param array $options
+     * @return array
+     */
     private function checkDiff(array $options): array
     {
         try {
@@ -87,6 +101,10 @@ final class OptionsResolver
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     private static function formatValue($value): string
     {
         if (is_object($value)) {
