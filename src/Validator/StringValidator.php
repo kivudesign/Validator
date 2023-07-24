@@ -117,6 +117,27 @@ final class StringValidator extends ValidatorProvider {
             $this->addError($message);
         }
     }
+
+    public function addressIp(string $ip_address){
+        if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP) ) {
+            $message = [
+                'type' => 'string.ip_address',
+                'message' => "`$this->field_name` is not a valid Ip address",
+                'label' => $this->field_name,
+            ];
+            $this->addError($message);
+        }
+    }
+    public function addressIpv6(string $ip_address){
+        if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP,FILTER_FLAG_IPV6) ) {
+            $message = [
+                'type' => 'string.ip_address_v6',
+                'message' => "`$this->field_name` should be an ip address (ipv6)",
+                'label' => $this->field_name,
+            ];
+            $this->addError($message);
+        }
+    }
     /**
      *
      * @param string $item_key

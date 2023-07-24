@@ -21,11 +21,11 @@ use Wepesi\App\Providers\SChemaProvider;
  */
 abstract class StringSchema extends SChemaProvider {
 
-    function __construct() {
+    public function __construct() {
         parent::__construct(__CLASS__);
     }
 
-    function email(): StringSchema
+    public function email(): StringSchema
     {
         $this->schema[$this->class_name]["email"]=true;
         return $this;
@@ -34,7 +34,7 @@ abstract class StringSchema extends SChemaProvider {
      * 
      * @return $this
      */
-    function url(): StringSchema
+    public function url(): StringSchema
     {
         $this->schema[$this->class_name]["url"]=true;
         return $this;
@@ -45,9 +45,22 @@ abstract class StringSchema extends SChemaProvider {
      * @param string $key_to_match
      * @return $this
      */
-    function match(string $key_to_match): StringSchema
+    public function match(string $key_to_match): StringSchema
     {
-        $this->schema[$this->class_name]["match"]=$key_to_match;
+        $this->schema[$this->class_name]["match"] = $key_to_match;
+        return $this;
+    }
+
+    /**
+     * @param string $ip_address
+     * @return $this
+     */
+    public function addressIp(bool $ipv6 = false): StringSchema{
+        if($ipv6) {
+            $this->schema[$this->class_name]['addressIpv6'] = true;
+        }else{
+            $this->schema[$this->class_name]['addressIp'] = true;
+        }
         return $this;
     }
 }
