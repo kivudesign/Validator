@@ -38,13 +38,12 @@ final class StringValidator extends ValidatorProvider
     {
         if ($this->positiveParamMethod($rule)) return;
         if (strlen($this->field_value) < $rule) {
-            $message = [
-                'type' => 'string.min',
-                'message' => "`$this->field_name` should have minimum of `$rule` characters",
-                'label' => $this->field_name,
-                'limit' => $rule
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.min')
+                ->message("`$this->field_name` should have minimum of `$rule` characters")
+                ->label($this->field_name)
+                ->limit($rule);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -57,13 +56,12 @@ final class StringValidator extends ValidatorProvider
     {
         if ($this->positiveParamMethod($rule, true)) return;
         if (strlen($this->field_value) > $rule) {
-            $message = [
-                'type' => 'string.max',
-                'message' => "`$this->field_name` should have maximum of `$rule` characters",
-                'label' => $this->field_name,
-                'limit' => $rule
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.max')
+                ->message("`$this->field_name` should have maximum of `$rule` characters")
+                ->label($this->field_name)
+                ->limit($rule);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -73,12 +71,11 @@ final class StringValidator extends ValidatorProvider
     public function email()
     {
         if (!filter_var($this->field_value, FILTER_VALIDATE_EMAIL)) {
-            $message = [
-                'type' => 'string.email',
-                'message' => ("`$this->field_name` should be an email."),
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.email')
+                ->message("`$this->field_name` should be an email.")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -92,12 +89,11 @@ final class StringValidator extends ValidatorProvider
     public function url()
     {
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->field_value)) {
-            $message = [
-                'type' => 'string.url',
-                'message' => ("'$this->field_name' this should be a link(url)"),
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.url')
+                ->message("'$this->field_name' this should be a link(url)")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -110,12 +106,11 @@ final class StringValidator extends ValidatorProvider
     {
         $this->isStringAndValid($key_to_match);
         if (isset($this->data_source[$key_to_match]) && (strlen($this->field_value) != strlen($this->data_source[$key_to_match])) && ($this->field_value != $this->data_source[$key_to_match])) {
-            $message = [
-                'type' => 'string.match',
-                'message' => "`$this->field_name` should match `$key_to_match`",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.match')
+                ->message("`$this->field_name` should match `$key_to_match`")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -126,12 +121,11 @@ final class StringValidator extends ValidatorProvider
     public function addressIp()
     {
         if (!filter_var($this->field_value, FILTER_VALIDATE_IP)) {
-            $message = [
-                'type' => 'string.ip_address',
-                'message' => "`$this->field_name` is not a valid Ip address",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.ip_address')
+                ->message("`$this->field_name` is not a valid Ip address")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -142,12 +136,11 @@ final class StringValidator extends ValidatorProvider
     public function addressIpv6(string $ip_address)
     {
         if (!filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $message = [
-                'type' => 'string.ip_address_v6',
-                'message' => "`$this->field_name` is not a valid ip address (ipv6)",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.ip_address_v6')
+                ->message("`$this->field_name` is not a valid ip address (ipv6)")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -161,19 +154,17 @@ final class StringValidator extends ValidatorProvider
         $field_to_check = !$item_key ? $this->field_name : $item_key;
         $regex = '#[a-zA-Z0-9]#';
         if (!isset($this->data_source[$field_to_check])) {
-            $message = [
-                'type' => 'string.unknown',
-                'message' => ("`$field_to_check` is not valid"),
-                'label' => $field_to_check,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.unknown')
+                ->message("`$field_to_check` is not valid")
+                ->label($field_to_check);
+            $this->addError($this->messageItem);
         } else if (!preg_match($regex, $this->data_source[$field_to_check]) || strlen(trim($this->field_value)) == 0) {
-            $message = [
-                'type' => 'string.unknown',
-                'message' => ("`$field_to_check` should be a string"),
-                'label' => $field_to_check,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('string.unknown')
+                ->message("`$field_to_check` should be a string")
+                ->label($field_to_check);
+            $this->addError($this->messageItem);
         }
     }
 

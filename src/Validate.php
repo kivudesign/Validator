@@ -21,7 +21,10 @@ class Validate
      * @var bool
      */
     private bool $passed;
-
+    /**
+     * @var MessageErrorBuilder
+     */
+    private MessageErrorBuilder $message;
     /**
      *
      */
@@ -29,6 +32,7 @@ class Validate
     {
         $this->errors = [];
         $this->passed = false;
+        $this->message = new MessageErrorBuilder();
     }
 
     /**
@@ -53,11 +57,10 @@ class Validate
 
             $exceptions = isset($options['exception']) || isset($options['InvalidArgumentException']) ?? false;
             if ($exceptions) {
-                $message = [
-                    'type' => 'object.unknown',
-                    'message' => $options['exception'] ?? $options['InvalidArgumentException'],
-                    'label' => "exception",
-                ];
+                $this->message
+                    ->type('object.unknown')
+                    ->message($options['exception'] ?? $options['InvalidArgumentException'])
+                    ->label("exception");
                 $this->addError($message);
             } else {
                 foreach ($schema as $item => $rules) {
@@ -97,9 +100,9 @@ class Validate
      * @param array $message
      * @return void
      */
-    private function addError(array $message)
+    private function addError(MessageErrorBuilder $item)
     {
-        $this->errors[] = $message;
+        $this->errors[] = $item->generate();
     }
 
     /**

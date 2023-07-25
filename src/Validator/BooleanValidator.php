@@ -66,12 +66,11 @@ final class BooleanValidator extends ValidatorProvider
 
         $regex = "/^(true|false)$/";
         if (!preg_match($regex, is_bool($val) ? ($val ? 'true' : 'false') : $val)) {
-            $message = [
-                'type' => 'boolean.unknown',
-                'message' => "`$item_to_check` should be a boolean",
-                'label' => $item_to_check,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('boolean.unknown')
+                ->message("`$item_to_check` should be a boolean")
+                ->label($item_to_check);
+            $this->addError($this->messageItem);
             return false;
         }
         return true;
@@ -87,23 +86,21 @@ final class BooleanValidator extends ValidatorProvider
         $required_value = strtolower($passed_value);
         $check = $required_value == 'true' || $required_value == 'false';
         if (!($check)) {
-            $message = [
-                'type' => 'boolean.required',
-                'message' => "isValid param must be boolean but you put `$required_value`",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('boolean.required')
+                ->message("isValid param must be boolean but you put `$required_value`")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
         } else {
             // $sting_value= is_bool($this->string_value);
             $incoming_value = $this->field_value ? 'true' : 'false';
 
             if ($incoming_value != $required_value) {
-                $message = [
-                    'type' => 'boolean.valid',
-                    'message' => "`$incoming_value` is not validValue required. You must put `$required_value`",
-                    'label' => $this->field_name,
-                ];
-                $this->addError($message);
+                $this->messageItem
+                    ->type('boolean.valid')
+                    ->message("`$incoming_value` is not validValue required. You must put `$required_value`")
+                    ->label($this->field_name);
+                $this->addError($this->messageItem);
             }
         }
     }
