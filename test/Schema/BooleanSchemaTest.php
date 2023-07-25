@@ -10,30 +10,47 @@ namespace Test\Schema;
 use PHPUnit\Framework\TestCase;
 use Wepesi\App\Schema\BooleanSchema;
 
+/**
+ *
+ */
 class BooleanSchemaTest extends TestCase
 {
-    function testBooleanIsObject()
+    private string $booleanSchema = 'Wepesi\\App\\Schema\\BooleanSchema';
+    /**
+     * @return void
+     */
+    public function testBooleanIsObject()
     {
-        $booleanSchema = new class extends BooleanSchema{};
+        $booleanSchema = new BooleanSchema();
         $this->assertIsObject($booleanSchema);
     }
 
-    function testStringObjectIsKey()
+    /**
+     * @return void
+     */
+    public function testStringObjectIsKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
-        $this->assertArrayHasKey('BooleanValidator', $booleanSchema->generate());
+        $booleanSchema = new BooleanSchema();
+        $this->assertArrayHasKey($this->booleanSchema, $booleanSchema->generate());
     }
 
-    function testBooleanIsRequireddKey()
+    /**
+     * @return void
+     */
+    public function testBooleanIsRequireddKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
-        $subset_array = ['BooleanValidator' => ['required' => true]];
+        $booleanSchema = new BooleanSchema();
+        $subset_array = [$this->booleanSchema => ['required' => true]];
         $this->assertEquals($subset_array, $booleanSchema->required()->generate());
     }
-    function testBooleanIsValidKey()
+
+    /**
+     * @return void
+     */
+    public function testBooleanIsValidKey()
     {
-        $booleanSchema = new class extends BooleanSchema{};
-        $subset_array = ['BooleanValidator' => ['isValid' => true]];
+        $booleanSchema = new BooleanSchema();
+        $subset_array = [$this->booleanSchema => ['isValid' => true]];
         $this->assertEquals($subset_array, $booleanSchema->isValid()->generate());
     }
 }

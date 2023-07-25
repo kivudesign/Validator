@@ -6,15 +6,28 @@
 
 namespace Wepesi\App;
 
+use Exception;
 use ReflectionClass;
 use Wepesi\App\Resolver\Option;
 use Wepesi\App\Resolver\OptionsResolver;
 
+/**
+ *
+ */
 class Validate
 {
+    /**
+     * @var array
+     */
     private array $errors;
+    /**
+     * @var bool
+     */
     private bool $passed;
 
+    /**
+     *
+     */
     function __construct()
     {
         $this->errors = [];
@@ -26,7 +39,8 @@ class Validate
      * @param array $schema data schema
      * @return void
      */
-    function check(array $resource, array $schema){
+    function check(array $resource, array $schema)
+    {
         try {
             $this->errors = [];
             $option_resolver = [];
@@ -46,39 +60,44 @@ class Validate
                     'label' => "exception",
                 ];
                 $this->addError($message);
-            }else{
+            } else {
                 foreach ($schema as $item => $rules) {
-                    if(!is_array($rules)){
-                        throw new \Exception("Trying to access array offset on value of type null! method generate not called");
+                    if (!is_array($rules)) {
+                        throw new Exception("Trying to access array offset on value of type null! method generate not called");
                     }
                     $class_namespace = array_keys($rules)[0];
                     if ($class_namespace == "any") continue;
 
-                    $validator_class = str_replace("Schema","Validator",$class_namespace);
+                    $validator_class = str_replace("Schema", "Validator", $class_namespace);
                     $reflexion = new ReflectionClass($validator_class);
 
-                    $instance = $reflexion->newInstance($item,$resource);
+                    $instance = $reflexion->newInstance($item, $resource);
 
-                    foreach ($rules[$class_namespace] as $method => $params){
-                        if(method_exists($instance,$method)){
-                            call_user_func_array([$instance,$method],[$params]);
+                    foreach ($rules[$class_namespace] as $method => $params) {
+                        if (method_exists($instance, $method)) {
+                            call_user_func_array([$instance, $method], [$params]);
                         }
                     }
                     $result = $instance->result();
-                    if( count($result)>0 ){
-                        $this->errors = array_merge($this->errors,$result);
+                    if (count($result) > 0) {
+                        $this->errors = array_merge($this->errors, $result);
                     }
                 }
-                if ( count($this->errors) == 0) {
+                if (count($this->errors) == 0) {
                     $this->passed = true;
                 }
             }
-        }catch (\Exception $ex){
+        } catch (Exception $ex) {
             die($ex);
         }
     }
 
-    private function addError(array $message){
+    /**
+     * @param array $message
+     * @return void
+     */
+    private function addError(array $message)
+    {
         $this->errors[] = $message;
     }
 
@@ -89,6 +108,7 @@ class Validate
     {
         return $this->errors;
     }
+
     /**
      * @return bool
      */

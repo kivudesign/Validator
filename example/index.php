@@ -19,8 +19,8 @@ $data_source = [
     "date_created"=>"2021-05-23"
 ];
 
-//    include_once __DIR__."/string.php";
+    include_once __DIR__."/string.php";
 //    include __DIR__."/number.php";
 //    include __DIR__."/date.php";
 //    include __DIR__."/boolean.php";
-    include __DIR__."/arrays.php";
+//    include __DIR__."/arrays.php";

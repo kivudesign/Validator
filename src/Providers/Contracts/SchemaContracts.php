@@ -7,8 +7,14 @@
 namespace Wepesi\App\Providers\Contracts;
 
 
+/**
+ *
+ */
 interface SchemaContracts extends Contracts
 {
 
+    /**
+     * @return mixed
+     */
     public function generate();
 }

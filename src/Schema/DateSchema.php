@@ -5,16 +5,20 @@
  */
 
 namespace Wepesi\App\Schema;
+
 use Wepesi\App\Providers\SChemaProvider;
 
 /**
- * Description of VDate
+ * Schema datetime
  *
- * @author Boss Ibrahim Mussa
  */
-abstract class DateSchema extends SChemaProvider
+final class DateSchema extends SChemaProvider
 {
-    function __construct() {
+    /**
+     *
+     */
+    function __construct()
+    {
         parent::__construct(__CLASS__);
     }
 
@@ -37,6 +41,7 @@ abstract class DateSchema extends SChemaProvider
         $this->schema[$this->class_name]['max'] = $rule;
         return $this;
     }
+
     /**
      * @return $this
      */
@@ -45,12 +50,13 @@ abstract class DateSchema extends SChemaProvider
         $this->schema[$this->class_name]["now"] = true;
         return $this;
     }
+
     /**
      * @return $this
      */
     function today(): DateSchema
     {
-        $this->schema[$this->class_name]["today"]=true;
+        $this->schema[$this->class_name]["today"] = true;
         return $this;
     }
 }

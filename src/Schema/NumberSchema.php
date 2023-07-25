@@ -9,13 +9,17 @@ namespace Wepesi\App\Schema;
 use Wepesi\App\Providers\SChemaProvider;
 
 /**
- * Description of VNumber
- *
- * @author Boss Ibrahim Mussa
+ * Schema number validation
+ * validate any format number
  */
-abstract class NumberSchema extends SChemaProvider {
+final class NumberSchema extends SChemaProvider
+{
 
-    function __construct() {
+    /**
+     *
+     */
+    function __construct()
+    {
         parent::__construct(__CLASS__);
     }
 

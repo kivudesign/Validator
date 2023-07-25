@@ -6,7 +6,14 @@
 
 namespace Wepesi\App\Resolver;
 
+use ArrayObject;
+use Exception;
+use InvalidArgumentException;
 use Wepesi\App\Traits\ExceptionTraits;
+use function array_key_exists;
+use function get_class;
+use function gettype;
+use function sprintf;
 
 /**
  * Class OptionsResolver
@@ -14,22 +21,32 @@ use Wepesi\App\Traits\ExceptionTraits;
  */
 final class OptionsResolver
 {
-    private \ArrayObject $options;
+    /**
+     * @var ArrayObject
+     */
+    private ArrayObject $options;
     use ExceptionTraits;
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options)
     {
-        $this->options = new \ArrayObject();
+        $this->options = new ArrayObject();
         foreach ($options as $option) {
             $this->add($option);
         }
     }
 
+    /**
+     * @param array $options
+     * @return array
+     */
     public function resolve(array $options): array
     {
         try {
             $checkDiff = $this->checkDiff($options);
-            if(isset($checkDiff['exception'])){
+            if (isset($checkDiff['exception'])) {
                 return $checkDiff;
             }
             /**
@@ -38,10 +55,10 @@ final class OptionsResolver
             $optionsResolved = [];
             foreach ($this->options as $option) {
                 $optionName = $option->getName();
-                if (\array_key_exists($optionName, $options)) {
+                if (array_key_exists($optionName, $options)) {
                     $value = $options[$optionName];
                     if ($option->isValid($value) === false) {
-                        throw new \InvalidArgumentException(sprintf('The option "%s" with value %s is invalid.', $optionName, self::formatValue($value)));
+                        throw new InvalidArgumentException(sprintf('The option "%s" with value %s is invalid.', $optionName, self::formatValue($value)));
                     }
                     $optionsResolved[$optionName] = $value;
                     continue;
@@ -52,10 +69,10 @@ final class OptionsResolver
                     continue;
                 }
 
-                throw new \InvalidArgumentException(sprintf('The required option "%s" is missing.', $optionName));
+                throw new InvalidArgumentException(sprintf('The required option "%s" is missing.', $optionName));
             }
             return $optionsResolved;
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return $this->exception($ex);
         }
     }
@@ -69,28 +86,36 @@ final class OptionsResolver
         $this->options->offsetSet($option->getName(), $option);
     }
 
+    /**
+     * @param array $options
+     * @return array
+     */
     private function checkDiff(array $options): array
     {
         try {
             $defined = $this->options->getArrayCopy();
             $diff = array_diff_key($options, $defined);
             if (count($diff) > 0) {
-                throw new \InvalidArgumentException(\sprintf(
+                throw new InvalidArgumentException(sprintf(
                         'The option(s) "%s" do(es) not exist. Defined options are: "%s".',
                         implode(', ', array_keys($diff)),
                         implode('", "', array_keys($defined)))
                 );
             }
             return [];
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return $this->exception($ex);
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     private static function formatValue($value): string
     {
         if (is_object($value)) {
-            return \get_class($value);
+            return get_class($value);
         }
 
         if (is_string($value)) {
@@ -105,6 +130,6 @@ final class OptionsResolver
             return 'true';
         }
 
-        return \gettype($value);
+        return gettype($value);
     }
 }

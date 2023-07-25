@@ -5,8 +5,8 @@
  */
 
 
-
 namespace Wepesi\App\Validator;
+
 use Wepesi\App\Providers\ValidatorProvider;
 
 /**
@@ -17,11 +17,15 @@ use Wepesi\App\Providers\ValidatorProvider;
 final class DateValidator extends ValidatorProvider
 {
 
-    public function __construct(string $item,array $data_source ) {
+    /**
+     * @param string $item
+     * @param array $data_source
+     */
+    public function __construct(string $item, array $data_source)
+    {
         $this->field_name = $item;
         $this->field_value = $data_source[$item];
         $this->data_source = $data_source;
-        $this->class_provider = "date";
         $this->checkExist();
         parent::__construct();
     }
@@ -31,15 +35,15 @@ final class DateValidator extends ValidatorProvider
      */
     public function now()
     {
-        $min_date_time = strtotime("now");
-        $min_date = date("d/F/Y",$min_date_time);
+        $min_date_time = strtotime('now');
+        $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time < $min_date_time) {
-            $message=[
-                "type" => "date.now",
-                "message" => "`$this->field_name` should be greater than now",
-                "label" => $this->field_name,
-                "limit" => $min_date
+            $message = [
+                'type' => 'date.now',
+                'message' => "`$this->field_name` should be greater than now",
+                'label' => $this->field_name,
+                'limit' => $min_date
             ];
             $this->addError($message);
         }
@@ -50,17 +54,17 @@ final class DateValidator extends ValidatorProvider
      * @return  void
      * while trying to get day validation use this module
      */
-    public function today(string $times=null)
+    public function today(string $times = null)
     {
         $min_date_time = strtotime("now {$times}");
-        $min_date = date("d/F/Y",$min_date_time);
+        $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time > $min_date_time) {
-            $message=[
-                "type" => "date.now",
-                "message" => "`$this->field_name` should be greater than today ",
-                "label" => $this->field_name,
-                "limit" => $min_date
+            $message = [
+                'type' => 'date.now',
+                'message' => "`$this->field_name` should be greater than today ",
+                'label' => $this->field_name,
+                'limit' => $min_date
             ];
             $this->addError($message);
         }
@@ -79,16 +83,16 @@ final class DateValidator extends ValidatorProvider
          * $con=!$time?$time:(int)$time;
          * in case the parameters are integers
          */
-        $rule = $rule ?? "now";
+        $rule = $rule ?? 'now';
         $min_date_time = strtotime($rule);
-        $min_date = date("d/F/Y",$min_date_time);
+        $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time > $min_date_time) {
-            $message=[
-                "type" => "date.min",
-                "message" => "`$this->field_name` should be greater than `$min_date`",
-                "label" => $this->field_name,
-                "limit" => $min_date
+            $message = [
+                'type' => 'date.min',
+                'message' => "`$this->field_name` should be greater than `$min_date`",
+                'label' => $this->field_name,
+                'limit' => $min_date
             ];
             $this->addError($message);
         }
@@ -101,40 +105,52 @@ final class DateValidator extends ValidatorProvider
      */
     public function max($rule)
     {
-        $rule = $rule ?? "now";
+        $rule = $rule ?? 'now';
         $max_date_time = strtotime($rule);
-        $max_date = date("d/F/Y",$max_date_time);
+        $max_date = date('d/F/Y', $max_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($max_date_time < $date_value_time) {
             $message = [
-                "type" => "date.max",
-                "message" => "`$this->field_name` should be less than `$max_date`",
-                "label" => $this->field_name,
-                "limit" => $max_date
+                'type' => 'date.max',
+                'message' => "`$this->field_name` should be less than `$max_date`",
+                'label' => $this->field_name,
+                'limit' => $max_date
             ];
             $this->addError($message);
         }
     }
 
-    protected function checkExist(string $itemKey=null): void
+    /**
+     * @param string|null $itemKey
+     * @return void
+     */
+    protected function checkExist(string $itemKey = null): void
     {
-        $item_to_check = $itemKey?$itemKey:$this->field_name;
-        $regex = "#[a-zA-Z0-9]#";
-        $this->_errors=[];
+        $item_to_check = $itemKey ? $itemKey : $this->field_name;
+        $regex = '#[a-zA-Z0-9]#';
+        $this->_errors = [];
         if (!isset($this->data_source[$item_to_check])) {
             $message = [
-                "type"=> "any.unknown",
-                "message" => "`$item_to_check` is unknown",
-                "label" => $item_to_check,
+                'type' => 'any.unknown',
+                'message' => "`$item_to_check` is unknown",
+                'label' => $item_to_check,
             ];
             $this->addError($message);
-        }else if(!preg_match($regex,$this->data_source[$item_to_check]) || strlen(trim($this->data_source[$item_to_check]))==0){
-            $message=[
-                "type" => "date.unknown",
-                "message" => "`$item_to_check` should be a date.",
-                "label" => $item_to_check,
+        } else if (!preg_match($regex, $this->data_source[$item_to_check]) || strlen(trim($this->data_source[$item_to_check])) == 0) {
+            $message = [
+                'type' => 'date.unknown',
+                'message' => "`$item_to_check` should be a date.",
+                'label' => $item_to_check,
             ];
             $this->addError($message);
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function classProvider(): string
+    {
+        return 'date';
     }
 }

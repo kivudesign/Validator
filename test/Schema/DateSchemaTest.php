@@ -10,30 +10,47 @@ namespace Test\Schema;
 use PHPUnit\Framework\TestCase;
 use Wepesi\App\Schema\DateSchema;
 
+/**
+ *
+ */
 class DateSchemaTest extends TestCase
 {
-    function testStringIsObject()
+    private string $dateSchema = 'Wepesi\\App\\Schema\\DateSchema';
+    /**
+     * @return void
+     */
+    public function testStringIsObject()
     {
-        $dateSchema = new class extends DateSchema{};
+        $dateSchema = new DateSchema();
         $this->assertIsObject($dateSchema);
     }
 
-    function testStringObjectIsKey()
+    /**
+     * @return void
+     */
+    public function testStringObjectIsKey()
     {
-        $dateSchema = new class extends DateSchema{};
-        $this->assertArrayHasKey('DateValidator', $dateSchema->generate());
+        $dateSchema = new DateSchema();
+        $this->assertArrayHasKey($this->dateSchema, $dateSchema->generate());
     }
 
-    function testDateNowKey()
+    /**
+     * @return void
+     */
+    public function testDateNowKey()
     {
-        $dateSchema = new class extends DateSchema{};
-        $subset_array = ['DateValidator' => ['now' => true]];
+        $dateSchema = new DateSchema();
+        $subset_array = [$this->dateSchema => ['now' => true]];
         $this->assertEquals($subset_array, $dateSchema->now()->generate());
     }
-    function testDateTodayKey()
+
+    /**
+     * @return void
+     */
+    public function testDateTodayKey()
     {
-        $dateSchema = new class extends DateSchema{};
-        $subset_array = ['DateValidator' => ['today' => true]];
+        $dateSchema = new DateSchema();
+        $subset_array = [$this->dateSchema => ['today' => true]];
         $this->assertEquals($subset_array, $dateSchema->today()->generate());
     }
 }
