@@ -39,13 +39,12 @@ final class DateValidator extends ValidatorProvider
         $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time < $min_date_time) {
-            $message = [
-                'type' => 'date.now',
-                'message' => "`$this->field_name` should be greater than now",
-                'label' => $this->field_name,
-                'limit' => $min_date
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('date.now')
+                ->message("`$this->field_name` should be greater than now")
+                ->label($this->field_name)
+                ->limit($min_date);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -60,13 +59,12 @@ final class DateValidator extends ValidatorProvider
         $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time > $min_date_time) {
-            $message = [
-                'type' => 'date.now',
-                'message' => "`$this->field_name` should be greater than today ",
-                'label' => $this->field_name,
-                'limit' => $min_date
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('date.now')
+                ->message("`$this->field_name` should be greater than today ")
+                ->label($this->field_name)
+                ->limit($min_date);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -88,13 +86,12 @@ final class DateValidator extends ValidatorProvider
         $min_date = date('d/F/Y', $min_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($date_value_time > $min_date_time) {
-            $message = [
-                'type' => 'date.min',
-                'message' => "`$this->field_name` should be greater than `$min_date`",
-                'label' => $this->field_name,
-                'limit' => $min_date
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('date.min')
+                ->message("`$this->field_name` should be greater than `$min_date`")
+                ->label($this->field_name)
+                ->limit($min_date);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -110,13 +107,12 @@ final class DateValidator extends ValidatorProvider
         $max_date = date('d/F/Y', $max_date_time);
         $date_value_time = strtotime($this->field_value);
         if ($max_date_time < $date_value_time) {
-            $message = [
-                'type' => 'date.max',
-                'message' => "`$this->field_name` should be less than `$max_date`",
-                'label' => $this->field_name,
-                'limit' => $max_date
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('date.max')
+                ->message("`$this->field_name` should be less than `$max_date`")
+                ->label($this->field_name)
+                ->limit($max_date);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -130,19 +126,17 @@ final class DateValidator extends ValidatorProvider
         $regex = '#[a-zA-Z0-9]#';
         $this->_errors = [];
         if (!isset($this->data_source[$item_to_check])) {
-            $message = [
-                'type' => 'any.unknown',
-                'message' => "`$item_to_check` is unknown",
-                'label' => $item_to_check,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('any.unknown')
+                ->message("`$item_to_check` is unknown")
+                ->label($item_to_check);
+            $this->addError($this->messageItem);
         } else if (!preg_match($regex, $this->data_source[$item_to_check]) || strlen(trim($this->data_source[$item_to_check])) == 0) {
-            $message = [
-                'type' => 'date.unknown',
-                'message' => "`$item_to_check` should be a date.",
-                'label' => $item_to_check,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('date.unknown')
+                ->message("`$item_to_check` should be a date.")
+                ->label($item_to_check);
+            $this->addError($this->messageItem);
         }
     }
 

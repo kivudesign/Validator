@@ -37,13 +37,12 @@ final class ArrayValidator extends ValidatorProvider
         // TODO: Implement min() method.
         if ($this->positiveParamMethod($rule)) return;
         if (count($this->field_value) < $rule) {
-            $message = [
-                'type' => 'array.min',
-                'message' => "`$this->field_name` should have a minimum of `$rule` elements",
-                'label' => $this->field_name,
-                'limit' => $rule
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('array.min')
+                ->message("`$this->field_name` should have a minimum of `$rule` elements")
+                ->label($this->field_name)
+                ->limit($rule);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -56,13 +55,12 @@ final class ArrayValidator extends ValidatorProvider
         // TODO: Implement max() method.
         if ($this->positiveParamMethod($rule, true)) return;
         if (count($this->field_value) > $rule) {
-            $message = [
-                'type' => 'array.max',
-                'message' => "`$this->field_name` should have a maximum of `$rule` elements",
-                'label' => $this->field_name,
-                'limit' => $rule
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type('array.max')
+                ->message("`$this->field_name` should have a maximum of `$rule` elements")
+                ->label($this->field_name)
+                ->limit($rule);
+            $this->addError($this->messageItem);
         }
     }
 
@@ -96,13 +94,12 @@ final class ArrayValidator extends ValidatorProvider
             $keys = array_keys($filter);
             for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
-                $message = [
-                    'type' => 'array.string',
-                    'message' => "`$this->field_name[$position]` should be a string",
-                    'label' => $this->field_name,
-                    'limit' => 1
-                ];
-                $this->addError($message);
+                $this->messageItem
+                    ->type('array.string')
+                    ->message("`$this->field_name[$position]` should be a string")
+                    ->label($this->field_name)
+                    ->limit(1);
+                $this->addError($this->messageItem);
             }
         }
     }
@@ -123,13 +120,12 @@ final class ArrayValidator extends ValidatorProvider
             $keys = array_keys($filter);
             for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
-                $message = [
-                    'type' => 'array.number',
-                    'message' => "`$this->field_name[$position]` should be a number",
-                    'label' => $this->field_name,
-                    'limit' => count($keys)
-                ];
-                $this->addError($message);
+                $this->messageItem
+                    ->type('array.number')
+                    ->message("`$this->field_name[$position]` should be a number")
+                    ->label($this->field_name)
+                    ->limit(count($keys));
+                $this->addError($this->messageItem);
             }
         }
     }

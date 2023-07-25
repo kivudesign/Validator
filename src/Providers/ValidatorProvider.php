@@ -6,6 +6,7 @@
 
 namespace Wepesi\App\Providers;
 
+use Wepesi\App\MessageErrorBuilder;
 use Wepesi\App\Providers\Contracts\Contracts;
 
 /**
@@ -29,13 +30,18 @@ abstract class ValidatorProvider implements Contracts
      * @var
      */
     protected $field_value;
-
+    /**
+     * @var MessageErrorBuilder
+     */
+    protected MessageErrorBuilder $messageItem;
     /**
      *
      */
+
     function __construct()
     {
         $this->errors = [];
+        $this->messageItem = new MessageErrorBuilder();
     }
 
     /**
@@ -70,22 +76,20 @@ abstract class ValidatorProvider implements Contracts
     {
         if (is_array($this->field_value)) {
             if (count($this->field_value) == 0) {
-                $message = [
-                    'type' => $this->getClassProvider() . ' required',
-                    'message' => "'$this->field_name' is required",
-                    'label' => $this->field_name,
-                ];
-                $this->addError($message);
+                $this->messageItem
+                    ->type($this->getClassProvider() . ' required')
+                    ->label($this->field_name)
+                    ->message("'$this->field_name' is required");
+                $this->addError($this->messageItem);
             }
         } else {
             $required_value = trim($this->field_value);
             if (strlen($required_value) == 0) {
-                $message = [
-                    'type' => $this->classProvider() . ' required',
-                    'message' => "'$this->field_name' is required",
-                    'label' => $this->field_name,
-                ];
-                $this->addError($message);
+                $this->messageItem
+                    ->type($this->classProvider() . ' required')
+                    ->message("'$this->field_name' is required")
+                    ->label($this->field_name);
+                $this->addError($this->messageItem);
             }
         }
     }
@@ -95,9 +99,9 @@ abstract class ValidatorProvider implements Contracts
      * @param array $value
      * @return void
      */
-    public function addError(array $value): void
+    public function addError(MessageErrorBuilder $item): void
     {
-        $this->errors[] = $value;
+        $this->errors[] = $item->generate();
     }
 
     /**
@@ -118,12 +122,11 @@ abstract class ValidatorProvider implements Contracts
         $status = true;
         if ($rule < 1) {
             $method = $max ? "max" : "min";
-            $message = [
-                'type' => $this->getClassProvider() . ' method ' . $method,
-                'message' => "'$this->field_name' $method param should be a positive number",
-                'label' => $this->field_name,
-            ];
-            $this->addError($message);
+            $this->messageItem
+                ->type($this->getClassProvider() . ' method ' . $method)
+                ->message("'$this->field_name' $method param should be a positive number")
+                ->label($this->field_name);
+            $this->addError($this->messageItem);
             $status = false;
         }
         return $status;
