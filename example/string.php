@@ -28,8 +28,7 @@ $rules = [
     "new_password" => $schema->string()->min(3)->max(40)->match("password")->generate(),
     "email" => $schema->string()->min(3)->max(40)->email()->generate(),
     "link" => $schema->string()->min(3)->max(40)->url()->generate(),
-    "ip" => $schema->string()->addressIp()->max(40)->url()->generate(),
-
+    "ip" => $schema->string()->addressIp()->generate()
 ];
 $validate->check($source, $rules);
 ////    check if the validation passed or not

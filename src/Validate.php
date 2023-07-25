@@ -6,11 +6,8 @@
 
 namespace Wepesi\App;
 
-use Exception;
-use ReflectionClass;
-use Wepesi\App\Resolver\Option;
-use Wepesi\App\Resolver\OptionsResolver;
-
+use Wepesi\Resolver\OptionsResolver;
+use Wepesi\Resolver\Option;
 /**
  *
  */
@@ -53,23 +50,27 @@ class Validate
             }
             $resolver = new OptionsResolver($option_resolver);
             $options = $resolver->resolve($schema);
-            if (isset($options["exception"])) {
+
+            $exceptions = isset($options['exception']) || isset($options['InvalidArgumentException']) ?? false;
+            if ($exceptions) {
                 $message = [
                     'type' => 'object.unknown',
-                    'message' => $options["exception"],
+                    'message' => $options['exception'] ?? $options['InvalidArgumentException'],
                     'label' => "exception",
                 ];
                 $this->addError($message);
             } else {
                 foreach ($schema as $item => $rules) {
-                    if (!is_array($rules)) {
-                        throw new Exception("Trying to access array offset on value of type null! method generate not called");
+                    if (!is_array($rules) && is_object($rules)) {
+                        if(!$rules->generate()){
+                            throw new \Exception("Schema rule is not a valid schema! method generate does not exist");
+                        }
+                        $rules = $rules->generate();
                     }
                     $class_namespace = array_keys($rules)[0];
                     if ($class_namespace == "any") continue;
-
                     $validator_class = str_replace("Schema", "Validator", $class_namespace);
-                    $reflexion = new ReflectionClass($validator_class);
+                    $reflexion = new \ReflectionClass($validator_class);
 
                     $instance = $reflexion->newInstance($item, $resource);
 
@@ -87,7 +88,7 @@ class Validate
                     $this->passed = true;
                 }
             }
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             die($ex);
         }
     }

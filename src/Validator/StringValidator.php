@@ -20,7 +20,7 @@ final class StringValidator extends ValidatorProvider
      * @param string $item the item to be validated.
      * @param array $data_source the source data from where is going to check it the match key exist and have value.
      */
-    public function __construct(string $item, array $data_source = [])
+    public function __construct(string $item, array $data_source)
     {
         $this->errors = [];
         $this->data_source = $data_source;
@@ -123,9 +123,9 @@ final class StringValidator extends ValidatorProvider
      * @param string $ip_address
      * @return void
      */
-    public function addressIp(string $ip_address)
+    public function addressIp()
     {
-        if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP)) {
+        if (!filter_var($this->field_value, FILTER_VALIDATE_IP)) {
             $message = [
                 'type' => 'string.ip_address',
                 'message' => "`$this->field_name` is not a valid Ip address",
@@ -141,10 +141,10 @@ final class StringValidator extends ValidatorProvider
      */
     public function addressIpv6(string $ip_address)
     {
-        if (!filter_var($this->data_source[$ip_address], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        if (!filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             $message = [
                 'type' => 'string.ip_address_v6',
-                'message' => "`$this->field_name` should be an ip address (ipv6)",
+                'message' => "`$this->field_name` is not a valid ip address (ipv6)",
                 'label' => $this->field_name,
             ];
             $this->addError($message);
