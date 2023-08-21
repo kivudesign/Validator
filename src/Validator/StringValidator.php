@@ -105,7 +105,7 @@ final class StringValidator extends ValidatorProvider
     public function match(string $key_to_match)
     {
         $this->isStringAndValid($key_to_match);
-        if (isset($this->data_source[$key_to_match]) && (strlen($this->field_value) != strlen($this->data_source[$key_to_match])) && ($this->field_value != $this->data_source[$key_to_match])) {
+        if (isset($this->data_source[$key_to_match]) && ($this->field_value != $this->data_source[$key_to_match])) {
             $this->messageItem
                 ->type('string.match')
                 ->message("`$this->field_name` should match `$key_to_match`")
