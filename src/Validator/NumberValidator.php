@@ -28,13 +28,8 @@ final class NumberValidator extends ValidatorProvider
      */
     public function __construct(string $item, array $data_source)
     {
-        $this->data_source = $data_source;
-        $this->field_name = $item;
-        $this->field_value = $data_source[$item];
-        if ($this->isNumber()) {
-            $this->field_value = $data_source[$item];
-        }
-        parent::__construct();
+        parent::__construct($item, $data_source);
+        $this->isNumber();
     }
 
     /**
@@ -43,14 +38,13 @@ final class NumberValidator extends ValidatorProvider
      */
     public function min(int $rule)
     {
-        if ($this->positiveParamMethod($rule)) return;
         if ((int)$this->field_value < $rule) {
-            $this->messageItem
-                ->type('number.min')
+            $this->message_error_builder
+                ->type($this->typeError('min'))
                 ->message("`$this->field_name` should be greater than `$rule`")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -60,14 +54,14 @@ final class NumberValidator extends ValidatorProvider
      */
     public function max(int $rule)
     {
-        if ($this->positiveParamMethod($rule, true)) return;
+        if ($this->checkNotPositiveParamMethod($rule, true)) return;
         if ((int)$this->field_value > $rule) {
-            $this->messageItem
-                ->type('number.max')
+            $this->message_error_builder
+                ->type($this->typeError('max'))
                 ->message("`$this->field_name` should be less than `$rule`")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -77,12 +71,26 @@ final class NumberValidator extends ValidatorProvider
     public function positive()
     {
         if ((int)$this->field_value < 0) {
-            $this->messageItem
-                ->type('number.positive')
+            $this->message_error_builder
+                ->type($this->typeError('positive'))
                 ->message("`$this->field_name` should be a positive number")
                 ->label($this->field_name)
                 ->limit(1);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
+        }
+    }
+    /**
+     *
+     */
+    public function negative()
+    {
+        if ((int)$this->field_value > 0) {
+            $this->message_error_builder
+                ->type($this->typeError('negative'))
+                ->message("`$this->field_name` should be a negative number")
+                ->label($this->field_name)
+                ->limit(1);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -93,21 +101,13 @@ final class NumberValidator extends ValidatorProvider
     {
         $regex_string = '#[a-zA-Z]#';
         if (preg_match($regex_string, trim($this->data_source[$this->field_name])) || !is_integer($this->data_source[$this->field_name])) {
-            $this->messageItem
-                ->type('number.unknown')
+            $this->message_error_builder
+                ->type($this->typeError('unknown'))
                 ->message("`$this->field_name` should be a number")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
             return false;
         }
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    protected function classProvider(): string
-    {
-        return 'number';
     }
 }
