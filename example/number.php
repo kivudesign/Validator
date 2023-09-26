@@ -4,22 +4,38 @@
  *  @author Boss Ibrahim Mussa
  */
 
-$validate = new \Wepesi\App\Validate();
-$schema = new \Wepesi\App\Schema();
-$data_source = [
+use Wepesi\App\Schema;
+use Wepesi\App\Validate;
+
+$validate = new Validate();
+$schema = new Schema();
+$data_source_pass = [
+    "age" => 10,
+    "length" => 3,
+    "height" => 10,
+    "level" => -10,
+];
+
+$data_source_fail = [
     "age" => 20,
     "length" => 0,
-    "height" =>"35",
-    "width" =>"",
-    "direction" => -7
+    "height" => -35,
+    "level" => 10,
 ];
-$rules=[
-    "age" => $schema->number()->min(8)->max(15)->required()->generate(),
-    "length" => $schema->number()->min(1)->max(10)->required()->generate(),
-    "height" => $schema->number()->min(18)->max(50)->required()->generate(),
-    "width" => $schema->number()->min(3)->max(50)->required()->generate(),
-    "direction" => $schema->number()->min(3)->max(50)->positive()->required()->generate(),
-    ];
-$validate->check($data_source,$rules);
+$rules = [
+    "age" => $schema->number()->min(8)->max(15)->required(),
+    "length" => $schema->number()->min(1)->max(10),
+    "height" => $schema->number()->positive(),
+    "level" => $schema->number()->negative(),
+];
+$validate->check($data_source_pass, $rules);
+var_dump([
+    'passed' => $validate->passed(),
+    'errors' => $validate->errors()
+]);
 
-include_once __DIR__ . '/vardump.php';
+$validate->check($data_source_fail, $rules);
+var_dump([
+    'passed' => $validate->passed(),
+    'errors' => $validate->errors()
+]);
