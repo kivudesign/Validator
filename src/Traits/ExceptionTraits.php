@@ -19,6 +19,6 @@ trait ExceptionTraits
      */
     protected function exception($ex): array
     {
-        return ['exception' => $ex->getMessage()];
+        return ['exception' => $ex];
     }
 }
