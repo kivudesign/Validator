@@ -4,6 +4,9 @@
  *  @author Boss Ibrahim Mussa
  */
 
+use Wepesi\App\Validator\StringValidator;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 $data_source = [
     "name" => "ibrahim",
     "age" => 12,
