@@ -15,7 +15,7 @@ use Wepesi\App\Schema\StringSchema;
 /**
  *
  */
-class Schema
+final class Schema
 {
 
     /**
