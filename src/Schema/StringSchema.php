@@ -11,30 +11,21 @@ namespace Wepesi\App\Schema;
  * and open the template in the editor.
  */
 
-use Wepesi\App\Providers\SChemaProvider;
+use Wepesi\App\Providers\SchemaProvider;
 
 
 /**
- * String valiation schema
+ * String validation schema
  * validate string value
  */
-final class StringSchema extends SChemaProvider
+final class StringSchema extends SchemaProvider
 {
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct(__CLASS__);
-    }
-
     /**
      * @return $this
      */
     public function email(): StringSchema
     {
-        $this->schema[$this->class_name]["email"] = true;
+        $this->schema["email"] = true;
         return $this;
     }
 
@@ -44,7 +35,7 @@ final class StringSchema extends SChemaProvider
      */
     public function url(): StringSchema
     {
-        $this->schema[$this->class_name]["url"] = true;
+        $this->schema["url"] = true;
         return $this;
     }
 
@@ -55,20 +46,20 @@ final class StringSchema extends SChemaProvider
      */
     public function match(string $key_to_match): StringSchema
     {
-        $this->schema[$this->class_name]["match"] = $key_to_match;
+        $this->schema["match"] = $key_to_match;
         return $this;
     }
 
     /**
-     * @param string $ip_address
+     * @param bool $ipv6
      * @return $this
      */
     public function addressIp(bool $ipv6 = false): StringSchema
     {
         if ($ipv6) {
-            $this->schema[$this->class_name]['addressIpv6'] = true;
+            $this->schema['addressIpv6'] = true;
         } else {
-            $this->schema[$this->class_name]['addressIp'] = true;
+            $this->schema['addressIp'] = true;
         }
         return $this;
     }

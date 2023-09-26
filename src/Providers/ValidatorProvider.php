@@ -8,6 +8,7 @@ namespace Wepesi\App\Providers;
 
 use Wepesi\App\MessageErrorBuilder;
 use Wepesi\App\Providers\Contracts\Contracts;
+use Wepesi\App\Providers\Contracts\MessageBuilderContracts;
 
 /**
  * Validator provider model
@@ -33,15 +34,15 @@ abstract class ValidatorProvider implements Contracts
     /**
      * @var MessageErrorBuilder
      */
-    protected MessageErrorBuilder $messageItem;
-    /**
-     *
-     */
+    protected MessageErrorBuilder $message_error_builder;
 
-    function __construct()
+    function __construct(string $item, array $data_source = [])
     {
         $this->errors = [];
-        $this->messageItem = new MessageErrorBuilder();
+        $this->message_error_builder = new MessageErrorBuilder();
+        $this->data_source = $data_source;
+        $this->field_name = $item;
+        $this->field_value = $data_source[$item];
     }
 
     /**
@@ -60,14 +61,18 @@ abstract class ValidatorProvider implements Contracts
      * Provide validation module name
      * @return string
      */
-    abstract protected function classProvider(): string ;
+    protected function classProvider(): string {
+        $reflexion = new \ReflectionClass($this);
+        return str_replace('validator','',strtolower($reflexion->getShortName()));
+    }
 
     /**
      * @return string
      */
     private function getClassProvider(): string
     {
-        return $this->classProvider && strlen($this->classProvider) > 0 ? $this->classProvider : 'unknown';
+        $reflexion = new \ReflectionClass($this);
+        return str_replace('validator','',strtolower($reflexion->getShortName()));
     }
     /**
      * @return void
@@ -76,30 +81,30 @@ abstract class ValidatorProvider implements Contracts
     {
         if (is_array($this->field_value)) {
             if (count($this->field_value) == 0) {
-                $this->messageItem
+                $this->message_error_builder
                     ->type($this->getClassProvider() . ' required')
                     ->label($this->field_name)
                     ->message("'$this->field_name' is required");
-                $this->addError($this->messageItem);
+                $this->addError($this->message_error_builder);
             }
         } else {
             $required_value = trim($this->field_value);
             if (strlen($required_value) == 0) {
-                $this->messageItem
-                    ->type($this->classProvider() . ' required')
+                $this->message_error_builder
+                    ->type($this->getClassProvider() . ' required')
                     ->message("'$this->field_name' is required")
                     ->label($this->field_name);
-                $this->addError($this->messageItem);
+                $this->addError($this->message_error_builder);
             }
         }
     }
 
     /**
      *
-     * @param array $value
+     * @param MessageBuilderContracts $item
      * @return void
      */
-    public function addError(MessageErrorBuilder $item): void
+    public function addError(MessageBuilderContracts $item): void
     {
         $this->errors[] = $item->generate();
     }
@@ -117,18 +122,22 @@ abstract class ValidatorProvider implements Contracts
      * @param bool $max
      * @return bool
      */
-    protected function positiveParamMethod(int $rule, bool $max = false): bool
+    protected function checkNotPositiveParamMethod(int $rule, bool $max = false): bool
     {
-        $status = true;
+        $status = false;
         if ($rule < 1) {
-            $method = $max ? "max" : "min";
-            $this->messageItem
+            $method = $max ? 'max' : 'min';
+            $this->message_error_builder
                 ->type($this->getClassProvider() . ' method ' . $method)
                 ->message("'$this->field_name' $method param should be a positive number")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
-            $status = false;
+            $this->addError($this->message_error_builder);
+            $status = true;
         }
         return $status;
+    }
+
+    protected function typeError(string $type){
+        return $this->getClassProvider() . ".$type";
     }
 }

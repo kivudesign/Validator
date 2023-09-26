@@ -6,12 +6,13 @@
 
 namespace Wepesi\App;
 
+use Wepesi\App\Providers\Contracts\MessageBuilderContracts;
 use Wepesi\Resolver\OptionsResolver;
 use Wepesi\Resolver\Option;
 /**
  *
  */
-class Validate
+final class Validate
 {
     /**
      * @var array
@@ -55,13 +56,13 @@ class Validate
             $resolver = new OptionsResolver($option_resolver);
             $options = $resolver->resolve($schema);
 
-            $exceptions = isset($options['exception']) || isset($options['InvalidArgumentException']) ?? false;
+            $exceptions = isset($options['InvalidArgumentException']) ?? false;
             if ($exceptions) {
                 $this->message
                     ->type('object.unknown')
-                    ->message($options['exception'] ?? $options['InvalidArgumentException'])
+                    ->message($options['InvalidArgumentException'])
                     ->label("exception");
-                $this->addError($message);
+                $this->addError($this->message);
             } else {
                 foreach ($schema as $item => $rules) {
                     if (!is_array($rules) && is_object($rules)) {
@@ -71,6 +72,7 @@ class Validate
                         $rules = $rules->generate();
                     }
                     $class_namespace = array_keys($rules)[0];
+                    // In case the method is defined as any it will not be checked.
                     if ($class_namespace == "any") continue;
                     $validator_class = str_replace("Schema", "Validator", $class_namespace);
                     $reflexion = new \ReflectionClass($validator_class);
@@ -97,10 +99,10 @@ class Validate
     }
 
     /**
-     * @param array $message
+     * @param MessageBuilderContracts $item
      * @return void
      */
-    private function addError(MessageErrorBuilder $item)
+    private function addError(MessageBuilderContracts $item)
     {
         $this->errors[] = $item->generate();
     }

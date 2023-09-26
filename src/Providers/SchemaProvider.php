@@ -11,7 +11,7 @@ use Wepesi\App\Providers\Contracts\SchemaContracts;
 /**
  *
  */
-abstract class SChemaProvider implements SchemaContracts
+abstract class SchemaProvider implements SchemaContracts
 {
     /**
      * @var array
@@ -23,21 +23,12 @@ abstract class SChemaProvider implements SchemaContracts
     protected string $class_name;
 
     /**
-     * @param string $class_name
-     */
-    public function __construct(string $class_name)
-    {
-        $this->class_name = $class_name;
-        $this->schema[$this->class_name] = [];
-    }
-
-    /**
      * @param int $rule
-     * @return SChemaProvider
+     * @return SchemaProvider
      */
-    public function min(int $rule): SChemaProvider
+    public function min(int $rule): SchemaProvider
     {
-        $this->schema[$this->class_name]["min"] = $rule;
+        $this->schema["min"] = $rule;
         return $this;
     }
 
@@ -45,18 +36,18 @@ abstract class SChemaProvider implements SchemaContracts
      * @param $rule
      * @return $this
      */
-    public function max($rule): SChemaProvider
+    public function max($rule): SchemaProvider
     {
-        $this->schema[$this->class_name]["max"] = $rule;
+        $this->schema["max"] = $rule;
         return $this;
     }
 
     /**
      * @return $this
      */
-    public function required(): SChemaProvider
+    public function required(): SchemaProvider
     {
-        $this->schema[$this->class_name]["required"] = true;
+        $this->schema["required"] = true;
         return $this;
     }
 
@@ -65,6 +56,13 @@ abstract class SChemaProvider implements SchemaContracts
      */
     public function generate(): array
     {
-        return $this->schema;
+        $reflexion = new \ReflectionClass($this);
+        return [$reflexion->getName() => $this->schema];
+    }
+
+    public function __call($method, $args){
+        if(method_exists($this,$method)){
+            return call_user_func_array([$this,$method], $args);
+        }
     }
 }

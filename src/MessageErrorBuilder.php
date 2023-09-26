@@ -6,10 +6,12 @@
 
 namespace Wepesi\App;
 
+use Wepesi\App\Providers\Contracts\MessageBuilderContracts;
+
 /**
  *
  */
-final class MessageErrorBuilder
+final class MessageErrorBuilder implements MessageBuilderContracts
 {
 
     /**
@@ -67,7 +69,19 @@ final class MessageErrorBuilder
     /**
      * @return array
      */
-    public function generate(){
+    private function generate(){
         return $this->items;
+    }
+
+    /**
+     * @param $method
+     * @param $arg
+     * @return mixed|void
+     */
+    public function __call($method, $arg)
+    {
+        if (method_exists($this, $method)) {
+            return call_user_func_array([$this, $method], $arg);
+        }
     }
 }

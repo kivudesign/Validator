@@ -9,42 +9,54 @@ use Wepesi\App\Validate;
 
 $schema = new Schema();
 $validate = new Validate();
-$source = [
-    "name" =>"wepesi",
-    "email" => "info@wepesi.com",
-    "possessions" => [
-        "cars" => 2,
-        "plane" => 0,
-        "houses" => 4,
-        "children" => -3,
-        "children_name" => ['alfa', 3, false],
-        "children_age" => [12,'6.2', 'rachel'],
+$data_source_pass = [
+    "family" => [
+        "children" => 3,
+        "children_name" => ['alfa', 'beta', 'omega'],
+        "children_age" => [12, 9, 3],
         "location" => [
             "goma" => "Q.Virunga 08",
-            "bukabu" => "Bagira 10",
-            "kinshasa" => "matadi kibala 05"
+            "bukabu" => "Bagira 10"
+        ]
+    ]
+];
+$data_source_fail = [
+    "family" => [
+        "children" => 3,
+        "children_name" => ['alfa', 3, 'blue'],
+        "children_age" => [12, '6.2', 'rachel'],
+        "location" => [
+            "goma" => "goma",
+            "bukabu" => "Bagira",
+            "kinshasa" => "Gombe ",
+            "Lubumbashi" => "lushi"
         ]
     ]
 ];
 
-$rules =[
-  "name" => $schema->string()->min(1)->max(10)->required()->generate(),
-  "email" => $schema->string()->email()->required()->generate(),
-  "possessions" => $schema->array()->min(1)->max(20)->required()->structure([
-      "cars" => $schema->number()->min(1)->required()->generate(),
-      "plane" => $schema->number()->min(1)->required()->generate(),
-      "houses" => $schema->number()->min(6)->required()->generate(),
-      "children" => $schema->number()->positive()->required()->generate(),
-      'children_name' => $schema->array()->string()->generate(),
-      'children_age' => $schema->array()->number()->generate(),
-      "location" => $schema->array()->min(2)->structure([
-          "goma" => $schema->string()->min(20)->generate(),
-          "bukabu" => $schema->string()->min(20)->generate(),
-          "kinshasa" => $schema->string()->min(20)->generate(),
-      ])->generate()
-  ])->generate()
+$rules = [
+    "family" => $schema->array()->min(1)->max(20)->required()->structure([
+        "children" => $schema->number()->positive()->min(1)->max(5)->required(),
+        'children_name' => $schema->array()->string(),
+        'children_age' => $schema->array()->number(),
+        "location" => $schema->array()->min(2)->max(3)->structure([
+            "goma" => $schema->string(),
+            "bukabu" => $schema->string(),
+            "kinshasa" => $schema->any(),
+            "Lubumbashi" => $schema->any(),
+        ])
+    ])
 ];
 
-$validate->check($source, $rules);
-////    check if the validation passed or not
-include_once __DIR__ . '/vardump.php';
+//    check if the validation passed or not
+$validate->check($data_source_pass, $rules);
+var_dump([
+    'passed' => $validate->passed(),
+    'errors' => $validate->errors()
+]);
+
+$validate->check($data_source_fail, $rules);
+var_dump([
+    'passed' => $validate->passed(),
+    'errors' => $validate->errors()
+]);

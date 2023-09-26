@@ -3,7 +3,10 @@
  * Copyright (c) 2023.  Wepesi validation.
  *  @author Boss Ibrahim Mussa
  */
-var_dump([
-    'passed' => $validate->passed(),
-    'errors' => $validate->errors()
-]);
+
+namespace Wepesi\App\Providers\Contracts;
+
+interface MessageBuilderContracts
+{
+
+}

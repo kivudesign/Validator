@@ -6,31 +6,22 @@
 
 namespace Wepesi\App\Schema;
 
-use Wepesi\App\Providers\SChemaProvider;
+use Wepesi\App\Providers\SchemaProvider;
 
 /**
- * Arraye schema validation
+ * Array schema validation
  */
-final class ArraySchema extends SChemaProvider
+final class ArraySchema extends SchemaProvider
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct(__CLASS__);
-    }
-
     /**
      * @param array $elements data array to be validated
      * @return $this
      */
     public function structure(array $elements): ?ArraySchema
     {
-        if (isset($this->schema[$this->class_name]['string']) || isset($this->schema[$this->class_name]['number'])) {
-            return false;
+        if (! isset($this->schema['string']) || ! isset($this->schema['number'])) {
+            $this->schema['structure'] = $elements;
         }
-        $this->schema[$this->class_name]['structure'] = $elements;
         return $this;
     }
 
@@ -40,10 +31,9 @@ final class ArraySchema extends SChemaProvider
      */
     public function string(): ?ArraySchema
     {
-        if (isset($this->schema[$this->class_name]['number'])) {
-            return false;
+        if (! isset($this->schema['number'])) {
+            $this->schema['string'] = true;
         }
-        $this->schema[$this->class_name]['string'] = true;
         return $this;
     }
 
@@ -52,10 +42,9 @@ final class ArraySchema extends SChemaProvider
      */
     public function number(): ?ArraySchema
     {
-        if (isset($this->schema[$this->class_name]['string'])) {
-            return false;
+        if (! isset($this->schema['string'])) {
+            $this->schema['number'] = true;
         }
-        $this->schema[$this->class_name]['number'] = true;
         return $this;
     }
 }

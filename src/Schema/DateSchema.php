@@ -6,21 +6,14 @@
 
 namespace Wepesi\App\Schema;
 
-use Wepesi\App\Providers\SChemaProvider;
+use Wepesi\App\Providers\SchemaProvider;
 
 /**
  * Schema datetime
  *
  */
-final class DateSchema extends SChemaProvider
+final class DateSchema extends SchemaProvider
 {
-    /**
-     *
-     */
-    function __construct()
-    {
-        parent::__construct(__CLASS__);
-    }
 
     /**
      * @param string $rule
@@ -28,7 +21,7 @@ final class DateSchema extends SChemaProvider
      */
     public function min($rule): DateSchema
     {
-        $this->schema[$this->class_name]['min'] = $rule;
+        $this->schema['min'] = $rule;
         return $this;
     }
 
@@ -38,7 +31,7 @@ final class DateSchema extends SChemaProvider
      */
     public function max($rule): DateSchema
     {
-        $this->schema[$this->class_name]['max'] = $rule;
+        $this->schema['max'] = $rule;
         return $this;
     }
 
@@ -47,7 +40,7 @@ final class DateSchema extends SChemaProvider
      */
     function now(): DateSchema
     {
-        $this->schema[$this->class_name]["now"] = true;
+        $this->schema["now"] = true;
         return $this;
     }
 
@@ -56,7 +49,7 @@ final class DateSchema extends SChemaProvider
      */
     function today(): DateSchema
     {
-        $this->schema[$this->class_name]["today"] = true;
+        $this->schema["today"] = true;
         return $this;
     }
 }

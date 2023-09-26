@@ -6,29 +6,29 @@
 
 namespace Wepesi\App\Schema;
 
-use Wepesi\App\Providers\SChemaProvider;
+use Wepesi\App\Providers\SchemaProvider;
 
 /**
  * Schema number validation
  * validate any format number
  */
-final class NumberSchema extends SChemaProvider
+final class NumberSchema extends SchemaProvider
 {
-
     /**
-     *
+     * @return $this
      */
-    function __construct()
+    public function positive(): NumberSchema
     {
-        parent::__construct(__CLASS__);
+        $this->schema['positive'] = true;
+        return $this;
     }
 
     /**
      * @return $this
      */
-    function positive(): NumberSchema
+    public function negative(): NumberSchema
     {
-        $this->schema[$this->class_name]['positive'] = true;
+        $this->schema['negative'] = true;
         return $this;
     }
 }

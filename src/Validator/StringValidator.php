@@ -22,11 +22,7 @@ final class StringValidator extends ValidatorProvider
      */
     public function __construct(string $item, array $data_source)
     {
-        $this->errors = [];
-        $this->data_source = $data_source;
-        $this->field_name = $item;
-        $this->field_value = $data_source[$item];
-        parent::__construct();
+        parent::__construct($item, $data_source);
     }
 
     /**
@@ -36,14 +32,14 @@ final class StringValidator extends ValidatorProvider
      */
     public function min(int $rule): void
     {
-        if ($this->positiveParamMethod($rule)) return;
+        if ($this->checkNotPositiveParamMethod($rule)) return;
         if (strlen($this->field_value) < $rule) {
-            $this->messageItem
-                ->type('string.min')
+            $this->message_error_builder
+                ->type($this->typeError('min'))
                 ->message("`$this->field_name` should have minimum of `$rule` characters")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -54,14 +50,14 @@ final class StringValidator extends ValidatorProvider
      */
     public function max(int $rule): void
     {
-        if ($this->positiveParamMethod($rule, true)) return;
+        if ($this->checkNotPositiveParamMethod($rule, true)) return;
         if (strlen($this->field_value) > $rule) {
-            $this->messageItem
-                ->type('string.max')
+            $this->message_error_builder
+                ->type($this->typeError('max'))
                 ->message("`$this->field_name` should have maximum of `$rule` characters")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -71,11 +67,11 @@ final class StringValidator extends ValidatorProvider
     public function email()
     {
         if (!filter_var($this->field_value, FILTER_VALIDATE_EMAIL)) {
-            $this->messageItem
-                ->type('string.email')
+            $this->message_error_builder
+                ->type($this->typeError('email'))
                 ->message("`$this->field_name` should be an email.")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -89,11 +85,11 @@ final class StringValidator extends ValidatorProvider
     public function url()
     {
         if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $this->field_value)) {
-            $this->messageItem
+            $this->message_error_builder
                 ->type('string.url')
                 ->message("'$this->field_name' this should be a link(url)")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -105,12 +101,12 @@ final class StringValidator extends ValidatorProvider
     public function match(string $key_to_match)
     {
         $this->isStringAndValid($key_to_match);
-        if (isset($this->data_source[$key_to_match]) && ($this->field_value != $this->data_source[$key_to_match])) {
-            $this->messageItem
+        if (isset($this->data_source[$key_to_match]) && (strlen($this->field_value) != strlen($this->data_source[$key_to_match])) && ($this->field_value != $this->data_source[$key_to_match])) {
+            $this->message_error_builder
                 ->type('string.match')
                 ->message("`$this->field_name` should match `$key_to_match`")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -121,11 +117,11 @@ final class StringValidator extends ValidatorProvider
     public function addressIp()
     {
         if (!filter_var($this->field_value, FILTER_VALIDATE_IP)) {
-            $this->messageItem
+            $this->message_error_builder
                 ->type('string.ip_address')
                 ->message("`$this->field_name` is not a valid Ip address")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -136,11 +132,11 @@ final class StringValidator extends ValidatorProvider
     public function addressIpv6(string $ip_address)
     {
         if (!filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $this->messageItem
+            $this->message_error_builder
                 ->type('string.ip_address_v6')
                 ->message("`$this->field_name` is not a valid ip address (ipv6)")
                 ->label($this->field_name);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -154,22 +150,17 @@ final class StringValidator extends ValidatorProvider
         $field_to_check = !$item_key ? $this->field_name : $item_key;
         $regex = '#[a-zA-Z0-9]#';
         if (!isset($this->data_source[$field_to_check])) {
-            $this->messageItem
+            $this->message_error_builder
                 ->type('string.unknown')
                 ->message("`$field_to_check` is not valid")
                 ->label($field_to_check);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         } else if (!preg_match($regex, $this->data_source[$field_to_check]) || strlen(trim($this->field_value)) == 0) {
-            $this->messageItem
+            $this->message_error_builder
                 ->type('string.unknown')
                 ->message("`$field_to_check` should be a string")
                 ->label($field_to_check);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
-    }
-
-    protected function classProvider(): string
-    {
-        return 'string';
     }
 }

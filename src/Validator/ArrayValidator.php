@@ -20,11 +20,7 @@ final class ArrayValidator extends ValidatorProvider
      */
     public function __construct(string $item, array $data_source = [])
     {
-        $this->errors = [];
-        $this->data_source = $data_source;
-        $this->field_name = $item;
-        $this->field_value = $data_source[$item];
-        parent::__construct();
+        parent::__construct($item,$data_source);
     }
 
     /**
@@ -35,14 +31,14 @@ final class ArrayValidator extends ValidatorProvider
     public function min(int $rule): void
     {
         // TODO: Implement min() method.
-        if ($this->positiveParamMethod($rule)) return;
+        if ($this->checkNotPositiveParamMethod($rule)) return;
         if (count($this->field_value) < $rule) {
-            $this->messageItem
-                ->type('array.min')
+            $this->message_error_builder
+                ->type($this->typeError('min'))
                 ->message("`$this->field_name` should have a minimum of `$rule` elements")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -53,14 +49,14 @@ final class ArrayValidator extends ValidatorProvider
     public function max(int $rule): void
     {
         // TODO: Implement max() method.
-        if ($this->positiveParamMethod($rule, true)) return;
+        if ($this->checkNotPositiveParamMethod($rule, true)) return;
         if (count($this->field_value) > $rule) {
-            $this->messageItem
-                ->type('array.max')
+            $this->message_error_builder
+                ->type($this->typeError('max'))
                 ->message("`$this->field_name` should have a maximum of `$rule` elements")
                 ->label($this->field_name)
                 ->limit($rule);
-            $this->addError($this->messageItem);
+            $this->addError($this->message_error_builder);
         }
     }
 
@@ -74,7 +70,14 @@ final class ArrayValidator extends ValidatorProvider
         $element_source = $this->data_source[$this->field_name];
         $validate->check($element_source, $elements);
         if (!$validate->passed()) {
-            foreach ($validate->errors() as $error) $this->addError($error);
+            foreach ($validate->errors() as $error) {
+                $this->message_error_builder
+                    ->type($error['type'])
+                    ->message($error['message'])
+                    ->label($error['label'])
+                    ->limit($error['limit']??1);
+                $this->addError($this->message_error_builder);
+            }
         }
     }
 
@@ -94,12 +97,12 @@ final class ArrayValidator extends ValidatorProvider
             $keys = array_keys($filter);
             for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
-                $this->messageItem
-                    ->type('array.string')
+                $this->message_error_builder
+                    ->type($this->typeError('string'))
                     ->message("`$this->field_name[$position]` should be a string")
                     ->label($this->field_name)
                     ->limit(1);
-                $this->addError($this->messageItem);
+                $this->addError($this->message_error_builder);
             }
         }
     }
@@ -120,21 +123,13 @@ final class ArrayValidator extends ValidatorProvider
             $keys = array_keys($filter);
             for ($i = 0; $i < count($keys); $i++) {
                 $position = $keys[$i];
-                $this->messageItem
+                $this->message_error_builder
                     ->type('array.number')
                     ->message("`$this->field_name[$position]` should be a number")
                     ->label($this->field_name)
                     ->limit(count($keys));
-                $this->addError($this->messageItem);
+                $this->addError($this->message_error_builder);
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function classProvider(): string
-    {
-        return 'array';
     }
 }
