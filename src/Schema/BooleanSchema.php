@@ -11,30 +11,21 @@ namespace Wepesi\App\Schema;
  * and open the template in the editor.
  */
 
-use Wepesi\App\Providers\SChemaProvider;
+use Wepesi\App\Providers\SchemaProvider;
 
 /**
  * Description of String
  *
  * @author Domeshow
  */
-final class BooleanSchema extends SChemaProvider
+final class BooleanSchema extends SchemaProvider
 {
-
-    /**
-     *
-     */
-    function __construct()
-    {
-        parent::__construct(__CLASS__);
-    }
-
     /**
      * @return $this
      */
     function isValid(): BooleanSchema
     {
-        $this->schema[$this->class_name]['isValid'] = true;
+        $this->schema['isValid'] = true;
         return $this;
     }
 }
